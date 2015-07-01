@@ -33,6 +33,14 @@ module.exports = function () {
             return c;
         },
 
+        sclSum = function (a, ka, b, kb) {
+            var c = a.slice();
+            for (var i = 0; i < c.length; i++) {
+                c[i] = c[i] * ka + b[i] * kb;
+            }
+            return c;
+        },
+
         cross = function (a, b) {
             return [
                 a[1] * b[2] - a[2] * b[1],
@@ -69,6 +77,7 @@ module.exports = function () {
         add: add,
         sub: sub,
         sum: sum,
+        sclSum: sclSum,
         cross: cross,
         mod2: mod2,
         mod: mod,
@@ -76,5 +85,4 @@ module.exports = function () {
         scl: scl,
         scld: scld
     };
-
 }();

@@ -1,7 +1,6 @@
-var expect = require('chai').expect,
-    r = require('../r'),
-
-    v = r('maths/vector');
+var hlp = require('../r'),
+    expect = hlp.expect,
+    v = hlp.req('maths/vector');
 
 describe('vector', function () {
 
@@ -27,6 +26,11 @@ describe('vector', function () {
     it('should sum', function () {
         var a = v.sum([-1, 3, 2], [2, -1, 1]);
         expect(a).to.eql([1, 2, 3]);
+    });
+
+    it('should do scaled sum', function () {
+        var a = v.sclSum([-1, 3, 2], 2, [2, -1, 1], 3);
+        expect(a).to.eql([4, 3, 7]);
     });
 
     it('should calculate cross product', function () {

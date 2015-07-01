@@ -1,8 +1,14 @@
 module.exports = function () {
     'use strict';
 
-    return function (mod) {
-        return require('../src/js/' + mod);
+    var chai = require('chai'),
+        r = function (mod) {
+            return require('../src/js/' + mod);
+        };
+
+    return {
+        expect: chai.expect,
+        req: r
     };
 
 }();

@@ -1,12 +1,11 @@
-var expect = require('chai').expect,
-    r = require('../r'),
-
-    orbit = r('maths/orbit');
+var hlp = require('../r'),
+    expect = hlp.expect,
+    orbit = hlp.req('maths/orbit');
 
 describe('orbit', function () {
 
     it('should calculate orbit', function () {
-        var orbitParam = {
+        var orbitParams = {
                 h: 82000,                   // [km^2/s] Specific angular momentum
                 i: 50 * Math.PI / 180,      // [rad] Inclination
                 lan: 60 * Math.PI / 180,    // [rad] Longitude of the ascending node
@@ -24,7 +23,15 @@ describe('orbit', function () {
 
             calculated = orbit.params(mu, state);
 
-        expect(calculated).to.eql(orbitParam);
+        for (var key in orbitParams) {
+            if (orbitParams.hasOwnProperty(key)) {
+                var op = orbitParams[key],
+                    tolerance = Math.abs(.001 * op),
+                    cv = calculated[key];
+
+                expect(Math.abs(cv - op) < tolerance).to.be.true;
+            }
+        }
     });
 
 
