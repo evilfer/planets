@@ -28,6 +28,11 @@ describe('vector', function () {
         expect(a).to.eql([1, 2, 3]);
     });
 
+    it('should diff', function () {
+        var a = v.diff([-1, 3, 2], [2, -1, 1]);
+        expect(a).to.eql([-3, 4, 1]);
+    });
+
     it('should do scaled sum', function () {
         var a = v.sclSum([-1, 3, 2], 2, [2, -1, 1], 3);
         expect(a).to.eql([4, 3, 7]);

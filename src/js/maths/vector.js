@@ -27,6 +27,12 @@ module.exports = function () {
             }
         },
 
+        diff = function (a, b) {
+            var c = a.slice();
+            sub(c, b);
+            return c;
+        },
+
         sum = function (a, b) {
             var c = a.slice();
             add(c, b);
@@ -75,6 +81,7 @@ module.exports = function () {
     return {
         eq: eq,
         add: add,
+        diff: diff,
         sub: sub,
         sum: sum,
         sclSum: sclSum,
