@@ -2,10 +2,11 @@
     'use strict';
 
     var React = require('react'),
-        SceneManager = require('./ui/components/3d/scene-manager.jsx');
+        SceneManager = require('./ui/components/3d/scene-manager.jsx'),
+        data = require('../../data/data.json');
 
     React.render(
-        <SceneManager />,
+        <SceneManager ephemerides={data}/>,
         document.getElementById('content')
     );
 

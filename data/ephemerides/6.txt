@@ -1,0 +1,76 @@
+
+
+*******************************************************************************
+Ephemeris / MAIL_REQUEST Sun Jul  5 11:37:09 2015 Pasadena, USA  / Horizons
+*******************************************************************************
+Target body name: Saturn Barycenter (6)           {source: DE-0431LE-0431}
+Center body name: Solar System Barycenter (0)     {source: DE-0431LE-0431}
+Center-site name: BODY CENTER
+*******************************************************************************
+Start time      : A.D. 2015-Jan-01 00:00:00.0000 CT
+Stop  time      : A.D. 2016-Feb-05 00:00:00.0000 CT
+Step-size       : 144000 minutes
+*******************************************************************************
+Center geodetic : 0.00000000,0.00000000,0.0000000 {E-lon(deg),Lat(deg),Alt(km)}
+Center cylindric: 0.00000000,0.00000000,0.0000000 {E-lon(deg),Dxy(km),Dz(km)}
+Center radii    : (undefined)
+Output units    : KM-S
+Output format   : 02
+Reference frame : ICRF/J2000.0
+Output type     : GEOMETRIC cartesian states
+Coordinate systm: Ecliptic and Mean Equinox of Reference Epoch
+*******************************************************************************
+JDCT
+   X     Y     Z
+   VX    VY    VZ
+*******************************************************************************
+$$SOE
+2457023.500000000 = A.D. 2015-Jan-01 00:00:00.0000 (CT)
+  -8.086230767595687E+08 -1.249156303663204E+09  5.390152849979419E+07
+   7.581043145557281E+00 -5.276167467942241E+00 -2.099684498904180E-01
+2457123.500000000 = A.D. 2015-Apr-11 00:00:00.0000 (CT)
+  -7.419441499269696E+08 -1.292848366343707E+09  5.200754833513165E+07
+   7.849810886554986E+00 -4.835587171666999E+00 -2.283277136853588E-01
+2457223.500000000 = A.D. 2015-Jul-20 00:00:00.0000 (CT)
+  -6.730495233582865E+08 -1.332679962597406E+09  4.995824550548881E+07
+   8.093865625763671E+00 -4.382754192353771E+00 -2.459162547049114E-01
+2457323.500000000 = A.D. 2015-Oct-28 00:00:00.0000 (CT)
+  -6.021544795485212E+08 -1.368550749810488E+09  4.776044472035563E+07
+   8.312808371637820E+00 -3.918945678926446E+00 -2.626960976510928E-01
+2457423.500000000 = A.D. 2016-Feb-05 00:00:00.0000 (CT)
+  -5.294775198693417E+08 -1.400371398932321E+09  4.542128921927691E+07
+   8.506292631396636E+00 -3.445433864649629E+00 -2.786314673926900E-01
+$$EOE
+*******************************************************************************
+Coordinate system description:
+
+  Ecliptic and Mean Equinox of Reference Epoch
+
+    Reference epoch: J2000.0
+    xy-plane: plane of the Earth's orbit at the reference epoch
+    x-axis  : out along ascending node of instantaneous plane of the Earth's
+              orbit and the Earth's mean equator at the reference epoch
+    z-axis  : perpendicular to the xy-plane in the directional (+ or -) sense
+              of Earth's north pole at the reference epoch.
+
+Symbol meaning
+
+    JDCT     Epoch Julian Date, Coordinate Time
+      X      x-component of position vector (km)
+      Y      y-component of position vector (km)
+      Z      z-component of position vector (km)
+      VX     x-component of velocity vector (km/sec)
+      VY     y-component of velocity vector (km/sec)
+      VZ     z-component of velocity vector (km/sec)
+
+Geometric states/elements have no aberration corrections applied.
+
+ Computations by ...
+     Solar System Dynamics Group, Horizons On-Line Ephemeris System
+     4800 Oak Grove Drive, Jet Propulsion Laboratory
+     Pasadena, CA  91109   USA
+     Information: http://ssd.jpl.nasa.gov/
+     Connect    : telnet://ssd.jpl.nasa.gov:6775  (via browser)
+                  telnet ssd.jpl.nasa.gov 6775    (via command-line)
+     Author     : Jon.Giorgini@jpl.nasa.gov
+*******************************************************************************

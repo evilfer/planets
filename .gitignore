@@ -2,3 +2,5 @@
 
 node_modules
 build
+data/requests
+data/data.json

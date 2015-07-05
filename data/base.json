@@ -1,15 +1,55 @@
 {
-  "t0": 0,
-  "t1": 1,
+  "t0": 57023,
+  "t1": 57388,
   "objects": {
     "0": {
       "label": "Sun",
       "parent": false
     },
+    "199": {
+      "label": "Mercury",
+      "parent": "0",
+      "step": 1
+    },
+    "299": {
+      "label": "Mars",
+      "parent": "0",
+      "step": 2
+    },
+    "3": {
+      "label": "Earth",
+      "parent": "0",
+      "step": 3
+    },
+    "301": {
+      "label": "Moon",
+      "parent": "3",
+      "step": 0.5
+    },
     "4": {
       "label": "Mars",
       "parent": "0",
-      "gap": 6
+      "step": 6
+    },
+    "5": {
+      "label": "Jupiter",
+      "parent": "0",
+      "step": 40
+    },
+    "6": {
+      "label": "Saturn",
+      "parent": "0",
+      "step": 100
+    },
+    "7": {
+      "label": "Uranus",
+      "parent": "0",
+      "step": 300
+    },
+    "8": {
+      "label": "Neptune",
+      "parent": "0",
+      "step": 600
     }
   }
 }

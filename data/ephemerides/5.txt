@@ -1,0 +1,94 @@
+
+
+*******************************************************************************
+Ephemeris / MAIL_REQUEST Sun Jul  5 11:36:56 2015 Pasadena, USA  / Horizons
+*******************************************************************************
+Target body name: Jupiter Barycenter (5)          {source: DE-0431LE-0431}
+Center body name: Solar System Barycenter (0)     {source: DE-0431LE-0431}
+Center-site name: BODY CENTER
+*******************************************************************************
+Start time      : A.D. 2015-Jan-01 00:00:00.0000 CT
+Stop  time      : A.D. 2016-Feb-05 00:00:00.0000 CT
+Step-size       : 57600 minutes
+*******************************************************************************
+Center geodetic : 0.00000000,0.00000000,0.0000000 {E-lon(deg),Lat(deg),Alt(km)}
+Center cylindric: 0.00000000,0.00000000,0.0000000 {E-lon(deg),Dxy(km),Dz(km)}
+Center radii    : (undefined)
+Output units    : KM-S
+Output format   : 02
+Reference frame : ICRF/J2000.0
+Output type     : GEOMETRIC cartesian states
+Coordinate systm: Ecliptic and Mean Equinox of Reference Epoch
+*******************************************************************************
+JDCT
+   X     Y     Z
+   VX    VY    VZ
+*******************************************************************************
+$$SOE
+2457023.500000000 = A.D. 2015-Jan-01 00:00:00.0000 (CT)
+  -5.575105492872652E+08  5.674636876111323E+08  1.010688912023520E+07
+  -9.475845167421932E+00 -8.541334793259956E+00  2.475279479450441E-01
+2457063.500000000 = A.D. 2015-Feb-10 00:00:00.0000 (CT)
+  -5.893674016204154E+08  5.370704874011077E+08  1.094602563746244E+07
+  -8.955630769530925E+00 -9.042136555137429E+00  2.379678892558816E-01
+2457103.500000000 = A.D. 2015-Mar-22 00:00:00.0000 (CT)
+  -6.193839056525006E+08  5.050008581448156E+08  1.175094621730772E+07
+  -8.411142737084583E+00 -9.511328772457473E+00  2.277334133354669E-01
+2457143.500000000 = A.D. 2015-May-01 00:00:00.0000 (CT)
+  -6.474794302168635E+08  4.713656566904007E+08  1.251938630725473E+07
+  -7.844267659487710E+00 -9.947995182406689E+00  2.168629439250678E-01
+2457183.500000000 = A.D. 2015-Jun-10 00:00:00.0000 (CT)
+  -6.735798708634565E+08  4.362787236238300E+08  1.324921503704670E+07
+  -7.256895255885024E+00 -1.035132449184647E+01  2.053953961801573E-01
+2457223.500000000 = A.D. 2015-Jul-20 00:00:00.0000 (CT)
+  -6.976176527654403E+08  3.998565290237820E+08  1.393843670942575E+07
+  -6.650913782024025E+00 -1.072060558957245E+01  1.933700664307487E-01
+2457263.500000000 = A.D. 2015-Aug-29 00:00:00.0000 (CT)
+  -7.195317191237555E+08  3.622178337058324E+08  1.458519197252111E+07
+  -6.028206525063498E+00 -1.105522311645186E+01  1.808265453484692E-01
+2457303.500000000 = A.D. 2015-Oct-08 00:00:00.0000 (CT)
+  -7.392675090319779E+08  3.234833668317092E+08  1.518775866382919E+07
+  -5.390648870856770E+00 -1.135465256618750E+01  1.678046191869456E-01
+2457343.500000000 = A.D. 2015-Nov-17 00:00:00.0000 (CT)
+  -7.567769248171625E+08  2.837755194741824E+08  1.574455234516437E+07
+  -4.740105267799730E+00 -1.161845604227259E+01  1.543441921222399E-01
+2457383.500000000 = A.D. 2015-Dec-27 00:00:00.0000 (CT)
+  -7.720182901342396E+08  2.432180518318834E+08  1.625412660004246E+07
+  -4.078427076427680E+00 -1.184627849684219E+01  1.404852233013409E-01
+2457423.500000000 = A.D. 2016-Feb-05 00:00:00.0000 (CT)
+  -7.849563027480426E+08  2.019358137323751E+08  1.671517311765118E+07
+  -3.407451456454380E+00 -1.203784370735969E+01  1.262676675792145E-01
+$$EOE
+*******************************************************************************
+Coordinate system description:
+
+  Ecliptic and Mean Equinox of Reference Epoch
+
+    Reference epoch: J2000.0
+    xy-plane: plane of the Earth's orbit at the reference epoch
+    x-axis  : out along ascending node of instantaneous plane of the Earth's
+              orbit and the Earth's mean equator at the reference epoch
+    z-axis  : perpendicular to the xy-plane in the directional (+ or -) sense
+              of Earth's north pole at the reference epoch.
+
+Symbol meaning
+
+    JDCT     Epoch Julian Date, Coordinate Time
+      X      x-component of position vector (km)
+      Y      y-component of position vector (km)
+      Z      z-component of position vector (km)
+      VX     x-component of velocity vector (km/sec)
+      VY     y-component of velocity vector (km/sec)
+      VZ     z-component of velocity vector (km/sec)
+
+Geometric states/elements have no aberration corrections applied.
+
+ Computations by ...
+     Solar System Dynamics Group, Horizons On-Line Ephemeris System
+     4800 Oak Grove Drive, Jet Propulsion Laboratory
+     Pasadena, CA  91109   USA
+     Information: http://ssd.jpl.nasa.gov/
+     Connect    : telnet://ssd.jpl.nasa.gov:6775  (via browser)
+                  telnet ssd.jpl.nasa.gov 6775    (via command-line)
+     Author     : Jon.Giorgini@jpl.nasa.gov
+*******************************************************************************

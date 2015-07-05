@@ -20,7 +20,7 @@ var fs = require('fs'),
             }
         }
 
-        fs.writeFileSync('./build/dev/data.json', JSON.stringify(data));
+        fs.writeFileSync('./data/data.json', JSON.stringify(data));
     };
 
 compose();
