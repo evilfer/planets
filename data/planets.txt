@@ -1,0 +1,11 @@
+
+mercury     199     88d             1
+venus       299     225d            2
+earth       3       365d            3
+moon        301     28d             .5
+mars        4       687d            6
+jupiter     5       12*365d         40
+saturn      6       29*365d         100
+uranus      7       84*365          300
+neptune     8       165*365         600
+

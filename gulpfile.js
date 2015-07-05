@@ -56,6 +56,10 @@ var gulp = require('gulp'),
 gulp.task('js-watch', browserifyTaskGen(true, true));
 gulp.task('js-dev', browserifyTaskGen(true, false));
 
+gulp.task('html-dev', function () {
+    gulp.src('./src/html/*')
+        .pipe(gulp.dest('./build/dev/'));
+});
 
 /* test */
 gulp.task('test', function () {
@@ -73,6 +77,7 @@ gulp.task('watch', ['test', 'test-watch', 'js-watch']);
 gulp.task('default', ['watch']);
 
 gulp.task('build-dev', ['js-dev']);
+
 
 /* prod tasks */
 

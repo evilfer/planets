@@ -68,22 +68,12 @@ module.exports = function () {
                     r: vector.diff(absState.r, center.r),
                     v: vector.diff(absState.v, center.v)
                 },
-                params = calculateParams(center.mu, state),
-                semiMajor = .5 * (params.a + params.p),
-                semiMinor = Math.sqrt(params.a * params.p),
+                params = calculateParams(center.mu, state);
 
-                cosLan = Math.cos(params.lan), sinLan = Math.sin(params.lan),
-                cosInc = Math.cos(params.i), sinInc = Math.sin(params.i),
-                cosArg = Math.cos(params.arpe), sinArg = Math.sin(params.arpe),
+            params.semiMajor = .5 * (params.a + params.p);
+            params.semiMinor = Math.sqrt(params.a * params.p);
 
-                uToAn = [cosLan, sinLan, 0],
-                uToPer = [
-                    cosInc * sinLan * sinArg + cosLan * cosArg,
-                    sinLan * cosArg - cosInc * cosLan * sinArg,
-                    -sinInc * sinArg
-                ],
-                ellipseCenter = vector.sclSum(center.r, 1, uToPer, params.p - semiMajor);
-
+            return params;
         };
 
     return {

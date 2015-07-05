@@ -1,0 +1,15 @@
+{
+  "t0": 0,
+  "t1": 1,
+  "objects": {
+    "0": {
+      "label": "Sun",
+      "parent": false
+    },
+    "4": {
+      "label": "Mars",
+      "parent": "0",
+      "gap": 6
+    }
+  }
+}

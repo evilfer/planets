@@ -1,0 +1,68 @@
+*******************************************************************************
+Ephemeris / WWW_USER Sat Jul  4 14:54:51 2015 Pasadena, USA      / Horizons
+*******************************************************************************
+Target body name: Mars Barycenter (4)             {source: DE-0431LE-0431}
+Center body name: Solar System Barycenter (0)     {source: DE-0431LE-0431}
+Center-site name: BODY CENTER
+*******************************************************************************
+Start time      : A.D. 2015-Jul-04 00:00:00.0000 CT
+Stop  time      : A.D. 2015-Jul-06 00:00:00.0000 CT
+Step-size       : 1440 minutes
+*******************************************************************************
+Center geodetic : 0.00000000,0.00000000,0.0000000 {E-lon(deg),Lat(deg),Alt(km)}
+Center cylindric: 0.00000000,0.00000000,0.0000000 {E-lon(deg),Dxy(km),Dz(km)}
+Center radii    : (undefined)
+Output units    : KM-S
+Output format   : 02
+Reference frame : ICRF/J2000.0
+Output type     : GEOMETRIC cartesian states
+Coordinate systm: Ecliptic and Mean Equinox of Reference Epoch
+*******************************************************************************
+JDCT
+   X     Y     Z
+   VX    VY    VZ
+*******************************************************************************
+$$SOE
+2457207.500000000 = A.D. 2015-Jul-04 00:00:00.0000 (CT)
+  -1.038023121257381E+07  2.355322700317043E+08  5.179088944083527E+06
+  -2.327911383722389E+01  9.482408617874410E-01  5.909973017279033E-01
+2457208.500000000 = A.D. 2015-Jul-05 00:00:00.0000 (CT)
+  -1.239111104183550E+07  2.356053073544306E+08  5.229954114702433E+06
+  -2.326874141877495E+01  7.425035394533432E-01  5.864314865192445E-01
+2457209.500000000 = A.D. 2015-Jul-06 00:00:00.0000 (CT)
+  -1.440101992231130E+07  2.356605861641689E+08  5.280423323822185E+06
+  -2.325663957709178E+01  5.371662417607387E-01  5.818316041639465E-01
+$$EOE
+*******************************************************************************
+Coordinate system description:
+
+  Ecliptic and Mean Equinox of Reference Epoch
+
+    Reference epoch: J2000.0
+    xy-plane: plane of the Earth's orbit at the reference epoch
+    x-axis  : out along ascending node of instantaneous plane of the Earth's
+              orbit and the Earth's mean equator at the reference epoch
+    z-axis  : perpendicular to the xy-plane in the directional (+ or -) sense
+              of Earth's north pole at the reference epoch.
+
+Symbol meaning
+
+    JDCT     Epoch Julian Date, Coordinate Time
+      X      x-component of position vector (km)
+      Y      y-component of position vector (km)
+      Z      z-component of position vector (km)
+      VX     x-component of velocity vector (km/sec)
+      VY     y-component of velocity vector (km/sec)
+      VZ     z-component of velocity vector (km/sec)
+
+Geometric states/elements have no aberration corrections applied.
+
+ Computations by ...
+     Solar System Dynamics Group, Horizons On-Line Ephemeris System
+     4800 Oak Grove Drive, Jet Propulsion Laboratory
+     Pasadena, CA  91109   USA
+     Information: http://ssd.jpl.nasa.gov/
+     Connect    : telnet://ssd.jpl.nasa.gov:6775  (via browser)
+                  telnet ssd.jpl.nasa.gov 6775    (via command-line)
+     Author     : Jon.Giorgini@jpl.nasa.gov
+*******************************************************************************
