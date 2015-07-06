@@ -20,7 +20,7 @@
     "bundle-collapser": "1.2.0",
     "chai": "3.0.0",
     "chai-stats": "0.3.0",
-    "express": "^4.13.0",
+    "express": "^4.13.1",
     "gulp": "3.9.0",
     "gulp-if": "1.2.5",
     "gulp-mocha": "2.1.2",

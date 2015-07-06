@@ -3,7 +3,7 @@ var fs = require('fs'),
     hlp = require('../r'),
     expect = hlp.expect,
     parser = hlp.req('data/parser'),
-    loader = hlp.req('data/loader');
+    expand = hlp.req('data/expand');
 
 describe('data implementation', function () {
 
@@ -23,8 +23,8 @@ describe('data implementation', function () {
 
         it('should parse horizons response', function () {
             var expected = [
-                    -1.038023121257381E+07, 2.355322700317043E+08, 5.179088944083527E+06,
-                    -2.327911383722389E+01, 9.482408617874410E-01, 5.909973017279033E-01,
+                    -1.038023121257381E+07, 2.355322700317043E+08, -5.179088944083527E+06,
+                    -2.327911383722389E+01, -9.482408617874410E-01, 5.909973017279033E-01,
                     -1.239111104183550E+07, 2.356053073544306E+08, 5.229954114702433E+06,
                     -2.326874141877495E+01, 7.425035394533432E-01, 5.864314865192445E-01,
                     -1.440101992231130E+07, 2.356605861641689E+08, 5.280423323822185E+06,
@@ -36,10 +36,10 @@ describe('data implementation', function () {
         });
     });
 
-    describe('loader', function () {
+    describe('expand', function () {
         it('should expand data', function () {
             var points = parser.parse(this.data),
-                expanded = loader.expand(points);
+                expanded = expand.expand(points);
 
             expect(expanded.length).to.equal(3);
 

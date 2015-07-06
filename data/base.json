@@ -4,7 +4,8 @@
   "objects": {
     "0": {
       "label": "Sun",
-      "parent": false
+      "parent": false,
+      "mu": 132712440018
     },
     "199": {
       "label": "Mercury",
@@ -19,7 +20,8 @@
     "3": {
       "label": "Earth",
       "parent": "0",
-      "step": 3
+      "step": 3,
+      "mu": 398600.4418
     },
     "301": {
       "label": "Moon",

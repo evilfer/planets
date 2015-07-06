@@ -15,34 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-module.exports = function () {
+!function () {
     'use strict';
 
-    var vector = require('./vector'),
+    var React = require('react'),
+        Planets = require('./ui/components/planets.jsx'),
+        data = require('./data/data');
 
-        interpolate = function (t, t0, data) {
-            var dt = t - t0,
-                fn = dt / data.step,
-                n = Math.floor(fn);
+    React.render(
+        <Planets data={data}/>,
+        document.getElementById('content')
+    );
 
-            if (n >= 0 && n < data.points.length - 1) {
-                var p0 = data.points[n],
-                    p1 = data.points[n + 1],
-                    k1 = fn - n,
-                    k0 = 1 - k1;
-
-                return {
-                    r: vector.sclSum(p0.r, k0, p1.r, k1),
-                    v: vector.sclSum(p0.v, k0, p1.v, k1)
-                };
-            } else {
-                return false;
-            }
-
-        };
-
-    return {
-        at: interpolate
-    };
 
 }();

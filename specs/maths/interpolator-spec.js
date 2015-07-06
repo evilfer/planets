@@ -5,9 +5,9 @@ var hlp = require('../r'),
 describe('interpolator', function () {
 
     beforeEach(function () {
+        this.t0 = 100;
         this.data = {
-            t0: 100,
-            gap: 10,
+            step: 10,
             points: [
                 {r: [0, 0, 0], v: [1, 1, 1]},
                 {r: [1, 1, 1], v: [0, 0, 0]},
@@ -17,18 +17,18 @@ describe('interpolator', function () {
     });
 
     it('should reject time before start', function () {
-        expect(interpolator.at(90, this.data)).to.eql(false);
+        expect(interpolator.at(90, this.t0, this.data)).to.eql(false);
     });
 
     it('should reject time after end', function () {
-        expect(interpolator.at(200, this.data)).to.eql(false);
+        expect(interpolator.at(200, this.t0, this.data)).to.eql(false);
     });
 
     it('should interpolate', function () {
-        expect(interpolator.at(100, this.data)).to.eql({r: [0, 0, 0], v: [1, 1, 1]});
-        expect(interpolator.at(102, this.data)).to.eql({r: [0.2, 0.2, 0.2], v: [0.8, 0.8, 0.8]});
-        expect(interpolator.at(110, this.data)).to.eql({r: [1, 1, 1], v: [0, 0, 0]});
-        expect(interpolator.at(115, this.data)).to.eql({r: [2, 2, 2], v: [0.5, 1, 1.5]});
+        expect(interpolator.at(100, this.t0, this.data)).to.eql({r: [0, 0, 0], v: [1, 1, 1]});
+        expect(interpolator.at(102, this.t0, this.data)).to.eql({r: [0.2, 0.2, 0.2], v: [0.8, 0.8, 0.8]});
+        expect(interpolator.at(110, this.t0, this.data)).to.eql({r: [1, 1, 1], v: [0, 0, 0]});
+        expect(interpolator.at(115, this.t0, this.data)).to.eql({r: [2, 2, 2], v: [0.5, 1, 1.5]});
     });
 
 });

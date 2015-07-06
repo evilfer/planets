@@ -10,7 +10,7 @@ var gulp = require('gulp'),
     gulpIf = require('gulp-if'),
     mocha = require('gulp-mocha'),
 
-    jsIndex = './src/js/index.js',
+    jsIndex = './src/js/index.jsx.js',
     jsSpecs = './specs/**/*.js',
     jsWatch = ['./src/js/**/*.js', jsSpecs],
 
