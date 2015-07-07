@@ -3,55 +3,55 @@
   "t1": 57388,
   "objects": {
     "0": {
-      "label": "Sun",
       "parent": false,
-      "mu": 132712440018
+      "mu": 132712440018,
+      "radius": 695000
     },
     "199": {
-      "label": "Mercury",
       "parent": "0",
-      "step": 1
+      "step": 1,
+      "radius": 2440
     },
     "299": {
-      "label": "Mars",
       "parent": "0",
-      "step": 2
+      "step": 2,
+      "radius": 6052
     },
     "3": {
-      "label": "Earth",
       "parent": "0",
       "step": 3,
-      "mu": 398600.4418
+      "mu": 398600.4418,
+      "radius": 6378
     },
     "301": {
-      "label": "Moon",
       "parent": "3",
-      "step": 0.5
+      "step": 0.5,
+      "radius": 1738
     },
     "4": {
-      "label": "Mars",
       "parent": "0",
-      "step": 6
+      "step": 6,
+      "radius": 3397
     },
     "5": {
-      "label": "Jupiter",
       "parent": "0",
-      "step": 40
+      "step": 40,
+      "radius": 71492
     },
     "6": {
-      "label": "Saturn",
       "parent": "0",
-      "step": 100
+      "step": 100,
+      "radius": 60268
     },
     "7": {
-      "label": "Uranus",
       "parent": "0",
-      "step": 300
+      "step": 300,
+      "radius": 25559
     },
     "8": {
-      "label": "Neptune",
       "parent": "0",
-      "step": 600
+      "step": 600,
+      "radius": 24766
     }
   }
 }

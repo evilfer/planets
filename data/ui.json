@@ -1,0 +1,83 @@
+{
+  "objects": {
+    "0": {
+      "label": "Sun",
+      "hue": 0,
+      "scale": {
+        "body": 1
+      }
+    },
+    "199": {
+      "label": "Mercury",
+      "hue": 0,
+      "scale": {
+        "body": 1,
+        "orbit": 1
+      }
+    },
+    "299": {
+      "label": "Mars",
+      "hue": 0,
+      "scale": {
+        "body": 1,
+        "orbit": 1
+      }
+    },
+    "3": {
+      "label": "Earth",
+      "hue": 0,
+      "scale": {
+        "body": 1,
+        "orbit": 1
+      }
+    },
+    "301": {
+      "label": "Moon",
+      "hue": 0,
+      "scale": {
+        "body": 1,
+        "orbit": 1
+      }
+    },
+    "4": {
+      "label": "Mars",
+      "hue": 0,
+      "scale": {
+        "body": 1,
+        "orbit": 1
+      }
+    },
+    "5": {
+      "label": "Jupiter",
+      "hue": 0,
+      "scale": {
+        "body": 1,
+        "orbit": 1
+      }
+    },
+    "6": {
+      "label": "Saturn",
+      "hue": 0,
+      "scale": {
+        "body": 1,
+        "orbit": 1
+      }
+    },
+    "7": {
+      "label": "Uranus",
+      "hue": 0,
+      "scale": {
+        "body": 1,
+        "orbit": 1
+      }
+    },
+    "8": {
+      "label": "Neptune",
+      "hue": 0,
+      "scale": {
+        "body": 1,
+        "orbit": 1
+      }
+    }
+  }
+}

@@ -19,9 +19,12 @@ module.exports = function () {
     'use strict';
 
     var compressed = require('../../../data/data.json'),
+        uiData = require('../../../data/ui.json'),
+
         expand = require('./expand').expand,
-        cp = ['label', 'parent', 'step', 'mu'],
+        cp = ['label', 'parent', 'step', 'mu', 'radius'],
         data = {t0: compressed.t0, t1: compressed.t1, objects: {}},
+
 
         ids = Object.keys(compressed.objects),
         parents = {};
@@ -33,6 +36,7 @@ module.exports = function () {
     ids.sort(function (a, b) {
         return parents[a] - parents[b];
     });
+
 
     for (var i = 0; i < ids.length; i += 1) {
         var id = ids[i],
@@ -47,6 +51,8 @@ module.exports = function () {
         if (orig.hasOwnProperty('points')) {
             obj.points = expand(orig.points);
         }
+
+        obj.ui = uiData.objects[id];
 
         data.objects[id] = obj;
     }

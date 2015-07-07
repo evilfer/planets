@@ -82,6 +82,24 @@ module.exports = function () {
             };
         },
 
+        pos = function (orb, ta, oposite) {
+            var cosTa = Math.cos(ta),
+                sinTa = Math.sin(ta),
+                ka = Math.sqrt(orb.a * orb.p * sinTa * sinTa + orb.semiMajor * orb.semiMajor * cosTa * cosTa),
+                kb = .5 * (orb.p - orb.a) * cosTa,
+                k = ka + kb;
+
+            return oposite ? {
+                x: k * cosTa,
+                y: k * sinTa,
+                x2: (kb - ka) * cosTa,
+                y2: (kb - ka) * sinTa
+            } : {
+                x: k * cosTa,
+                y: k * sinTa
+            };
+        },
+
         around = function (mu, center, absState) {
             var state = center ? {
                 r: vector.diff(absState.r, center.r),
@@ -93,7 +111,8 @@ module.exports = function () {
 
     return {
         params: calculateParams,
-        around: around
+        around: around,
+        pos: pos
     };
 
 }();

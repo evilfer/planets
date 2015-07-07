@@ -19,25 +19,36 @@ module.exports = function () {
     'use strict';
 
     var React = require('react'),
+        ReactTHREE = require('react-three'),
         THREE = require('three'),
-        PerspectiveCamera = require('react-three').PerspectiveCamera;
+        Object3D = ReactTHREE.Object3D,
+        Mesh = ReactTHREE.Mesh,
+
+        Orbit = require('./orbit.jsx');
+
 
     return React.createClass({
 
         render: function () {
+            var ephemeris = this.props.ephemeris,
+                data = this.props.data,
+                position = ephemeris.vectors ? new THREE.Vector3(ephemeris.vectors.r[0], ephemeris.vectors.r[1], ephemeris.vectors.r[2]) : new THREE.Vector3(0, 0, 0),
 
-            var a = Math.PI / 4 * (1 + Math.cos(this.props.a)),
-                d = 1e10,
-                lookAt = new THREE.Vector3(0, 0, 0),
-                pos = new THREE.Vector3(0, -d * Math.cos(a), d * Math.sin(a)),
-                up = new THREE.Vector3(0, 1, 0);
+                material = new THREE.MeshBasicMaterial({color: 'red'}),
+                sphereGeometry = new THREE.SphereGeometry(1000 * data.radius, 32, 32);
+
+            console.log(data);
+            console.log(ephemeris.vectors.r);
 
             return (
-                <PerspectiveCamera name={this.props.name}
-                                   aspect={this.props.window.width/this.props.window.height}
-                                   near={5e9} far={1e12}
-                                   position={pos} lookat={lookAt} up={up}/>
+                <Object3D>
+                    <Orbit ephemeris={ephemeris}/>
+                    <Mesh geometry={sphereGeometry}
+                          material={material}
+                          position={position}/>
+                </Object3D>
             );
+
         }
     });
 }();

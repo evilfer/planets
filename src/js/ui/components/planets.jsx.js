@@ -33,7 +33,7 @@ module.exports = function () {
             var ephemerides = eph.state(this.state.t);
 
             return (
-                <SceneManager ephemerides={ephemerides} t={this.state.t}/>
+                <SceneManager ephemerides={ephemerides} data={this.props.data} t={this.state.t}/>
             );
         }
     });
