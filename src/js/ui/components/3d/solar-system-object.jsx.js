@@ -24,31 +24,55 @@ module.exports = function () {
         Object3D = ReactTHREE.Object3D,
         Mesh = ReactTHREE.Mesh,
 
-        Orbit = require('./orbit.jsx');
+        Orbit = require('./orbit.jsx'),
 
+        SolarSystemObject = React.createClass({
 
-    return React.createClass({
+            render: function () {
+                var ephemerides = this.props.ephemerides,
+                    obj = this.props.obj,
+                    view = this.props.view,
 
-        render: function () {
-            var ephemeris = this.props.ephemeris,
-                data = this.props.data,
-                position = ephemeris.vectors ? new THREE.Vector3(ephemeris.vectors.r[0], ephemeris.vectors.r[1], ephemeris.vectors.r[2]) : new THREE.Vector3(0, 0, 0),
+                    ephemeris = ephemerides[obj.id],
 
-                material = new THREE.MeshBasicMaterial({color: 'red'}),
-                sphereGeometry = new THREE.SphereGeometry(1000 * data.radius, 32, 32);
+                    position = ephemeris.vectors ? new THREE.Vector3(ephemeris.vectors.r[0], ephemeris.vectors.r[1], ephemeris.vectors.r[2]) : new THREE.Vector3(0, 0, 0),
 
-            console.log(data);
-            console.log(ephemeris.vectors.r);
+                    material = new THREE.MeshBasicMaterial({color: 'red'}),
+                    sphereGeometry = new THREE.SphereGeometry(obj.radius, 32, 32),
+                    orbit = ephemeris.orbit ? <Orbit ephemeris={ephemeris}/> : false,
 
-            return (
-                <Object3D>
-                    <Orbit ephemeris={ephemeris}/>
-                    <Mesh geometry={sphereGeometry}
-                          material={material}
-                          position={position}/>
-                </Object3D>
-            );
+                    globalScale = obj.ui.scale.hasOwnProperty('global') ? (view.scl * obj.ui.scale.global + 1 - view.scl) : 1,
+                    bodyScale = (view.scl * obj.ui.scale.body + 1 - view.scl) / globalScale;
 
-        }
-    });
+                return (
+                    <Object3D scale={globalScale}>
+                        {orbit}
+                        <Object3D position={position}>
+                            <Mesh geometry={sphereGeometry} material={material}
+                                  scale={bodyScale}/>
+                            <ObjectList t={this.props.t} list={obj.children} ephemerides={ephemerides} view={view}/>
+                        </Object3D>
+                    </Object3D>
+                );
+            }
+        }),
+
+        ObjectList = React.createClass({
+            render: function () {
+                var view = this.props.view,
+                    list = this.props.list,
+                    ephemerides = this.props.ephemerides,
+
+                    planets = list.map(function (obj) {
+                        return <SolarSystemObject key={obj.id} obj={obj} ephemerides={ephemerides} view={view}/>
+                    });
+
+                return <Object3D>{planets}</Object3D>;
+            }
+        });
+
+    return {
+        SolarSystemObject: SolarSystemObject,
+        ObjectList: ObjectList
+    };
 }();

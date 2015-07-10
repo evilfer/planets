@@ -4,79 +4,79 @@
       "label": "Sun",
       "hue": 0,
       "scale": {
-        "body": 1
+        "body": 100
       }
     },
     "199": {
       "label": "Mercury",
       "hue": 0,
       "scale": {
-        "body": 1,
-        "orbit": 1
+        "body": 1e4,
+        "global": 10
       }
     },
     "299": {
-      "label": "Mars",
+      "label": "Venus",
       "hue": 0,
       "scale": {
-        "body": 1,
-        "orbit": 1
+        "body": 1e4,
+        "global": 10
       }
     },
     "3": {
       "label": "Earth",
       "hue": 0,
       "scale": {
-        "body": 1,
-        "orbit": 1
+        "body": 1e4,
+        "global": 10
       }
     },
     "301": {
       "label": "Moon",
       "hue": 0,
       "scale": {
-        "body": 1,
-        "orbit": 1
+        "body": 1e3,
+        "global": 80
       }
     },
     "4": {
       "label": "Mars",
       "hue": 0,
       "scale": {
-        "body": 1,
-        "orbit": 1
+        "body": 1e4,
+        "global": 10
       }
     },
     "5": {
       "label": "Jupiter",
       "hue": 0,
       "scale": {
-        "body": 1,
-        "orbit": 1
+        "body": 3000,
+        "global": 3.7
       }
     },
     "6": {
       "label": "Saturn",
       "hue": 0,
       "scale": {
-        "body": 1,
-        "orbit": 1
+        "body": 3000,
+        "global": 2.4
       }
     },
     "7": {
       "label": "Uranus",
       "hue": 0,
       "scale": {
-        "body": 1,
-        "orbit": 1
+        "body": 3000,
+        "global": 1.4
       }
     },
     "8": {
       "label": "Neptune",
       "hue": 0,
       "scale": {
-        "body": 1,
-        "orbit": 1
+        "body": 3000,
+        "global": 1
       }
     }
   }

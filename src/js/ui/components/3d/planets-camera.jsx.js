@@ -26,7 +26,7 @@ module.exports = function () {
 
         render: function () {
 
-            var a = Math.PI / 4 * (1 + Math.cos(this.props.a)),
+            var a = Math.PI / 2,
                 d = 1e10,
                 lookAt = new THREE.Vector3(0, 0, 0),
                 pos = new THREE.Vector3(0, -d * Math.cos(a), d * Math.sin(a)),
@@ -35,7 +35,7 @@ module.exports = function () {
             return (
                 <PerspectiveCamera name={this.props.name}
                                    aspect={this.props.window.width/this.props.window.height}
-                                   near={5e9} far={1e12}
+                                   near={5e9} far={1e11}
                                    position={pos} lookat={lookAt} up={up}/>
             );
         }

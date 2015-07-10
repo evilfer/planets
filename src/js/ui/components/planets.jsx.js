@@ -29,6 +29,7 @@ module.exports = function () {
             };
         },
 
+
         render: function () {
             var ephemerides = eph.state(this.state.t);
 
@@ -37,5 +38,6 @@ module.exports = function () {
             );
         }
     });
+
 
 }();

@@ -23,7 +23,7 @@ module.exports = function () {
 
         expand = require('./expand').expand,
         cp = ['label', 'parent', 'step', 'mu', 'radius'],
-        data = {t0: compressed.t0, t1: compressed.t1, objects: {}},
+        data = {t0: compressed.t0, t1: compressed.t1, objects: {}, tree: []},
 
 
         ids = Object.keys(compressed.objects),
@@ -41,7 +41,7 @@ module.exports = function () {
     for (var i = 0; i < ids.length; i += 1) {
         var id = ids[i],
             orig = compressed.objects[id],
-            obj = {};
+            obj = {id: id, children: []};
 
         for (var j = 0; j < cp.length; j += 1) {
             if (orig.hasOwnProperty(cp[j])) {
@@ -53,6 +53,13 @@ module.exports = function () {
         }
 
         obj.ui = uiData.objects[id];
+
+        if (obj.parent) {
+            data.objects[obj.parent].children.push(obj);
+            console.log(obj.id, obj.parent);
+        } else {
+            data.tree.push(obj);
+        }
 
         data.objects[id] = obj;
     }

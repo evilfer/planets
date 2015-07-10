@@ -20,6 +20,7 @@ module.exports = function () {
     var data = require('./data.js'),
         interpolator = require('../maths/interpolator'),
         orbit = require('../maths/orbit'),
+        vector = require('../maths/vector'),
 
         state = function (t) {
             var stt = {};
@@ -29,12 +30,16 @@ module.exports = function () {
                     var obj = data.objects[id];
                     if (obj.parent) {
                         var vecs = interpolator.at(t, data.t0, obj),
-                            orb = orbit.around(data.objects[obj.parent].mu, stt[obj.parent].vectors, vecs);
+                            focusVecs = stt[obj.parent].vectors;
+
+                        if (focusVecs) {
+                            vector.sub(vecs.r, focusVecs.r);
+                            vector.sub(vecs.v, focusVecs.v);
+                        }
 
                         stt[id] = {
                             vectors: vecs,
-                            orbit: orb,
-                            focus: stt[obj.parent].vectors ? stt[obj.parent].vectors.r : false
+                            orbit: orbit.params(data.objects[obj.parent].mu, vecs)
                         };
                     } else {
                         stt[id] = {};
