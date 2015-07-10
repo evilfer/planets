@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* globals window */
 module.exports = function () {
     'use strict';
 
@@ -29,19 +30,64 @@ module.exports = function () {
     return React.createClass({
         mixins: [OnResize],
 
+        getInitialState: function () {
+            return {
+                view: {
+                    alt: 1,
+                    az: 0,
+                    scl: 0
+                }
+            };
+        },
+
+
+        componentDidMount: function () {
+            var t0 = false,
+                more = true,
+                duration = 2000,
+                me = this,
+
+                step = function (t) {
+                    console.log(t0, t, more);
+
+                    if (!t0) {
+                        t0 = t;
+                    } else {
+                        var dt = t - t0,
+                            s = dt / duration;
+
+                        more = t0 + duration > t;
+                        console.log(s);
+
+                        me.setState({view: {alt: 1, az: 0, scl: s}});
+                    }
+
+
+                    if (more) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+
+            console.log('!');
+            window.requestAnimationFrame(step);
+        },
+
         render: function () {
             var name = 'scene',
                 window = this.state.window,
+                view = this.state.view,
 
                 data = this.props.data,
                 ephemerides = this.props.ephemerides;
 
             return (
                 <Scene camera={name} width={window.width} height={window.height}>
-                    <PlanetsCamera a={0.2 * Math.PI} s={1} name={name} window={window}/>
-                    <ObjectList list={data.tree} ephemerides={ephemerides}/>
+                    <PlanetsCamera view={view} name={name} window={window}/>
+                    <ObjectList list={data.tree} ephemerides={ephemerides} view={view}/>
                 </Scene>
             );
+
+
         }
     });
 }();

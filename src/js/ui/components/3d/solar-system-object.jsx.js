@@ -32,21 +32,25 @@ module.exports = function () {
             render: function () {
                 var ephemerides = this.props.ephemerides,
                     obj = this.props.obj,
+                    view = this.props.view,
 
                     ephemeris = ephemerides[obj.id],
                     position = ephemeris.vectors ? new THREE.Vector3(ephemeris.vectors.r[0], ephemeris.vectors.r[1], ephemeris.vectors.r[2]) : new THREE.Vector3(0, 0, 0),
 
                     material = new THREE.MeshBasicMaterial({color: objectColor(obj, .5)}),
                     sphereGeometry = new THREE.SphereGeometry(1e7, 32, 32),
-                    orbit = ephemeris.orbit ? <Orbit obj={obj} ephemeris={ephemeris}/> : false;
+                    orbit = ephemeris.orbit ? <Orbit obj={obj} ephemeris={ephemeris}/> : false,
 
+                    globalScale = obj.ui.scale.hasOwnProperty('global') ? (view.scl * obj.ui.scale.global + 1 - view.scl) : 1,
+                    bodyScale = (view.scl * obj.ui.scale.body + 1 - view.scl) / globalScale;
 
                 return (
-                    <Object3D position={new THREE.Vector3(0, 0, 0)} quaternion={new THREE.Quaternion(0, 0, 0, 1)}>
+                    <Object3D scale={globalScale}>
                         {orbit}
-                        <Object3D position={position} quaternion={new THREE.Quaternion(0, 0, 0, 1)}>
-                            <Mesh geometry={sphereGeometry} material={material}/>
-                            <ObjectList list={obj.children} ephemerides={ephemerides}/>
+                        <Object3D position={position}>
+                            <Mesh geometry={sphereGeometry} material={material}
+                                  scale={bodyScale}/>
+                            <ObjectList t={this.props.t} list={obj.children} ephemerides={ephemerides} view={view}/>
                         </Object3D>
                     </Object3D>
                 );
@@ -55,15 +59,15 @@ module.exports = function () {
 
         ObjectList = React.createClass({
             render: function () {
-                var list = this.props.list,
+                var view = this.props.view,
+                    list = this.props.list,
                     ephemerides = this.props.ephemerides,
 
                     planets = list.map(function (obj) {
-                        return <SolarSystemObject key={obj.id} obj={obj} ephemerides={ephemerides}/>;
+                        return <SolarSystemObject key={obj.id} obj={obj} ephemerides={ephemerides} view={view}/>
                     });
 
-                return <Object3D position={new THREE.Vector3(0, 0, 0)}
-                                 quaternion={new THREE.Quaternion(0, 0, 0, 1)}>{planets}</Object3D>;
+                return <Object3D>{planets}</Object3D>;
             }
         });
 

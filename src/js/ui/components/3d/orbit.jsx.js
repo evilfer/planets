@@ -24,6 +24,7 @@ module.exports = function () {
         Object3D = ReactTHREE.Object3D,
         Line = ReactTHREE.Line,
 
+
         objectColor = require('../../utils/object-color'),
         orbitCalc = require('../../../maths/orbit'),
         vector = require('../../../maths/vector');
@@ -35,23 +36,29 @@ module.exports = function () {
                 ephemeris = this.props.ephemeris,
                 orbit = ephemeris.orbit,
 
+                rPos = orbitCalc.pos(orbit, orbit.ta, false),
+                nPos = orbitCalc.pos(orbit, -orbit.arpe, true),
+                apPos = orbitCalc.pos(orbit, 0, true),
+
+                ellipse = new THREE.EllipseCurve(orbit.per - orbit.semiMajor, 0, orbit.semiMajor, orbit.semiMinor, 0, 2.0 * Math.PI, false),
                 material = new THREE.LineBasicMaterial({color: objectColor(obj, .5)}),
 
                 material2 = new THREE.LineBasicMaterial({color: objectColor(obj, .2)}),
                 material3 = new THREE.LineBasicMaterial({color: objectColor(obj, .1)}),
                 ellipse = new THREE.EllipseCurve(orbit.per - orbit.semiMajor, 0, orbit.semiMajor, orbit.semiMinor, 0, 2.0 * Math.PI, false),
                 ellipsePath = new THREE.CurvePath(),
+
                 quaternion = new THREE.Quaternion(),
                 ellipseGeometry,
 
                 rGeometry = new THREE.Geometry(),
-                rPos = orbitCalc.pos(orbit, orbit.ta, false),
+
 
                 nGeometry = new THREE.Geometry(),
-                nPos = orbitCalc.pos(orbit, -orbit.arpe, true),
+
 
                 apGeometry = new THREE.Geometry(),
-                apPos = orbitCalc.pos(orbit, 0, true),
+
 
                 ca = Math.cos(orbit.arpe / 2), sa = Math.sin(orbit.arpe / 2),
                 ci = Math.cos(orbit.i / 2), si = Math.sin(orbit.i / 2),
@@ -81,12 +88,14 @@ module.exports = function () {
                 ca * ci * cn - sa * ci * sn
             );
 
+            /*<Line geometry={apGeometry} material={material2}/>
+             <Line geometry={nGeometry} material={material3}/>*/
+
             return (
                 <Object3D quaternion={quaternion}>
-                    <Line key="o" geometry={ellipseGeometry} material={material}/>
-                    <Line key="r" geometry={rGeometry} material={material}/>
-                    <Line key="ap" geometry={apGeometry} material={material2}/>
-                    <Line key="n" geometry={nGeometry} material={material3}/>
+                    <Line geometry={ellipseGeometry} material={material}/>
+                    <Line geometry={rGeometry} material={material}/>
+
                 </Object3D>
             );
 
