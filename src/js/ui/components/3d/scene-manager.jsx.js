@@ -24,40 +24,22 @@ module.exports = function () {
         OnResize = require("react-window-mixins").OnResize,
 
         PlanetsCamera = require('./planets-camera.jsx'),
-        SolarSystemObject = require('./solar-system-object.jsx');
+        ObjectList = require('./solar-system-object.jsx').ObjectList;
 
     return React.createClass({
         mixins: [OnResize],
 
-        getInitialState: function () {
-            return {a: 0, s: 0};
-        },
-
-        componentDidMount: function () {
-            var me = this;
-            setInterval(function () {
-                //me.setState({a: me.state.a + .1,s: .5 * (1 + Math.cos(me.state.a))});
-            }, 20);
-        },
-
         render: function () {
             var name = 'scene',
                 window = this.state.window,
-                planets = [];
 
-            for (var id in this.props.ephemerides) {
-                if (this.props.ephemerides.hasOwnProperty(id) && id === '7') {
-                    //orbits.push(<Orbit key={id} ephemeris={this.props.ephemerides[id]}/>);
-                    planets.push(<SolarSystemObject key={id}
-                                                    ephemeris={this.props.ephemerides[id]}
-                                                    data={this.props.data.objects[id]}/>);
-                }
-            }
+                data = this.props.data,
+                ephemerides = this.props.ephemerides;
 
             return (
                 <Scene camera={name} width={window.width} height={window.height}>
-                    <PlanetsCamera a={0 * Math.PI} s={this.state.s} name={name} window={window}/>
-                    {planets}
+                    <PlanetsCamera a={0.2 * Math.PI} s={1} name={name} window={window}/>
+                    <ObjectList list={data.tree} ephemerides={ephemerides}/>
                 </Scene>
             );
         }

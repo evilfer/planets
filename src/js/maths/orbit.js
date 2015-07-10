@@ -34,7 +34,7 @@ module.exports = function () {
                 n = vector.mod(nv),
 
                 ev = vector.scld(state.r, v2 - mu / r),
-                e, a, p, i, lan, ne, er, arpe, ta;
+                e, apo, per, semiMajor, semiMinor, i, lan, ne, er, arpe, ta;
 
             vector.sub(ev, vector.scld(state.v, rv));
             vector.scl(ev, 1 / mu);
@@ -44,11 +44,15 @@ module.exports = function () {
             er = e * r;
 
             if (e < 1) {
-                a = -mu / (v2 - 2 * mu / r);
-                p = a * (1 - e * e);
+                semiMajor = -mu / (v2 - 2 * mu / r);
+                apo = semiMajor * (1 + e);
+                per = semiMajor * (1 - e);
+                semiMinor = Math.sqrt(apo * per);
             } else {
-                p = vector.mod2(hv);
-                a = 0;
+                semiMinor = vector.mod2(hv);
+                semiMajor = 0;
+                apo = 0;
+                per = 0;
             }
 
             i = h > 0 ? Math.acos(hv[2] / h) : 0;
@@ -75,43 +79,42 @@ module.exports = function () {
                 i: i,
                 lan: lan,
                 ta: ta,
-                p: p,
-                a: a,
-                semiMajor: .5 * (a + p),
-                semiMinor: Math.sqrt(a * p)
+                per: per,
+                apo: apo,
+                semiMajor: semiMajor,
+                semiMinor: semiMinor
             };
         },
 
         pos = function (orb, ta, oposite) {
             var cosTa = Math.cos(ta),
                 sinTa = Math.sin(ta),
-                ka = Math.sqrt(orb.a * orb.p * sinTa * sinTa + orb.semiMajor * orb.semiMajor * cosTa * cosTa),
-                kb = .5 * (orb.p - orb.a) * cosTa,
-                k = ka + kb;
 
-            return oposite ? {
-                x: k * cosTa,
-                y: k * sinTa,
-                x2: (kb - ka) * cosTa,
-                y2: (kb - ka) * sinTa
-            } : {
-                x: k * cosTa,
-                y: k * sinTa
-            };
-        },
+                p_a = orb.per - orb.apo,
+                pa = orb.apo * orb.per,
+                m = 2 * pa / (p_a * p_a * sinTa * sinTa + 4 * pa),
+                ka = orb.per + orb.apo,
+                kb = p_a * cosTa,
+                k = m * (ka + kb);
 
-        around = function (mu, center, absState) {
-            var state = center ? {
-                r: vector.diff(absState.r, center.r),
-                v: vector.diff(absState.v, center.v)
-            } : absState;
-
-            return calculateParams(mu, state);
+            if (oposite) {
+                var k2 = m * (kb - ka);
+                return {
+                    x: k * cosTa,
+                    y: k * sinTa,
+                    x2: k2 * cosTa,
+                    y2: k2 * sinTa
+                }
+            } else {
+                return {
+                    x: k * cosTa,
+                    y: k * sinTa
+                };
+            }
         };
 
     return {
         params: calculateParams,
-        around: around,
         pos: pos
     };
 

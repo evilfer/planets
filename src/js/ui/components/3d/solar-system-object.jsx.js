@@ -23,32 +23,52 @@ module.exports = function () {
         THREE = require('three'),
         Object3D = ReactTHREE.Object3D,
         Mesh = ReactTHREE.Mesh,
+        objectColor = require('../../utils/object-color'),
 
-        Orbit = require('./orbit.jsx');
+        Orbit = require('./orbit.jsx'),
+
+        SolarSystemObject = React.createClass({
+
+            render: function () {
+                var ephemerides = this.props.ephemerides,
+                    obj = this.props.obj,
+
+                    ephemeris = ephemerides[obj.id],
+                    position = ephemeris.vectors ? new THREE.Vector3(ephemeris.vectors.r[0], ephemeris.vectors.r[1], ephemeris.vectors.r[2]) : new THREE.Vector3(0, 0, 0),
+
+                    material = new THREE.MeshBasicMaterial({color: objectColor(obj, .5)}),
+                    sphereGeometry = new THREE.SphereGeometry(1e7, 32, 32),
+                    orbit = ephemeris.orbit ? <Orbit obj={obj} ephemeris={ephemeris}/> : false;
 
 
-    return React.createClass({
+                return (
+                    <Object3D position={new THREE.Vector3(0, 0, 0)} quaternion={new THREE.Quaternion(0, 0, 0, 1)}>
+                        {orbit}
+                        <Object3D position={position} quaternion={new THREE.Quaternion(0, 0, 0, 1)}>
+                            <Mesh geometry={sphereGeometry} material={material}/>
+                            <ObjectList list={obj.children} ephemerides={ephemerides}/>
+                        </Object3D>
+                    </Object3D>
+                );
+            }
+        }),
 
-        render: function () {
-            var ephemeris = this.props.ephemeris,
-                data = this.props.data,
-                position = ephemeris.vectors ? new THREE.Vector3(ephemeris.vectors.r[0], ephemeris.vectors.r[1], ephemeris.vectors.r[2]) : new THREE.Vector3(0, 0, 0),
+        ObjectList = React.createClass({
+            render: function () {
+                var list = this.props.list,
+                    ephemerides = this.props.ephemerides,
 
-                material = new THREE.MeshBasicMaterial({color: 'red'}),
-                sphereGeometry = new THREE.SphereGeometry(1000 * data.radius, 32, 32);
+                    planets = list.map(function (obj) {
+                        return <SolarSystemObject key={obj.id} obj={obj} ephemerides={ephemerides}/>;
+                    });
 
-            console.log(data);
-            console.log(ephemeris.vectors.r);
+                return <Object3D position={new THREE.Vector3(0, 0, 0)}
+                                 quaternion={new THREE.Quaternion(0, 0, 0, 1)}>{planets}</Object3D>;
+            }
+        });
 
-            return (
-                <Object3D>
-                    <Orbit ephemeris={ephemeris}/>
-                    <Mesh geometry={sphereGeometry}
-                          material={material}
-                          position={position}/>
-                </Object3D>
-            );
-
-        }
-    });
+    return {
+        SolarSystemObject: SolarSystemObject,
+        ObjectList: ObjectList
+    };
 }();

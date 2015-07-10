@@ -25,15 +25,37 @@ module.exports = function () {
     return React.createClass({
         getInitialState: function () {
             return {
-                t: this.props.data.t0
+                t: this.props.data.t0 + 100,
+                k: 0
             };
         },
 
-        render: function () {
-            var ephemerides = eph.state(this.state.t);
+        componentDidMount: function () {
+            var me = this;
 
+            setTimeout(function () {
+                me.setState({k: 1, t: me.props.data.t0 + 200});
+            }, 500);
+
+            setTimeout(function () {
+                me.setState({k: 2, t: me.props.data.t0 + 300});
+            }, 1000);
+
+        },
+
+
+        render: function () {
+            var s;
+            if (true || this.state.k) {
+                var ephemerides = eph.state(this.state.t);
+                s = <SceneManager key={this.state.k} ephemerides={ephemerides} data={this.props.data}/>;
+            } else {
+                s = false;
+            }
             return (
-                <SceneManager ephemerides={ephemerides} data={this.props.data} t={this.state.t}/>
+                <div>
+                    {s}
+                </div>
             );
         }
     });

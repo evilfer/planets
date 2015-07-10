@@ -2,22 +2,31 @@
   "objects": {
     "0": {
       "label": "Sun",
-      "hue": 0,
+      "color": {
+        "h": 16,
+        "s": 236
+      },
       "scale": {
         "body": 1
       }
     },
     "199": {
       "label": "Mercury",
-      "hue": 0,
+      "color": {
+        "h": 160,
+        "s": 0
+      },
       "scale": {
         "body": 1,
         "orbit": 1
       }
     },
     "299": {
-      "label": "Mars",
-      "hue": 0,
+      "label": "Venus",
+      "color": {
+        "h": 16,
+        "s": 190
+      },
       "scale": {
         "body": 1,
         "orbit": 1
@@ -25,7 +34,10 @@
     },
     "3": {
       "label": "Earth",
-      "hue": 0,
+      "color": {
+        "h": 141,
+        "s": 184
+      },
       "scale": {
         "body": 1,
         "orbit": 1
@@ -33,7 +45,10 @@
     },
     "301": {
       "label": "Moon",
-      "hue": 0,
+      "color": {
+        "h": 160,
+        "s": 0
+      },
       "scale": {
         "body": 1,
         "orbit": 1
@@ -41,7 +56,10 @@
     },
     "4": {
       "label": "Mars",
-      "hue": 0,
+      "color": {
+        "h": 22,
+        "s": 116
+      },
       "scale": {
         "body": 1,
         "orbit": 1
@@ -49,7 +67,10 @@
     },
     "5": {
       "label": "Jupiter",
-      "hue": 0,
+      "color": {
+        "h": 34,
+        "s": 80
+      },
       "scale": {
         "body": 1,
         "orbit": 1
@@ -57,7 +78,10 @@
     },
     "6": {
       "label": "Saturn",
-      "hue": 0,
+      "color": {
+        "h": 28,
+        "s": 116
+      },
       "scale": {
         "body": 1,
         "orbit": 1
@@ -65,7 +89,10 @@
     },
     "7": {
       "label": "Uranus",
-      "hue": 0,
+      "color": {
+        "h": 126,
+        "s": 108
+      },
       "scale": {
         "body": 1,
         "orbit": 1
@@ -73,7 +100,10 @@
     },
     "8": {
       "label": "Neptune",
-      "hue": 0,
+      "color": {
+        "h": 169,
+        "s": 240
+      },
       "scale": {
         "body": 1,
         "orbit": 1
