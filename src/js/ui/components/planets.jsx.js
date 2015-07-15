@@ -25,8 +25,41 @@ module.exports = function () {
     return React.createClass({
         getInitialState: function () {
             return {
-                t: this.props.data.t0
+                t: this.props.data.t0,
+                view: {
+                    alt: 1,
+                    az: 0,
+                    scl: 1
+                }
             };
+        },
+
+        componentDidMount: function () {
+            var t0 = false,
+                me = this,
+                n = 0,
+
+                step = function (t) {
+                    if (!t0) {
+                        t0 = t;
+                    } else {
+                        var dt = t - t0,
+                            alt = .5 * (1 + Math.cos(.001 * dt));
+                        n++;
+                        me.setState({
+                            t: me.props.data.t0 + dt / 100,
+                            view: {alt: alt, az: 0, scl: 1}
+                        });
+
+                        if (n % 10 === 0) {
+                            console.log(dt / n);
+                        }
+                    }
+
+                    window.requestAnimationFrame(step);
+                };
+
+            window.requestAnimationFrame(step);
         },
 
 
@@ -34,7 +67,8 @@ module.exports = function () {
             var ephemerides = eph.state(this.state.t);
 
             return (
-                <SceneManager ephemerides={ephemerides} data={this.props.data} t={this.state.t}/>
+                <SceneManager ephemerides={ephemerides} data={this.props.data}
+                              t={this.state.t} view={this.state.view}/>
             );
         }
     });

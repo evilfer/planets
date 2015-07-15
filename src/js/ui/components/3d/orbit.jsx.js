@@ -24,9 +24,27 @@ module.exports = function () {
         Object3D = ReactTHREE.Object3D,
         Line = ReactTHREE.Line,
 
+        ellipseGeometry = function () {
+            var ellipse = new THREE.EllipseCurve(0, 0, 1, 1, 0, 2.0 * Math.PI, false),
+                ellipsePath = new THREE.CurvePath(),
+                geometry;
+
+            ellipsePath.add(ellipse);
+            geometry = ellipsePath.createPointsGeometry(100);
+            geometry.computeTangents();
+
+
+            return geometry;
+        }(),
+
+        rGeometry2 = function () {
+            var geometry = new THREE.Geometry();
+            geometry.vertices.push(new THREE.Vector3(0, 0, 0));
+            geometry.vertices.push(new THREE.Vector3(1, 0, 0));
+            return geometry;
+        }(),
 
         objectColor = require('../../utils/object-color'),
-        orbitCalc = require('../../../maths/orbit'),
         vector = require('../../../maths/vector');
 
     return React.createClass({
@@ -36,70 +54,28 @@ module.exports = function () {
                 ephemeris = this.props.ephemeris,
                 orbit = ephemeris.orbit,
 
-                rPos = orbitCalc.pos(orbit, orbit.ta, false),
-                nPos = orbitCalc.pos(orbit, -orbit.arpe, true),
-                apPos = orbitCalc.pos(orbit, 0, true),
-
-                ellipse = new THREE.EllipseCurve(orbit.per - orbit.semiMajor, 0, orbit.semiMajor, orbit.semiMinor, 0, 2.0 * Math.PI, false),
                 material = new THREE.LineBasicMaterial({color: objectColor(obj, .5)}),
 
-                material2 = new THREE.LineBasicMaterial({color: objectColor(obj, .2)}),
-                material3 = new THREE.LineBasicMaterial({color: objectColor(obj, .1)}),
-                ellipse = new THREE.EllipseCurve(orbit.per - orbit.semiMajor, 0, orbit.semiMajor, orbit.semiMinor, 0, 2.0 * Math.PI, false),
-                ellipsePath = new THREE.CurvePath(),
-
                 quaternion = new THREE.Quaternion(),
-                ellipseGeometry,
+                rQuaternion = new THREE.Quaternion();
 
-                rGeometry = new THREE.Geometry(),
-
-
-                nGeometry = new THREE.Geometry(),
+                var r = new THREE.Vector3(orbit.rPos.x, orbit.rPos.y, 0).length();
 
 
-                apGeometry = new THREE.Geometry(),
-
-
-                ca = Math.cos(orbit.arpe / 2), sa = Math.sin(orbit.arpe / 2),
-                ci = Math.cos(orbit.i / 2), si = Math.sin(orbit.i / 2),
-                cn = Math.cos(orbit.lan / 2), sn = Math.sin(orbit.lan / 2);
-
-            ellipsePath.add(ellipse);
-            ellipseGeometry = ellipsePath.createPointsGeometry(100);
-            ellipseGeometry.computeTangents();
-
-            rGeometry.vertices.push(new THREE.Vector3(0, 0, 0));
-            rGeometry.vertices.push(new THREE.Vector3(rPos.x, rPos.y, 0));
-
-            apGeometry.vertices.push(new THREE.Vector3(apPos.x, apPos.y, 0));
-            apGeometry.vertices.push(new THREE.Vector3(apPos.x2, apPos.y2, 0));
-
-            nGeometry.vertices.push(new THREE.Vector3(nPos.x, nPos.y, 0));
-            nGeometry.vertices.push(new THREE.Vector3(nPos.x2, nPos.y2, 0));
-
-            /*
-             * Equivalent to ZXZ [lan, inc, arpe]
-             * or ZXY(inc, 0, lan) * ZXY(0, 0, arpe)
-             */
-            quaternion.set(
-                sa * si * sn + ca * si * cn,
-                ca * si * sn - sa * si * cn,
-                ca * ci * sn + sa * ci * cn,
-                ca * ci * cn - sa * ci * sn
-            );
-
-            /*<Line geometry={apGeometry} material={material2}/>
-             <Line geometry={nGeometry} material={material3}/>*/
+            quaternion.copy(orbit.quaternion);
+            rQuaternion.setFromEuler(new THREE.Euler(0, 0, orbit.ta, 'ZXY'));
 
             return (
                 <Object3D quaternion={quaternion}>
-                    <Line geometry={ellipseGeometry} material={material}/>
-                    <Line geometry={rGeometry} material={material}/>
+                    <Line key={'a' + this.props.t} geometry={ellipseGeometry} material={material}
+                          position={new THREE.Vector3(orbit.per - orbit.semiMajor, 0, 0)}
+                          scale={new THREE.Vector3(orbit.semiMajor, orbit.semiMinor, 1)}/>
 
+                    <Line key={'c' + this.props.t} geometry={rGeometry2} material={material}
+                        scale={new THREE.Vector3(r, r, r)}
+                        quaternion={rQuaternion}/>
                 </Object3D>
             );
-
-
         }
     });
 }();
