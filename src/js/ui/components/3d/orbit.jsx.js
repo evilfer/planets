@@ -54,28 +54,19 @@ module.exports = function () {
                 ephemeris = this.props.ephemeris,
                 orbit = ephemeris.orbit,
 
-                material = new THREE.LineBasicMaterial({color: objectColor(obj, .5)}),
-
-                quaternion = new THREE.Quaternion(),
-                rQuaternion = new THREE.Quaternion();
-
-                var r = new THREE.Vector3(orbit.rPos.x, orbit.rPos.y, 0).length();
-
-
-            quaternion.copy(orbit.quaternion);
-            rQuaternion.setFromEuler(new THREE.Euler(0, 0, orbit.ta, 'ZXY'));
+                material = new THREE.LineBasicMaterial({color: objectColor(obj, .5)});
 
             return (
-                <Object3D quaternion={quaternion}>
+                <Object3D quaternion={orbit.quaternion}>
                     <Line key={'a' + this.props.t} geometry={ellipseGeometry} material={material}
-                          position={new THREE.Vector3(orbit.per - orbit.semiMajor, 0, 0)}
-                          scale={new THREE.Vector3(orbit.semiMajor, orbit.semiMinor, 1)}/>
-
+                          position={orbit.cPos}
+                          scale={orbit.scale}/>
                     <Line key={'c' + this.props.t} geometry={rGeometry2} material={material}
-                        scale={new THREE.Vector3(r, r, r)}
-                        quaternion={rQuaternion}/>
+                          scale={orbit.r}
+                          quaternion={orbit.rQuaternion}/>
                 </Object3D>
             );
+
         }
     });
 }();

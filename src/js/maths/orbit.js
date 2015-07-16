@@ -22,55 +22,14 @@ module.exports = function () {
 
         z = [0, 0, 1],
 
-        pos = function (orb, ta, oposite) {
-            var cosTa = Math.cos(ta),
-                sinTa = Math.sin(ta),
-
-                p_a = orb.per - orb.apo,
-                pa = orb.apo * orb.per,
-                m = 2 * pa / (p_a * p_a * sinTa * sinTa + 4 * pa),
-                ka = orb.per + orb.apo,
-                kb = p_a * cosTa,
-                k = m * (ka + kb);
-
-            if (oposite) {
-                var k2 = m * (kb - ka);
-                return {
-                    x: k * cosTa,
-                    y: k * sinTa,
-                    x2: k2 * cosTa,
-                    y2: k2 * sinTa
-                }
-            } else {
-                return {
-                    x: k * cosTa,
-                    y: k * sinTa
-                };
-            }
-        },
-
-        /**
-         *
-         * Equivalent to ZXZ [lan, inc, arpe]
-         * or ZXY(inc, 0, lan) * ZXY(0, 0, arpe)
-         *
-         * @param orbit
-         * @returns {{x: number, y: number, z: number, w: number}}
-         */
-        quaternion = function (orbit) {
-            var ca = Math.cos(orbit.arpe / 2), sa = Math.sin(orbit.arpe / 2),
-                ci = Math.cos(orbit.i / 2), si = Math.sin(orbit.i / 2),
-                cn = Math.cos(orbit.lan / 2), sn = Math.sin(orbit.lan / 2);
-
-            return {
-                x: sa * si * sn + ca * si * cn,
-                y: ca * si * sn - sa * si * cn,
-                z: ca * ci * sn + sa * ci * cn,
-                w: ca * ci * cn - sa * ci * sn
-            };
-        },
 
         calculateParams = function (mu, state) {
+            var orbit = {};
+            update(mu, state, orbit);
+            return orbit;
+        },
+
+        update = function (mu, state, orbit) {
 
             var v2 = vector.mod2(state.v),
                 r = vector.mod(state.r),
@@ -84,7 +43,7 @@ module.exports = function () {
                 ev = vector.scld(state.r, v2 - mu / r),
                 e, apo, per, semiMajor, semiMinor, i, lan, ne, er, arpe, ta,
 
-                orbit;
+                pa, p_a, cosTa, sinTa;
 
             vector.sub(ev, vector.scld(state.v, rv));
             vector.scl(ev, 1 / mu);
@@ -122,28 +81,27 @@ module.exports = function () {
                 ta = 2 * Math.PI - ta;
             }
 
-            orbit = {
-                h: h,
-                e: e,
-                arpe: arpe,
-                i: i,
-                lan: lan,
-                ta: ta,
-                per: per,
-                apo: apo,
-                semiMajor: semiMajor,
-                semiMinor: semiMinor
-            };
+            p_a = per - apo;
+            pa = apo * per;
+            cosTa = Math.cos(ta);
+            sinTa = Math.sin(ta);
 
-            orbit.rPos = pos(orbit, ta, false);
-            orbit.quaternion = quaternion(orbit);
-
-            return orbit;
+            orbit.h = h;
+            orbit.e = e;
+            orbit.arpe = arpe;
+            orbit.i = i;
+            orbit.lan = lan;
+            orbit.ta = ta;
+            orbit.per = per;
+            orbit.apo = apo;
+            orbit.semiMajor = semiMajor;
+            orbit.semiMinor = semiMinor;
+            orbit.r = 2 * pa * (per + apo + p_a * cosTa) / (p_a * p_a * sinTa * sinTa + 4 * pa);
         };
 
     return {
         params: calculateParams,
-        pos: pos
+        update: update
     };
 
 }();

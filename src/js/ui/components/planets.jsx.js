@@ -19,55 +19,60 @@ module.exports = function () {
     'use strict';
 
     var React = require('react'),
+        clone = require('clone'),
+
         SceneManager = require('./3d/scene-manager.jsx'),
-        eph = require('../../data/ephemerides');
+        eph = require('../../data/ephemerides'),
+
+        WindowTimer = require('../animate/window-timer'),
+        animate = require('../animate/animate');
+
+    animate.useTimer(new WindowTimer());
 
     return React.createClass({
+        ephs: eph.init(),
+
         getInitialState: function () {
             return {
                 t: this.props.data.t0,
                 view: {
-                    alt: 1,
+                    alt: .1,
                     az: 0,
-                    scl: 1
+                    scl: 0
                 }
             };
         },
 
         componentDidMount: function () {
-            var t0 = false,
-                me = this,
-                n = 0,
+            var me = this;
+            animate.setUpdateCallback(function (anims) {
+                var state = clone(me.state);
 
-                step = function (t) {
-                    if (!t0) {
-                        t0 = t;
-                    } else {
-                        var dt = t - t0,
-                            alt = .5 * (1 + Math.cos(.001 * dt));
-                        n++;
-                        me.setState({
-                            t: me.props.data.t0 + dt / 100,
-                            view: {alt: alt, az: 0, scl: 1}
-                        });
+                if ('scl' in anims) {
+                    state.view.scl = anims.scl;
+                }
 
-                        if (n % 10 === 0) {
-                            console.log(dt / n);
-                        }
-                    }
+                if ('alt' in anims) {
+                    state.view.alt = anims.alt;
+                }
 
-                    window.requestAnimationFrame(step);
-                };
+                if ('t' in anims) {
+                    state.t = anims.t;
+                }
 
-            window.requestAnimationFrame(step);
+                me.setState(state);
+            });
+
+            animate.setAnim('scl', 1, 2000, 'lineal', this.state.view.scl);
+            animate.setAnim('alt', 1, 1000, 'lineal', this.state.view.alt);
+            animate.setAnim('t', this.props.data.t0 + 100, 10000, 'lineal', this.state.t);
         },
 
-
         render: function () {
-            var ephemerides = eph.state(this.state.t);
+            eph.state(this.state.t, this.ephs);
 
             return (
-                <SceneManager ephemerides={ephemerides} data={this.props.data}
+                <SceneManager ephemerides={this.ephs} data={this.props.data}
                               t={this.state.t} view={this.state.view}/>
             );
         }

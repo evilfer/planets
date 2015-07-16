@@ -1,6 +1,7 @@
 var hlp = require('../r'),
     expect = hlp.expect,
     orbit = hlp.req('maths/orbit'),
+    orbitThree = hlp.req('maths/orbit-three'),
     vector = hlp.req('maths/vector');
 
 describe('orbit', function () {
@@ -40,9 +41,8 @@ describe('orbit', function () {
     });
 
     it('should match r', function () {
-        var pos = orbit.pos(this.calculated, this.calculated.ta, false);
-        expect(vector.mod([pos.x, pos.y, 0])).to.equal(vector.mod(this.state.r));
+        var r = vector.mod(this.state.r);
+        expect(Math.abs(r - this.calculated.r) < r * 1e-5).to.be.true;
     });
-
 
 });

@@ -64,6 +64,13 @@ module.exports = function () {
             return c;
         },
 
+        setSclSum = function (r, a, ka, b, kb) {
+            for (var i = 0; i < r.length; i++) {
+                r[i] = a[i] * ka + b[i] * kb;
+            }
+            return r;
+        },
+
         cross = function (a, b) {
             return [
                 a[1] * b[2] - a[2] * b[1],
@@ -102,6 +109,7 @@ module.exports = function () {
         sub: sub,
         sum: sum,
         sclSum: sclSum,
+        setSclSum: setSclSum,
         cross: cross,
         mod2: mod2,
         mod: mod,

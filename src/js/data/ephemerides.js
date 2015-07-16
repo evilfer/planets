@@ -20,38 +20,47 @@ module.exports = function () {
     var data = require('./data.js'),
         interpolator = require('../maths/interpolator'),
         orbit = require('../maths/orbit'),
+        orbitThree = require('../maths/orbit-three'),
         vector = require('../maths/vector'),
 
-        state = function (t) {
+        init = function () {
             var stt = {};
 
             for (var id in data.objects) {
                 if (data.objects.hasOwnProperty(id)) {
-                    var obj = data.objects[id];
-                    if (obj.parent) {
-                        var vecs = interpolator.at(t, data.t0, obj),
-                            focusVecs = stt[obj.parent].vectors;
+                    var eph = {}
 
-                        if (focusVecs) {
-                            vector.sub(vecs.r, focusVecs.r);
-                            vector.sub(vecs.v, focusVecs.v);
-                        }
-
-                        stt[id] = {
-                            vectors: vecs,
-                            orbit: orbit.params(data.objects[obj.parent].mu, vecs)
-                        };
-                    } else {
-                        stt[id] = {};
+                    if (data.objects[id].parent) {
+                        eph.vectors = {r: [0, 0, 0], v: [0, 0, 0]};
+                        eph.orbit = {};
+                        orbitThree.init(eph.orbit);
                     }
+
+                    stt[id] = eph;
                 }
             }
 
             return stt;
+        },
+
+        state = function (t, stt) {
+            for (var id in data.objects) {
+                if (data.objects.hasOwnProperty(id)) {
+                    var obj = data.objects[id],
+                        eph = stt[id];
+
+                    if (obj.parent) {
+                        interpolator.update(t, data.t0, obj, eph.vectors);
+                        orbit.update(data.objects[obj.parent].mu, eph.vectors, eph.orbit);
+                        orbitThree.update(eph.orbit);
+                    }
+                }
+            }
         };
 
     return {
-        state: state
+        state: state,
+        init: init
     };
 
 }();
