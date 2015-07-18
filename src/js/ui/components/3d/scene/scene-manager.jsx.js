@@ -15,28 +15,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* globals window */
 module.exports = function () {
     'use strict';
 
     var React = require('react'),
-        THREE = require('three'),
-        PerspectiveCamera = require('react-three').PerspectiveCamera;
+        ReactTHREE = require('react-three'),
+        Scene = ReactTHREE.Scene,
+        OnResize = require("react-window-mixins").OnResize,
+
+        PlanetsCamera = require('./planets-camera.jsx.js'),
+        ObjectList = require('./solar-system-object.jsx.js').ObjectList;
 
     return React.createClass({
+        mixins: [OnResize],
 
         render: function () {
+            var name = 'main-camera',
+                window = this.props.window,
+                perspective = this.props.perspective,
+                data = this.props.data,
+                ephemerides = this.props.ephemerides;
 
-            var a = Math.PI / 2,
-                d = 1e10,
-                lookAt = new THREE.Vector3(0, 0, 0),
-                pos = new THREE.Vector3(0, -d * Math.cos(this.props.view.alt), d * Math.sin(this.props.view.alt));
             return (
-                <PerspectiveCamera name={this.props.name}
-                                   aspect={this.props.window.width/this.props.window.height}
-                                   near={5e9} far={1e11}
-                                   position={pos} lookat={lookAt}/>
+                <Scene camera={name} width={window.width} height={window.height}>
+                    <PlanetsCamera name={name} perspective={perspective}/>
+                    <ObjectList list={data.tree} ephemerides={ephemerides}/>
+                </Scene>
             );
-
         }
+        
     });
 }();
+

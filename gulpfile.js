@@ -5,11 +5,14 @@ var gulp = require('gulp'),
     browserify = require('browserify'),
     collapse = require('bundle-collapser/plugin'),
     watchify = require('watchify'),
+    minifycss = require('gulp-minify-css'),
+    sass = require('gulp-sass'),
     reactify = require('reactify'),
     uglify = require('gulp-uglify'),
     gulpIf = require('gulp-if'),
     mocha = require('gulp-mocha'),
 
+    cssSrc = './src/sass/**/*.scss',
     jsIndex = './src/js/index.jsx.js',
     jsSpecs = './specs/**/*.js',
     jsWatch = ['./src/js/**/*.js', jsSpecs],
@@ -50,11 +53,35 @@ var gulp = require('gulp'),
                 .pipe(gulpIf(!isDev, uglify()))
                 .pipe(gulp.dest(outputPath));
         };
+    },
+
+    cssTaskGen = function (isDev) {
+        var outputPath = './build/' + (isDev ? 'dev' : 'prod') + '/css/';
+
+        return function () {
+
+            return gulp.src(cssSrc)
+                .pipe(sass({
+                    errLogToConsole: true,
+                    style: 'nested'
+                }))
+                .pipe(gulpIf(!isDev, minifycss()))
+                .pipe(gulp.dest(outputPath));
+        };
     };
 
 
 gulp.task('js-watch', browserifyTaskGen(true, true));
 gulp.task('js-dev', browserifyTaskGen(true, false));
+
+gulp.task('css-dev', cssTaskGen(true));
+gulp.task('css-prod', cssTaskGen(false));
+
+gulp.task('css-watch', ['css-dev'], function () {
+    watch(cssSrc, function () {
+        gulp.start('css-dev');
+    });
+});
 
 gulp.task('html-dev', function () {
     gulp.src('./src/html/*')
@@ -72,7 +99,7 @@ gulp.task('test-watch', function () {
     gulp.watch(jsWatch, ['test']);
 });
 
-gulp.task('watch', ['test', 'test-watch', 'js-watch']);
+gulp.task('watch', ['test', 'test-watch', 'css-watch', 'js-watch']);
 
 gulp.task('default', ['watch']);
 

@@ -28,7 +28,7 @@ module.exports = function () {
 
             for (var id in data.objects) {
                 if (data.objects.hasOwnProperty(id)) {
-                    var eph = {}
+                    var eph = {};
 
                     if (data.objects[id].parent) {
                         eph.vectors = {r: [0, 0, 0], v: [0, 0, 0]};

@@ -15,37 +15,42 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* globals window */
 module.exports = function () {
     'use strict';
 
     var React = require('react'),
-        ReactTHREE = require('react-three'),
-        Scene = ReactTHREE.Scene,
+        THREE = require('three'),
         OnResize = require("react-window-mixins").OnResize,
 
-        PlanetsCamera = require('./planets-camera.jsx'),
-        ObjectList = require('./solar-system-object.jsx').ObjectList;
+        SceneManager = require('./scene/scene-manager.jsx.js'),
+        Overlay3d = require('./overlay/overlay.jsx');
+
 
     return React.createClass({
         mixins: [OnResize],
 
         render: function () {
-            var name = 'scene',
-                window = this.state.window,
+            var window = this.state.window,
                 view = this.props.view,
 
-                data = this.props.data,
-                ephemerides = this.props.ephemerides;
+                d = 1e10,
+                perspective = {
+                    lookAt: new THREE.Vector3(0, 0, 0),
+                    pos: new THREE.Vector3(0, -d * Math.cos(view.alt), d * Math.sin(view.alt)),
+                    far: 10 * d,
+                    near: .5 * d,
+                    aspect: window.width / window.height,
+                    fov: 50
+                };
 
             return (
-                <Scene camera={name} width={window.width} height={window.height}>
-                    <PlanetsCamera view={view} name={name} window={window}/>
-                    <ObjectList t={this.props.t} list={data.tree} ephemerides={ephemerides} view={view}/>
-                </Scene>
+                <div className="wrapper-3d">
+                    <SceneManager ephemerides={this.props.ephemerides} data={this.props.data}
+                                  perspective={perspective} window={window}/>
+                    <Overlay3d ephemerides={this.props.ephemerides} data={this.props.data}
+                               perspective={perspective} window={window}/>
+                </div>
             );
         }
-        
     });
 }();
-

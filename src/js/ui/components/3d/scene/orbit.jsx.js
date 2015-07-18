@@ -44,8 +44,8 @@ module.exports = function () {
             return geometry;
         }(),
 
-        objectColor = require('../../utils/object-color'),
-        vector = require('../../../maths/vector');
+        objectColor = require('../../../utils/object-color'),
+        vector = require('../../../../maths/vector');
 
     return React.createClass({
 
@@ -58,10 +58,10 @@ module.exports = function () {
 
             return (
                 <Object3D quaternion={orbit.quaternion}>
-                    <Line key={'a' + this.props.t} geometry={ellipseGeometry} material={material}
+                    <Line geometry={ellipseGeometry} material={material}
                           position={orbit.cPos}
                           scale={orbit.scale}/>
-                    <Line key={'c' + this.props.t} geometry={rGeometry2} material={material}
+                    <Line geometry={rGeometry2} material={material}
                           scale={orbit.r}
                           quaternion={orbit.rQuaternion}/>
                 </Object3D>
