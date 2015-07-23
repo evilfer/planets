@@ -1,4 +1,4 @@
-/**d
+/**
  * Copyright 2015 Eloy Villasclaras-Fernandez <eloy.villasclaras@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,21 +15,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-!function () {
+module.exports = function () {
     'use strict';
 
     var React = require('react'),
-        injectTapEventPlugin = require("react-tap-event-plugin"),
 
-        Planets = require('./ui/components/planets.jsx'),
-        data = require('./data/data');
+        mui = require('material-ui'),
+        ThemeManager = new mui.Styles.ThemeManager();
 
-    injectTapEventPlugin();
+    ThemeManager.setTheme(ThemeManager.types.DARK);
 
-    React.render(
-        <Planets data={data}/>,
-        document.getElementById('content')
-    );
+    return React.createClass({
+        childContextTypes: {
+            muiTheme: React.PropTypes.object
+        },
 
+        getChildContext: function () {
+            return {
+                muiTheme: ThemeManager.getCurrentTheme()
+            };
+        },
+
+        render: function () {
+            return (
+                <div className="planets-input">
+
+                </div>
+            );
+        }
+
+    });
 
 }();

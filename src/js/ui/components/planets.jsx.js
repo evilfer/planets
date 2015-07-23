@@ -21,7 +21,9 @@ module.exports = function () {
     var React = require('react'),
         clone = require('clone'),
 
-        Wrapper3d = require('./3d/wrapper-3d.jsx'),
+        Wrapper3d = require('./renderer/wrapper-3d.jsx'),
+        Input = require('./input/input.jsx'),
+
         eph = require('../../data/ephemerides'),
         scaleManager = require('../../data/scale-manager'),
 
@@ -77,7 +79,12 @@ module.exports = function () {
             eph.state(this.state.t, this.ephs);
             scaleManager.update(this.ephs, this.state.view.scl);
 
-            return <Wrapper3d ephemerides={this.ephs} data={this.props.data} view={this.state.view}/>;
+            return (
+                <div className='planets'>
+                    <Input data={this.props.data} view={this.state.view} t={this.state.t}/>
+                    <Wrapper3d ephemerides={this.ephs} data={this.props.data} view={this.state.view}/>
+                </div>
+            );
         }
     });
 
