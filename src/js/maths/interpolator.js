@@ -36,8 +36,8 @@ module.exports = function () {
                     k1 = fn - n,
                     k0 = 1 - k1;
 
-                vector.setSclSum(state.r, p0.r, k0, p1.r, k1);
-                vector.setSclSum(state.v, p0.v, k0, p1.v, k1);
+                vector.sclSum(state.r, p0.r, k0, p1.r, k1);
+                vector.sclSum(state.v, p0.v, k0, p1.v, k1);
                 return true;
             } else {
                 return false;

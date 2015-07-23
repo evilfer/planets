@@ -35,12 +35,13 @@ module.exports = function () {
                 window = this.props.window,
                 perspective = this.props.perspective,
                 data = this.props.data,
-                ephemerides = this.props.ephemerides;
+                ephemerides = this.props.ephemerides,
+                txEphemerides = this.props.txEphemerides;
 
             return (
                 <Scene camera={name} width={window.width} height={window.height}>
                     <PlanetsCamera name={name} perspective={perspective}/>
-                    <ObjectList list={data.tree} ephemerides={ephemerides}/>
+                    <ObjectList list={data.tree} ephemerides={ephemerides} txEphemerides={txEphemerides}/>
                 </Scene>
             );
         }

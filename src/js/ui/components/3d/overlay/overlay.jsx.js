@@ -18,29 +18,28 @@
 module.exports = function () {
     'use strict';
 
-    var React = require('react'),
-        THREE = require('three');
+    var React = require('react');
 
 
     return React.createClass({
 
         render: function () {
-            var perspective = this.props.perspective,
-                camera = new THREE.PerspectiveCamera(perspective.fov, perspective.aspect, perspective.near, perspective.far),
-                projScreenMat = new THREE.Matrix4();
+            var txEphemerides = this.props.txEphemerides,
+                window = this.props.window,
+                elements = [];
 
-            camera.position.set(perspective.pos);
-            camera.lookAt(perspective.lookAt);
+            for (var id in txEphemerides) {
+                if (txEphemerides.hasOwnProperty(id)) {
+                    var projected = txEphemerides[id].projected;
 
-            camera.updateMatrixWorld();
-            camera.matrixWorldInverse.getInverse(camera.matrixWorld);
-            projScreenMat.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+                    elements.push(<div key={id} style={{
+                        top: .5 * window.height * (1 - projected.y),
+                        left: .5 * window.width * (1 + projected.x)
+                    }}/>);
+                }
+            }
 
-
-            return (
-                <div className="3d-overlay">
-                </div>
-            );
+            return <div className="overlay-3d">{elements}</div>;
         }
     });
 }();

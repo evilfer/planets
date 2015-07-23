@@ -24,7 +24,6 @@ module.exports = function () {
     return React.createClass({
 
         render: function () {
-
             var perspective = this.props.perspective;
 
             return (

@@ -23,7 +23,6 @@ module.exports = function () {
 
         Wrapper3d = require('./3d/wrapper-3d.jsx'),
         eph = require('../../data/ephemerides'),
-        scaleManager = require('../../data/scale-manager'),
 
         WindowTimer = require('../animate/window-timer'),
         animate = require('../animate/animate');
@@ -31,19 +30,15 @@ module.exports = function () {
     animate.useTimer(new WindowTimer());
 
     return React.createClass({
-        ephs: function () {
-            var ephs = eph.init();
-            scaleManager.init(ephs);
-            return ephs;
-        }(),
+        ephs: eph.init(),
 
         getInitialState: function () {
             return {
                 t: this.props.data.t0,
                 view: {
-                    alt: .1,
+                    alt: Math.PI / 2,
                     az: 0,
-                    scl: 0
+                    scl: 1
                 }
             };
         },
@@ -68,15 +63,13 @@ module.exports = function () {
                 me.setState(state);
             });
 
-            animate.setAnim('scl', 1, 2000, 'lineal', this.state.view.scl);
-            animate.setAnim('alt', 1, 1000, 'lineal', this.state.view.alt);
+            //animate.setAnim('scl', 1, 2000, 'lineal', this.state.view.scl);
+            //animate.setAnim('alt', 1, 1000, 'lineal', this.state.view.alt);
             animate.setAnim('t', this.props.data.t0 + 100, 10000, 'lineal', this.state.t);
         },
 
         render: function () {
             eph.state(this.state.t, this.ephs);
-            scaleManager.update(this.ephs, this.state.view.scl);
-
             return <Wrapper3d ephemerides={this.ephs} data={this.props.data} view={this.state.view}/>;
         }
     });
