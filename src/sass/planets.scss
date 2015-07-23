@@ -44,6 +44,16 @@ html, body {
       &:hover {
         top: 0;
       }
+      width: 0;
+      height: 0;
+      overflow: visible;
+
+      div {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        background: red;
+      }
     }
   }
 }

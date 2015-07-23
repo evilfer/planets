@@ -24,7 +24,7 @@ describe('vector', function () {
     });
 
     it('should sum', function () {
-        var a = v.sum([-1, 3, 2], [2, -1, 1]);
+        var a = v.sum([0, 0, 0], [-1, 3, 2], [2, -1, 1]);
         expect(a).to.eql([1, 2, 3]);
     });
 
@@ -34,7 +34,7 @@ describe('vector', function () {
     });
 
     it('should do scaled sum', function () {
-        var a = v.sclSum([-1, 3, 2], 2, [2, -1, 1], 3);
+        var a = v.sclSum([0, 0, 0], [-1, 3, 2], 2, [2, -1, 1], 3);
         expect(a).to.eql([4, 3, 7]);
     });
 

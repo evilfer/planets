@@ -32,21 +32,24 @@ module.exports = function () {
         SolarSystemObject = React.createClass({
 
             render: function () {
-                var ephemerides = this.props.ephemerides,
-                    obj = this.props.obj,
+                var obj = this.props.obj,
+
+                    ephemerides = this.props.ephemerides,
+                    txEphemerides = this.props.txEphemerides,
 
                     ephemeris = ephemerides[obj.id],
+                    txEphemeris = txEphemerides[obj.id],
 
                     material = new THREE.MeshBasicMaterial({color: objectColor(obj, .5)}),
                     orbit = ephemeris.orbit ? <Orbit obj={obj} ephemeris={ephemeris}/> : false;
 
                 return (
-                    <Object3D scale={ephemeris.scaled.orbitScl}>
+                    <Object3D scale={txEphemeris.orbitScl}>
                         {orbit}
-                        <Object3D position={ephemeris.scaled.localPos}>
+                        <Object3D position={txEphemeris.localPos}>
                             <Mesh geometry={sphereGeometry} material={material}
-                                  scale={ephemeris.scaled.bodyScl}/>
-                            <ObjectList list={obj.children} ephemerides={ephemerides}/>
+                                  scale={txEphemeris.bodyScl}/>
+                            <ObjectList list={obj.children} ephemerides={ephemerides} txEphemerides={txEphemerides}/>
                         </Object3D>
                     </Object3D>
                 );
@@ -57,9 +60,11 @@ module.exports = function () {
             render: function () {
                 var list = this.props.list,
                     ephemerides = this.props.ephemerides,
+                    txEphemerides = this.props.txEphemerides,
 
                     planets = list.map(function (obj) {
-                        return <SolarSystemObject key={obj.id} obj={obj} ephemerides={ephemerides}/>;
+                        return <SolarSystemObject key={obj.id} obj={obj}
+                                                  ephemerides={ephemerides} txEphemerides={txEphemerides}/>;
                     });
 
                 return <Object3D>{planets}</Object3D>;

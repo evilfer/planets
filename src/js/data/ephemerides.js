@@ -17,6 +17,7 @@
 
 module.exports = function () {
     'use strict';
+
     var data = require('./data.js'),
         interpolator = require('../maths/interpolator'),
         orbit = require('../maths/orbit'),
@@ -30,8 +31,8 @@ module.exports = function () {
                 if (data.objects.hasOwnProperty(id)) {
                     var eph = {};
 
+                    eph.vectors = {r: [0, 0, 0], v: [0, 0, 0], p: [0, 0, 0]};
                     if (data.objects[id].parent) {
-                        eph.vectors = {r: [0, 0, 0], v: [0, 0, 0]};
                         eph.orbit = {};
                         orbitThree.init(eph.orbit);
                     }
@@ -51,6 +52,7 @@ module.exports = function () {
 
                     if (obj.parent) {
                         interpolator.update(t, data.t0, obj, eph.vectors);
+                        vector.sum(eph.vectors.p, eph.vectors.r, stt[obj.parent].vectors.p);
                         orbit.update(data.objects[obj.parent].mu, eph.vectors, eph.orbit);
                         orbitThree.update(eph.orbit);
                     }

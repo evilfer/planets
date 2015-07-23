@@ -50,21 +50,14 @@ module.exports = function () {
             return c;
         },
 
-        sum = function (a, b) {
-            var c = a.slice();
-            add(c, b);
-            return c;
-        },
-
-        sclSum = function (a, ka, b, kb) {
-            var c = a.slice();
-            for (var i = 0; i < c.length; i++) {
-                c[i] = c[i] * ka + b[i] * kb;
+        sum = function (r, a, b) {
+            for (var i = 0; i < r.length; i++) {
+                r[i] = a[i] + b[i];
             }
-            return c;
+            return r;
         },
 
-        setSclSum = function (r, a, ka, b, kb) {
+        sclSum = function (r, a, ka, b, kb) {
             for (var i = 0; i < r.length; i++) {
                 r[i] = a[i] * ka + b[i] * kb;
             }
@@ -109,7 +102,6 @@ module.exports = function () {
         sub: sub,
         sum: sum,
         sclSum: sclSum,
-        setSclSum: setSclSum,
         cross: cross,
         mod2: mod2,
         mod: mod,
