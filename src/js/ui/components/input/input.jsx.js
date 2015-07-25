@@ -21,7 +21,13 @@ module.exports = function () {
     var React = require('react'),
 
         mui = require('material-ui'),
-        ThemeManager = new mui.Styles.ThemeManager();
+        ThemeManager = new mui.Styles.ThemeManager(),
+        DatePicker = mui.DatePicker,
+        Toggle = mui.Toggle,
+        Paper = mui.Paper,
+
+        dates = require('../../../maths/dates');
+
 
     ThemeManager.setTheme(ThemeManager.types.DARK);
 
@@ -36,14 +42,35 @@ module.exports = function () {
             };
         },
 
+        handleDateChange: function (a, b, c) {
+            this.props.setValue('t', dates.date2mjd(b));
+        },
+
+        handleScaleChange: function (event, toggled) {
+            this.props.setValue('scl', toggled ? 0 : 1);
+        },
+
         render: function () {
+            var t = dates.mjd2date(this.props.t),
+                t0 = dates.mjd2date(this.props.data.t0),
+                t1 = dates.mjd2date(this.props.data.t1);
+
             return (
                 <div className="planets-input">
+                    <div className="date-picker">
+                        <Paper>
+                            <DatePicker mode="landscape" showYearSelector={true} onChange={this.handleDateChange}
+                                        defaultDate={t} minDate={t0} maxDate={t1}/>
 
+                            <div style={{width: 300}}>
+                                <Toggle label="Real scale" defaultToggled={this.props.view.scl === 0}
+                                        onToggle={this.handleScaleChange}/>
+                            </div>
+                        </Paper>
+                    </div>
                 </div>
             );
         }
-
     });
 
 }();

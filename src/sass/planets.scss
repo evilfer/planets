@@ -37,23 +37,11 @@ html, body {
 
     .planets-input {
       position: absolute;
-      top: -50px;
+      top: 0;
       left: 0;
-      width: 100%;
-      transition: top .2s;
-      &:hover {
-        top: 0;
-      }
+      height: 100%;
       width: 0;
-      height: 0;
       overflow: visible;
-
-      div {
-        position: absolute;
-        width: 5px;
-        height: 5px;
-        background: red;
-      }
     }
   }
 }

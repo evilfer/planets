@@ -20,11 +20,13 @@ module.exports = function () {
 
     var React = require('react'),
         clone = require('clone'),
+        extend = require('extend'),
 
         Wrapper3d = require('./renderer/wrapper-3d.jsx'),
         Input = require('./input/input.jsx'),
 
         eph = require('../../data/ephemerides'),
+        dates = require('../../maths/dates'),
 
         WindowTimer = require('../animate/window-timer'),
         animate = require('../animate/animate');
@@ -36,7 +38,7 @@ module.exports = function () {
 
         getInitialState: function () {
             return {
-                t: this.props.data.t0,
+                t: Math.min(this.props.data.t1, Math.max(this.props.data.t0, dates.date2mjd(new Date()))),
                 view: {
                     alt: Math.PI / 2,
                     az: 0,
@@ -67,18 +69,29 @@ module.exports = function () {
 
             //animate.setAnim('scl', 1, 2000, 'lineal', this.state.view.scl);
             //animate.setAnim('alt', 1, 1000, 'lineal', this.state.view.alt);
-            animate.setAnim('t', this.props.data.t0 + 100, 10000, 'lineal', this.state.t);
+            //animate.setAnim('t', this.props.data.t0 + 100, 10000, 'lineal', this.state.t);
+        },
+
+        setValue: function (key, value) {
+            switch (key) {
+                case 't':
+                    animate.setAnim('t', value, 1000, 'lineal', this.state.t);
+                    break;
+                case 'scl':
+                    animate.setAnim('scl', value, 500, 'lineal', this.state.view.scl);
+                    break;
+            }
         },
 
         render: function () {
             eph.state(this.state.t, this.ephs);
             return (
                 <div className='planets'>
-                    <Input data={this.props.data} view={this.state.view} t={this.state.t}/>
                     <Wrapper3d ephemerides={this.ephs} data={this.props.data} view={this.state.view}/>
+                    <Input data={this.props.data} setValue={this.setValue}
+                           view={this.state.view} t={this.state.t}/>
                 </div>
             );
-
         }
     });
 
