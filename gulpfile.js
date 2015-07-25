@@ -75,7 +75,6 @@ gulp.task('js-watch', browserifyTaskGen(true, true));
 gulp.task('js-dev', browserifyTaskGen(true, false));
 
 gulp.task('css-dev', cssTaskGen(true));
-gulp.task('css-prod', cssTaskGen(false));
 
 gulp.task('css-watch', ['css-dev'], function () {
     watch(cssSrc, function () {
@@ -103,11 +102,18 @@ gulp.task('watch', ['test', 'test-watch', 'css-watch', 'js-watch']);
 
 gulp.task('default', ['watch']);
 
-gulp.task('build-dev', ['js-dev']);
+gulp.task('build-dev', ['html-dev', 'js-dev', 'css-dev']);
 
 
 /* prod tasks */
 
 gulp.task('js-prod', browserifyTaskGen(false, false));
 
-gulp.task('build-prod', ['js-prod']);
+gulp.task('css-prod', cssTaskGen(false));
+
+gulp.task('html-prod', function () {
+    gulp.src('./src/html/*')
+        .pipe(gulp.dest('./build/prod/'));
+});
+
+gulp.task('build-prod', ['html-prod', 'js-prod', 'css-prod']);

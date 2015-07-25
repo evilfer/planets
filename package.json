@@ -22,7 +22,7 @@
     "chai-stats": "0.3.0",
     "clone": "^1.0.2",
     "express": "4.13.1",
-    "extend": "^3.0.0",
+    "extend": "3.0.0",
     "gulp": "3.9.0",
     "gulp-if": "1.2.5",
     "gulp-minify-css": "1.2.0",
