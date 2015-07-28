@@ -66,19 +66,15 @@ module.exports = function () {
 
                 me.setState(state);
             });
-
-            //animate.setAnim('scl', 1, 2000, 'lineal', this.state.view.scl);
-            //animate.setAnim('alt', 1, 1000, 'lineal', this.state.view.alt);
-            //animate.setAnim('t', this.props.data.t0 + 100, 10000, 'lineal', this.state.t);
         },
 
         setValue: function (key, value) {
             switch (key) {
                 case 't':
-                    animate.setAnim('t', value, 1000, 'lineal', this.state.t);
+                    animate.setAnim('t', 'poly3', {duration: 1000}, value, this.state.t);
                     break;
                 case 'scl':
-                    animate.setAnim('scl', value, 500, 'lineal', this.state.view.scl);
+                    animate.setAnim('scl', 'poly5', {duration: 800}, value, this.state.view.scl);
                     break;
             }
         },

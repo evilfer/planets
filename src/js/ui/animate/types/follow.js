@@ -19,19 +19,29 @@ module.exports = function () {
     'use strict';
 
     var init = function (anim, t0, params, v1, v0) {
-            anim.t0 = t0;
-            anim.t1 = t0 + params.duration;
-            anim.v0 = v0;
-            anim.vel = (v1 - v0) / params.duration;
+            anim.v = v0;
+            reset(anim, t0, params, v1);
         },
 
         reset = function (anim, t0, params, v1) {
-            init(anim, t0, params, v1, anim.v);
+            anim.target = v1;
+            anim.t0 = t0;
+            anim.halfT = params.halfT;
+            anim.threshold = params.threshold;
         },
 
         update = function (anim, t) {
-            anim.v = anim.v0 + anim.vel * (Math.min(t, anim.t1) - anim.t0);
-            return t >= anim.t1;
+            var k = Math.pow(2, (anim.t0 - t) / anim.halfT);
+
+            anim.v = (1 - k) * anim.target + k * anim.v;
+            anim.t0 = t;
+
+            if (Math.abs(anim.v - anim.target) < anim.threshold) {
+                anim.v = anim.target;
+                return true;
+            } else {
+                return true;
+            }
         };
 
     return {
@@ -39,5 +49,4 @@ module.exports = function () {
         reset: reset,
         update: update
     };
-
 }();

@@ -19,7 +19,10 @@ module.exports = function () {
     'use strict';
 
     var types = {
-            lineal: require('./types/lineal')
+            lineal: require('./types/lineal'),
+            follow: require('./types/follow'),
+            poly3: require('./types/poly3'),
+            poly5: require('./types/poly5')
         },
 
         data = {
@@ -28,7 +31,6 @@ module.exports = function () {
             n: 0,
             cb: null
         },
-
 
         setUpdateCallback = function (cb) {
             data.cb = cb;
@@ -39,11 +41,13 @@ module.exports = function () {
 
             for (var id in data.animations) {
                 if (data.animations.hasOwnProperty(id)) {
-                    var anim = data.animations[id];
-                    types[anim.type].update(anim, Math.min(t, anim.t1));
+                    var anim = data.animations[id],
+                        handler = types[anim.type],
+                        stop = handler.update(anim, t);
+
                     values[id] = anim.v;
 
-                    if (t >= anim.t1) {
+                    if (stop) {
                         delete data.animations[id];
                         data.n--;
                     }
@@ -62,28 +66,27 @@ module.exports = function () {
             timer.setFrameCallback(update);
         },
 
-        setAnim = function (id, value, duration, type, currentValue) {
+        setAnim = function (id, type, params, v1, v0) {
             var t0 = data.timer.t(),
-                anim = {
-                    type: type,
-                    t0: t0,
-                    duration: duration,
-                    t1: t0 + duration,
-                    vel: data.animations[id] ? data.animations[id].vel : 0,
-                    v0: currentValue,
-                    v: currentValue,
-                    v1: value
-                };
+                handler = types[type],
+                exists = data.animations.hasOwnProperty(id);
 
-            if (!data.animations.hasOwnProperty(id)) {
+            if (exists && type === data.animations[id].type) {
+                handler.reset(data.animations[id], t0, params, v1);
+            } else {
+                var anim = {
+                    type: type
+                };
+                handler.init(anim, t0, params, v1, v0);
+                data.animations[id] = anim;
+            }
+
+            if (!exists) {
                 data.n++;
                 if (data.n === 1) {
                     data.timer.enable(update);
                 }
             }
-
-            data.animations[id] = anim;
-            types[type].init(anim);
         },
 
         cancel = function (id) {
