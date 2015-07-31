@@ -23,7 +23,9 @@ module.exports = function () {
         THREE = require('three'),
         Object3D = ReactTHREE.Object3D,
         Mesh = ReactTHREE.Mesh,
-        objectColor = require('../../../utils/object-color'),
+
+
+        materials = require('../../../../data/materials'),
 
         Orbit = require('./orbit.jsx.js'),
 
@@ -40,7 +42,7 @@ module.exports = function () {
                     ephemeris = ephemerides[obj.id],
                     txEphemeris = txEphemerides[obj.id],
 
-                    material = new THREE.MeshBasicMaterial({color: objectColor(obj, .5)}),
+                    material = materials[obj.id].body,
                     orbit = ephemeris.orbit ? <Orbit obj={obj} ephemeris={ephemeris}/> : false;
 
                 return (

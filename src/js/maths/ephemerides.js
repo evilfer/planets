@@ -18,11 +18,11 @@
 module.exports = function () {
     'use strict';
 
-    var data = require('./data.js'),
-        interpolator = require('../maths/interpolator'),
-        orbit = require('../maths/orbit'),
-        orbitThree = require('../maths/orbit-three'),
-        vector = require('../maths/vector'),
+    var data = require('./../data/data.js'),
+        interpolator = require('./interpolator'),
+        orbit = require('./orbit'),
+        orbitThree = require('./orbit-three'),
+        vector = require('./vector'),
 
         init = function () {
             var stt = {};

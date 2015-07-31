@@ -25,7 +25,7 @@ module.exports = function () {
         Wrapper3d = require('./renderer/wrapper-3d.jsx'),
         Input = require('./input/input.jsx'),
 
-        eph = require('../../data/ephemerides'),
+        eph = require('../../maths/ephemerides'),
         dates = require('../../maths/dates'),
 
         WindowTimer = require('../animate/window-timer'),
@@ -81,6 +81,7 @@ module.exports = function () {
 
         render: function () {
             eph.state(this.state.t, this.ephs);
+
             return (
                 <div className='planets'>
                     <Wrapper3d ephemerides={this.ephs} data={this.props.data} view={this.state.view}/>

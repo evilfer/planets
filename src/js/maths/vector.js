@@ -64,12 +64,10 @@ module.exports = function () {
             return r;
         },
 
-        cross = function (a, b) {
-            return [
-                a[1] * b[2] - a[2] * b[1],
-                a[2] * b[0] - a[0] * b[2],
-                a[0] * b[1] - a[1] * b[0]
-            ];
+        cross = function (r, a, b) {
+            r[0] = a[1] * b[2] - a[2] * b[1];
+            r[1] = a[2] * b[0] - a[0] * b[2];
+            r[2] = a[0] * b[1] - a[1] * b[0];
         },
 
         mod2 = function (a) {
@@ -78,6 +76,14 @@ module.exports = function () {
 
         mod = function (a) {
             return Math.sqrt(mod2(a));
+        },
+
+        distance = function (a, b) {
+            var d0 = a[0] - b[0],
+                d1 = a[1] - b[1],
+                d2 = a[2] - b[2];
+
+            return Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
         },
 
         dot = function (a, b) {
@@ -90,8 +96,10 @@ module.exports = function () {
             }
         },
 
-        scld = function (a, k) {
-            return [a[0] * k, a[1] * k, a[2] * k];
+        scld = function (r, a, k) {
+            for (var i = 0; i < r.length; i++) {
+                r[i] = a[i] * k;
+            }
         };
 
 
@@ -105,6 +113,7 @@ module.exports = function () {
         cross: cross,
         mod2: mod2,
         mod: mod,
+        distance: distance,
         dot: dot,
         scl: scl,
         scld: scld

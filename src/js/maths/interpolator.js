@@ -25,6 +25,25 @@ module.exports = function () {
             return update(t, t0, data, state) ? state : false;
         },
 
+
+        pos = function (t, t0, data, r) {
+            var dt = t - t0,
+                fn = dt / data.step,
+                n = Math.floor(fn);
+
+            if (n >= 0 && n < data.points.length - 1) {
+                var p0 = data.points[n],
+                    p1 = data.points[n + 1],
+                    k1 = fn - n,
+                    k0 = 1 - k1;
+
+                vector.sclSum(r, p0.r, k0, p1.r, k1);
+                return true;
+            } else {
+                return false;
+            }
+        },
+
         update = function (t, t0, data, state) {
             var dt = t - t0,
                 fn = dt / data.step,
@@ -46,7 +65,8 @@ module.exports = function () {
 
     return {
         at: interpolate,
-        update: update
+        update: update,
+        pos: pos
     };
 
 }();

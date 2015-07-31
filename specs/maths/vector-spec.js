@@ -39,9 +39,16 @@ describe('vector', function () {
     });
 
     it('should calculate cross product', function () {
-        expect(v.cross([3, -3, 1], [4, 9, 2])).to.eql([-15, -2, 39]);
-        expect(v.cross([4, 9, 2], [3, -3, 1])).to.eql([15, 2, -39]);
-        expect(v.cross([3, -3, 1], [-12, 12, -4])).to.eql([0, 0, 0]);
+        var r = [0, 0, 0];
+
+        v.cross(r, [3, -3, 1], [4, 9, 2]);
+        expect(r).to.eql([-15, -2, 39]);
+
+        v.cross(r, [4, 9, 2], [3, -3, 1]);
+        expect(r).to.eql([15, 2, -39]);
+
+        v.cross(r, [3, -3, 1], [-12, 12, -4]);
+        expect(r).to.eql([0, 0, 0]);
     });
 
     it('should calculate squared mod of a vector', function () {
@@ -54,6 +61,10 @@ describe('vector', function () {
         expect(v.mod([0, 4, 3])).to.equal(5);
     });
 
+    it('should calculate distance of two  vector', function () {
+        expect(v.distance([1, 2, 5], [1, -2, 8])).to.equal(5);
+    });
+
     it('should calculate dot product', function () {
         expect(v.dot([3, -3, 1], [4, 9, 2])).to.equal(-13);
         expect(v.dot([4, 9, 2], [3, -3, 1])).to.equal(-13);
@@ -61,9 +72,16 @@ describe('vector', function () {
     });
 
     it('should scale vector', function () {
-        expect(v.scld([3, -3, 1], 0)).to.eql([0, -0, 0]);
-        expect(v.scld([4, 9, 2], 1)).to.eql([4, 9, 2]);
-        expect(v.scld([3, -3, 1], -2)).to.eql([-6, 6, -2]);
+        var r = [0, 0, 0];
+
+        v.scld(r, [3, -3, 1], 0)
+        expect(r).to.eql([0, -0, 0]);
+
+        v.scld(r, [4, 9, 2], 1)
+        expect(r).to.eql([4, 9, 2]);
+
+        v.scld(r, [3, -3, 1], -2)
+        expect(r).to.eql([-6, 6, -2]);
     });
 
     it('should scale vector', function () {

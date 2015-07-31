@@ -37,14 +37,14 @@ module.exports = function () {
             return geometry;
         }(),
 
-        rGeometry2 = function () {
+        rGeometry = function () {
             var geometry = new THREE.Geometry();
             geometry.vertices.push(new THREE.Vector3(0, 0, 0));
             geometry.vertices.push(new THREE.Vector3(1, 0, 0));
             return geometry;
         }(),
 
-        objectColor = require('../../../utils/object-color'),
+        materials = require('../../../../data/materials'),
         vector = require('../../../../maths/vector');
 
     return React.createClass({
@@ -54,14 +54,14 @@ module.exports = function () {
                 ephemeris = this.props.ephemeris,
                 orbit = ephemeris.orbit,
 
-                material = new THREE.LineBasicMaterial({color: objectColor(obj, .5)});
+                material = materials[obj.id].orbit;
 
             return (
                 <Object3D quaternion={orbit.quaternion}>
                     <Line geometry={ellipseGeometry} material={material}
                           position={orbit.cPos}
                           scale={orbit.scale}/>
-                    <Line geometry={rGeometry2} material={material}
+                    <Line geometry={rGeometry} material={material}
                           scale={orbit.r}
                           quaternion={orbit.rQuaternion}/>
                 </Object3D>
