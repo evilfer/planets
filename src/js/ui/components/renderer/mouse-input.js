@@ -17,37 +17,34 @@
 
 module.exports = function () {
     'use strict';
-
-    var init = function (anim, t0, params, v1, v0) {
-            anim.v = v0;
-            reset(anim, t0, params, v1);
-        },
-
-        reset = function (anim, t0, params, v1) {
-            anim.target = v1;
-            anim.t0 = t0;
-            anim.halfT = params.halfT;
-            anim.threshold = params.threshold;
-        },
-
-        update = function (anim, t) {
-            var k = Math.pow(2, (anim.t0 - t) / anim.halfT);
-
-            anim.v = (1 - k) * anim.target + k * anim.v;
-            anim.t0 = t;
-
-            if (Math.abs(anim.v - anim.target) < anim.threshold) {
-                anim.v = anim.target;
-                return true;
-            } else {
-                return false;
-            }
-        };
-
+    var p = [0, 0],
+        down = false,
+        moved = false;
 
     return {
-        init: init,
-        reset: reset,
-        update: update
-    };
+        handleMouseDown: function (e) {
+            p[0] = e.clientX;
+            p[1] = e.clientY;
+            down = true;
+            moved = false;
+        },
+        handleMouseUp: function (e) {
+            down = false;
+            if (!moved) {
+                this.handleClick(e.clientX, e.clientY);
+            }
+        },
+        handleMouseMove: function (e) {
+            if (down) {
+                this.handleDrag(e.clientX - p[0], e.clientY - p[1]);
+                p[0] = e.clientX;
+                p[1] = e.clientY;
+                moved = true;
+            }
+        },
+        handleMouseLeave: function (e) {
+            down = false;
+        }
+    }
+
 }();

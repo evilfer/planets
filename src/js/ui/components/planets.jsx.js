@@ -34,48 +34,85 @@ module.exports = function () {
     animate.useTimer(new WindowTimer());
 
     return React.createClass({
-        ephs: eph.init(),
+
+        componentWillMount: function () {
+            this.ephs = eph.init();
+        },
 
         getInitialState: function () {
             return {
                 t: Math.min(this.props.data.t1, Math.max(this.props.data.t0, dates.date2mjd(new Date()))),
                 view: {
-                    alt: Math.PI / 2,
+                    alt: Math.PI / 4,
+                    targetAlt: Math.PI / 4,
                     az: 0,
+                    targetAz: 0,
                     scl: 1
                 }
             };
         },
 
+        updateState: function (values) {
+            var state = clone(this.state);
+
+            if ('scl' in values) {
+                state.view.scl = values.scl;
+            }
+
+            if ('alt' in values) {
+                state.view.alt = values.alt;
+            }
+            if ('targetAlt' in values) {
+                state.view.targetAlt = values.targetAlt;
+            }
+
+            if ('az' in values) {
+                state.view.az = values.az;
+            }
+            if ('targetAz' in values) {
+                state.view.targetAz = values.targetAz;
+            }
+
+            if ('t' in values) {
+                state.t = values.t;
+            }
+
+            this.setState(state);
+        },
+
         componentDidMount: function () {
             var me = this;
             animate.setUpdateCallback(function (anims) {
-                var state = clone(me.state);
-
-                if ('scl' in anims) {
-                    state.view.scl = anims.scl;
-                }
-
-                if ('alt' in anims) {
-                    state.view.alt = anims.alt;
-                }
-
-                if ('t' in anims) {
-                    state.t = anims.t;
-                }
-
-                me.setState(state);
+                me.updateState(anims);
             });
         },
 
-        setValue: function (key, value) {
-            switch (key) {
-                case 't':
-                    animate.setAnim('t', 'poly3', {duration: 1000}, value, this.state.t);
-                    break;
-                case 'scl':
-                    animate.setAnim('scl', 'poly5', {duration: 800}, value, this.state.view.scl);
-                    break;
+        setValues: function (values) {
+            var newState = {},
+                stateChange = false;
+
+            if (values.hasOwnProperty('t')) {
+                animate.setAnim('t', 'poly3', {duration: 1000}, values.t, this.state.t);
+            }
+
+            if (values.hasOwnProperty('scl')) {
+                animate.setAnim('scl', 'poly5', {duration: 800}, values.scl, this.state.view.scl);
+            }
+
+            if (values.hasOwnProperty('az')) {
+                animate.setAnim('az', 'follow', {halfT: 50, threshold: .01}, values.az, this.state.view.az);
+                newState.targetAz = values.az;
+                stateChange = true;
+            }
+
+            if (values.hasOwnProperty('alt')) {
+                animate.setAnim('alt', 'follow', {halfT: 50, threshold: .01}, values.alt, this.state.view.alt);
+                newState.targetAlt = values.alt;
+                stateChange = true;
+            }
+
+            if (stateChange) {
+                this.updateState(newState);
             }
         },
 
@@ -84,8 +121,9 @@ module.exports = function () {
 
             return (
                 <div className='planets'>
-                    <Wrapper3d ephemerides={this.ephs} data={this.props.data} view={this.state.view}/>
-                    <Input data={this.props.data} setValue={this.setValue}
+                    <Wrapper3d ephemerides={this.ephs} data={this.props.data} view={this.state.view}
+                               setValues={this.setValues}/>
+                    <Input data={this.props.data} setValues={this.setValues}
                            view={this.state.view} t={this.state.t}/>
                 </div>
             );

@@ -43,11 +43,11 @@ module.exports = function () {
         },
 
         handleDateChange: function (a, b, c) {
-            this.props.setValue('t', dates.date2mjd(b));
+            this.props.setValues({t: dates.date2mjd(b)});
         },
 
         handleScaleChange: function (event, toggled) {
-            this.props.setValue('scl', toggled ? 0 : 1);
+            this.props.setValues({scl: toggled ? 0 : 1});
         },
 
         render: function () {

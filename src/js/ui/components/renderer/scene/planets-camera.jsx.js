@@ -30,7 +30,8 @@ module.exports = function () {
                 <PerspectiveCamera name={this.props.name}
                                    aspect={perspective.aspect} fov={perspective.fov}
                                    near={perspective.near} far={perspective.far}
-                                   position={perspective.pos} lookat={perspective.lookAt}/>
+                                   position={perspective.pos} lookat={perspective.lookAt}
+                                   up={perspective.up}/>
             );
 
         }

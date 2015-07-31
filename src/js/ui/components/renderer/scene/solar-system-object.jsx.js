@@ -47,12 +47,12 @@ module.exports = function () {
 
                 return (
                     <Object3D scale={txEphemeris.orbitScl}>
-                        {orbit}
                         <Object3D position={txEphemeris.localPos}>
                             <Mesh geometry={sphereGeometry} material={material}
                                   scale={txEphemeris.bodyScl}/>
                             <ObjectList list={obj.children} ephemerides={ephemerides} txEphemerides={txEphemerides}/>
                         </Object3D>
+                        {orbit}
                     </Object3D>
                 );
             }

@@ -25,13 +25,30 @@ module.exports = function () {
         ephTransforms = require('../../../data/eph-transforms'),
 
         SceneManager = require('./scene/scene-manager.jsx.js'),
-        Overlay3d = require('./overlay/overlay.jsx');
-
+        Overlay3d = require('./overlay/overlay.jsx'),
+        MouseInputMixin = require('./mouse-input');
 
     return React.createClass({
-        mixins: [OnResize],
+        mixins: [OnResize, MouseInputMixin],
 
-        txEphs: ephTransforms.init(),
+        componentWillMount: function () {
+            this.txEphs = ephTransforms.init();
+        },
+
+        handleDrag: function (dx, dy) {
+            var values = {};
+            if (dx !== 0) {
+                values.az = this.props.view.targetAz - dx / 80;
+            }
+            if (dy !== 0) {
+                values.alt = Math.min(Math.PI / 2, Math.max(0, this.props.view.targetAlt + dy / 50));
+            }
+            this.props.setValues(values);
+        },
+
+        handleClick: function (x, y) {
+            console.log('click', x, y);
+        },
 
         render: function () {
             var window = this.state.window,
@@ -41,8 +58,8 @@ module.exports = function () {
                 d = 1e10,
                 perspective = {
                     lookAt: new THREE.Vector3(0, 0, 0),
-                    pos: new THREE.Vector3(0, -d * Math.cos(view.alt), d * Math.sin(view.alt)),
-                    up: new THREE.Vector3(0, Math.sin(view.alt), Math.cos(view.alt)),
+                    pos: new THREE.Vector3(d * Math.sin(view.az) * Math.cos(view.alt), -d * Math.cos(view.az) * Math.cos(view.alt), d * Math.sin(view.alt)),
+                    up: new THREE.Vector3(-Math.sin(view.alt) * Math.sin(view.az), Math.sin(view.alt) * Math.cos(view.az), Math.cos(view.alt)),
                     far: 10 * d,
                     near: .5 * d,
                     aspect: window.width / window.height,
@@ -53,10 +70,16 @@ module.exports = function () {
 
 
             return (
-                <div className="wrapper-3d">
+                <div className="wrapper-3d"
+                     onMouseDown={this.handleMouseDown}
+                     onMouseUp={this.handleMouseUp}
+                     onMouseMove={this.handleMouseMove}
+                     onMouseLeave={this.handleMouseLeave}>
+
                     <SceneManager ephemerides={ephemerides} data={this.props.data}
                                   perspective={perspective} window={window}
                                   txEphemerides={this.txEphs}/>
+
                     <Overlay3d ephemerides={ephemerides} data={this.props.data}
                                perspective={perspective} window={window}
                                txEphemerides={this.txEphs}/>

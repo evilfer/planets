@@ -20,9 +20,6 @@ describe('analysis', function () {
     });
 
     it('should calculate oposition', function () {
-        console.log(analysis.opposition('3', '7', t), 57306.53125);
-        console.log(analysis.opposition('3', '8', t), 57266.04861);
-
         expect(Math.abs(analysis.opposition('3', '7', t) - 57306.53125) < .75).to.be.true;
         expect(Math.abs(analysis.opposition('3', '8', t) - 57266.04861) < .75).to.be.true;
     });
