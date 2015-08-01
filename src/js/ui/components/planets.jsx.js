@@ -43,9 +43,10 @@ module.exports = function () {
             return {
                 t: Math.min(this.props.data.t1, Math.max(this.props.data.t0, dates.date2mjd(new Date()))),
                 view: {
+                    zoom: 1,
                     alt: Math.PI / 4,
-                    targetAlt: Math.PI / 4,
                     az: 0,
+                    targetAlt: Math.PI / 4,
                     targetAz: 0,
                     scl: 1
                 }
@@ -59,18 +60,16 @@ module.exports = function () {
                 state.view.scl = values.scl;
             }
 
+            if ('zoom' in values) {
+                state.view.zoom = values.zoom;
+            }
+
             if ('alt' in values) {
                 state.view.alt = values.alt;
-            }
-            if ('targetAlt' in values) {
-                state.view.targetAlt = values.targetAlt;
             }
 
             if ('az' in values) {
                 state.view.az = values.az;
-            }
-            if ('targetAz' in values) {
-                state.view.targetAz = values.targetAz;
             }
 
             if ('t' in values) {
@@ -88,31 +87,40 @@ module.exports = function () {
         },
 
         setValues: function (values) {
-            var newState = {},
-                stateChange = false;
-
             if (values.hasOwnProperty('t')) {
-                animate.setAnim('t', 'poly3', {duration: 1000}, values.t, this.state.t);
+                animate.setAnim('t', 'poly3', {duration: 1000, target: values.t}, this.state.t);
             }
 
             if (values.hasOwnProperty('scl')) {
-                animate.setAnim('scl', 'poly5', {duration: 800}, values.scl, this.state.view.scl);
+                animate.setAnim('scl', 'poly5', {duration: 800, target: values.scl}, this.state.view.scl);
             }
 
             if (values.hasOwnProperty('az')) {
-                animate.setAnim('az', 'follow', {halfT: 50, threshold: .01}, values.az, this.state.view.az);
-                newState.targetAz = values.az;
-                stateChange = true;
+                animate.setAnim('az', 'follow', {
+                    halfT: 50,
+                    threshold: .01,
+                    delta: values.az
+                }, this.state.view.az);
             }
 
             if (values.hasOwnProperty('alt')) {
-                animate.setAnim('alt', 'follow', {halfT: 50, threshold: .01}, values.alt, this.state.view.alt);
-                newState.targetAlt = values.alt;
-                stateChange = true;
+                animate.setAnim('alt', 'follow', {
+                    halfT: 50,
+                    threshold: .01,
+                    delta: values.alt,
+                    max: Math.PI / 2,
+                    min: 0
+                }, this.state.view.alt);
             }
 
-            if (stateChange) {
-                this.updateState(newState);
+            if (values.hasOwnProperty('zoom')) {
+                animate.setAnim('zoom', 'follow', {
+                    halfT: 100,
+                    threshold: .01,
+                    deltaP: values.zoom,
+                    min: 1,
+                    max: 100
+                }, this.state.view.zoom);
             }
         },
 

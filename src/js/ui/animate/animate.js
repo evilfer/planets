@@ -66,18 +66,18 @@ module.exports = function () {
             timer.setFrameCallback(update);
         },
 
-        setAnim = function (id, type, params, v1, v0) {
+        setAnim = function (id, type, params, v0) {
             var t0 = data.timer.t(),
                 handler = types[type],
                 exists = data.animations.hasOwnProperty(id);
 
             if (exists && type === data.animations[id].type) {
-                handler.reset(data.animations[id], t0, params, v1);
+                handler.reset(data.animations[id], t0, params);
             } else {
                 var anim = {
                     type: type
                 };
-                handler.init(anim, t0, params, v1, v0);
+                handler.init(anim, t0, params, v0);
                 data.animations[id] = anim;
             }
 

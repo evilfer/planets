@@ -50,6 +50,10 @@ module.exports = function () {
             this.props.setValues({scl: toggled ? 0 : 1});
         },
 
+        dateFormat: function (date) {
+            return date.toDateString();
+        },
+
         render: function () {
             var t = dates.mjd2date(this.props.t),
                 t0 = dates.mjd2date(this.props.data.t0),
@@ -60,7 +64,8 @@ module.exports = function () {
                     <div className="date-picker">
                         <Paper>
                             <DatePicker mode="landscape" showYearSelector={true} onChange={this.handleDateChange}
-                                        defaultDate={t} minDate={t0} maxDate={t1}/>
+                                        defaultDate={t} minDate={t0} maxDate={t1}
+                                        formatDate={this.dateFormat}/>
 
                             <div style={{width: 300}}>
                                 <Toggle label="Real scale" defaultToggled={this.props.view.scl === 0}

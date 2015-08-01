@@ -18,13 +18,25 @@
 module.exports = function () {
     'use strict';
 
-    var init = function (anim, t0, params, v1, v0) {
+    var init = function (anim, t0, params, v0) {
             anim.v = v0;
-            reset(anim, t0, params, v1);
+            anim.target = v0;
+            reset(anim, t0, params);
         },
 
-        reset = function (anim, t0, params, v1) {
-            anim.target = v1;
+        reset = function (anim, t0, params) {
+            if (typeof params.delta !== 'undefined') {
+                anim.target += params.delta;
+            } else if (typeof params.deltaP !== 'undefined') {
+                anim.target *= params.deltaP;
+            }
+
+            if (typeof params.min !== 'undefined' && anim.target < params.min) {
+                anim.target = params.min;
+            } else if (typeof params.max !== 'undefined' && anim.target > params.max) {
+                anim.target = params.max;
+            }
+
             anim.t0 = t0;
             anim.halfT = params.halfT;
             anim.threshold = params.threshold;

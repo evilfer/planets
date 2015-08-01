@@ -38,43 +38,54 @@ module.exports = function () {
         handleDrag: function (dx, dy) {
             var values = {};
             if (dx !== 0) {
-                values.az = this.props.view.targetAz - dx / 80;
+                values.az = -dx / 80;
             }
             if (dy !== 0) {
-                values.alt = Math.min(Math.PI / 2, Math.max(0, this.props.view.targetAlt + dy / 50));
+                values.alt = dy / 50;
             }
             this.props.setValues(values);
         },
 
         handleClick: function (x, y) {
-            console.log('click', x, y);
         },
+
+        handleWheel: function (e) {
+            e.preventDefault();
+
+            if (e.deltaY) {
+                this.props.setValues({
+                    zoom: e.deltaY < 0 ? 1.2 : 1 / 1.2
+                });
+            }
+        },
+
 
         render: function () {
             var window = this.state.window,
                 view = this.props.view,
                 ephemerides = this.props.ephemerides,
 
-                d = 1e10,
+                d = 1e10 / view.zoom,
+
                 perspective = {
                     lookAt: new THREE.Vector3(0, 0, 0),
                     pos: new THREE.Vector3(d * Math.sin(view.az) * Math.cos(view.alt), -d * Math.cos(view.az) * Math.cos(view.alt), d * Math.sin(view.alt)),
                     up: new THREE.Vector3(-Math.sin(view.alt) * Math.sin(view.az), Math.sin(view.alt) * Math.cos(view.az), Math.cos(view.alt)),
                     far: 10 * d,
-                    near: .5 * d,
+                    near: .1 * d,
                     aspect: window.width / window.height,
                     fov: 50
                 };
 
             ephTransforms.update(this.txEphs, ephemerides, view.scl, perspective);
 
-
             return (
                 <div className="wrapper-3d"
                      onMouseDown={this.handleMouseDown}
                      onMouseUp={this.handleMouseUp}
                      onMouseMove={this.handleMouseMove}
-                     onMouseLeave={this.handleMouseLeave}>
+                     onMouseLeave={this.handleMouseLeave}
+                     onWheel={this.handleWheel}>
 
                     <SceneManager ephemerides={ephemerides} data={this.props.data}
                                   perspective={perspective} window={window}

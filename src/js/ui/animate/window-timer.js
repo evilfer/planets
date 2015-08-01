@@ -23,7 +23,7 @@ module.exports = function () {
         this.enabled = false;
     };
 
-    WindowTimer.prototype.setFrameCallback = function(cb) {
+    WindowTimer.prototype.setFrameCallback = function (cb) {
         this.cb = cb;
     };
 

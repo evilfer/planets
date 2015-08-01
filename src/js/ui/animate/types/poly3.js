@@ -18,8 +18,9 @@
 module.exports = function () {
     'use strict';
 
-    var prepare = function (anim, t0, p0, p1, vel0, params) {
-            var p1_p0 = p1 - p0,
+    var prepare = function (anim, t0, p0, vel0, params) {
+            var p1 = params.target,
+                p1_p0 = p1 - p0,
                 dT = params.duration || (params.dpd * Math.abs(p1_p0)),
                 p1_p0_6 = 6 * p1_p0,
                 dT_2 = dT * dT,
@@ -37,12 +38,12 @@ module.exports = function () {
             anim.vel = vel0;
         },
 
-        init = function (anim, t0, params, v1, v0) {
-            prepare(anim, t0, v0, v1, 0, params);
+        init = function (anim, t0, params, v0) {
+            prepare(anim, t0, v0, 0, params);
         },
 
-        reset = function (anim, t0, params, v1) {
-            prepare(anim, t0, anim.v, v1, anim.vel || 0, params);
+        reset = function (anim, t0, params) {
+            prepare(anim, t0, anim.v, anim.vel || 0, params);
         },
 
         update = function (anim, gt) {
