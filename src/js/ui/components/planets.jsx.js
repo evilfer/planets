@@ -22,6 +22,9 @@ module.exports = function () {
         clone = require('clone'),
         extend = require('extend'),
 
+        mui = require('material-ui'),
+        ThemeManager = new mui.Styles.ThemeManager(),
+
         Wrapper3d = require('./renderer/wrapper-3d.jsx'),
         Input = require('./input/input.jsx'),
 
@@ -31,9 +34,20 @@ module.exports = function () {
         WindowTimer = require('../animate/window-timer'),
         animate = require('../animate/animate');
 
+    ThemeManager.setTheme(ThemeManager.types.DARK);
     animate.useTimer(new WindowTimer());
 
+
     return React.createClass({
+        childContextTypes: {
+            muiTheme: React.PropTypes.object
+        },
+
+        getChildContext: function () {
+            return {
+                muiTheme: ThemeManager.getCurrentTheme()
+            };
+        },
 
         componentWillMount: function () {
             this.ephs = eph.init();

@@ -35,6 +35,10 @@ module.exports = function () {
             this.txEphs = ephTransforms.init();
         },
 
+        getInitialState: function () {
+            return {selected: false};
+        },
+
         handleDrag: function (dx, dy) {
             var values = {};
             if (dx !== 0) {
@@ -47,6 +51,28 @@ module.exports = function () {
         },
 
         handleClick: function (x, y) {
+            var error = 600,
+                select = false;
+
+            for (var id in this.txEphs) {
+                if (this.txEphs.hasOwnProperty(id)) {
+                    var pos = this.txEphs[id].screenPos,
+                        dx = x - pos[0],
+                        dy = y - pos[1],
+                        e = dx * dx + dy * dy;
+
+                    if (e < error) {
+                        error = e;
+                        select = id;
+                    }
+                }
+            }
+
+            if (select !== false) {
+                this.setState({
+                    selected: this.state.selected === select ? false : select
+                });
+            }
         },
 
         handleWheel: function (e) {
@@ -77,7 +103,7 @@ module.exports = function () {
                     fov: 50
                 };
 
-            ephTransforms.update(this.txEphs, ephemerides, view.scl, perspective);
+            ephTransforms.update(this.txEphs, ephemerides, view.scl, perspective, window);
 
             return (
                 <div className="wrapper-3d"
@@ -93,7 +119,8 @@ module.exports = function () {
 
                     <Overlay3d ephemerides={ephemerides} data={this.props.data}
                                perspective={perspective} window={window}
-                               txEphemerides={this.txEphs}/>
+                               txEphemerides={this.txEphs}
+                               selected={this.state.selected}/>
                 </div>
             );
         }

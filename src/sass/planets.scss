@@ -36,6 +36,16 @@ html, body {
         width: 0;
         height: 0;
         overflow: visible;
+
+        .body-info-anchor {
+          position: absolute;
+
+          .body-info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+          }
+        }
       }
     }
 

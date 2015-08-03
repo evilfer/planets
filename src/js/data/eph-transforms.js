@@ -29,6 +29,7 @@ module.exports = function () {
                         globalPos: new THREE.Vector3(),
                         localPos: new THREE.Vector3(),
                         projected: new THREE.Vector3(),
+                        screenPos: [0, 0],
                         bodyScl: 1,
                         orbitScl: 1,
                         accScl: 1
@@ -39,7 +40,7 @@ module.exports = function () {
             return tx;
         },
 
-        update = function (txEphs, ephs, scl, perspective) {
+        update = function (txEphs, ephs, scl, perspective, window) {
             var camera = new THREE.PerspectiveCamera(perspective.fov, perspective.aspect, perspective.near, perspective.far);
 
             camera.position.copy(perspective.pos);
@@ -69,6 +70,9 @@ module.exports = function () {
                     tx.bodyScl = obj.radius * (scl * obj.ui.scale.body + 1 - scl) / tx.accScl;
                     tx.projected.copy(tx.globalPos);
                     tx.projected.project(camera);
+
+                    tx.screenPos[0] = .5 * window.width * (1 + tx.projected.x);
+                    tx.screenPos[1] = .5 * window.height * (1 - tx.projected.y);
                 }
             }
         };

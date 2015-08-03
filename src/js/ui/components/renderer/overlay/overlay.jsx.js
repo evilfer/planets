@@ -18,28 +18,37 @@
 module.exports = function () {
     'use strict';
 
-    var React = require('react');
-
+    var React = require('react'),
+        mui = require('material-ui'),
+        Paper = mui.Paper;
 
     return React.createClass({
-
         render: function () {
             var txEphemerides = this.props.txEphemerides,
                 window = this.props.window,
-                elements = [];
+                element = false,
+                id = this.props.selected;
 
-            for (var id in txEphemerides) {
-                if (txEphemerides.hasOwnProperty(id)) {
-                    var projected = txEphemerides[id].projected;
-
-                    elements.push(<div key={id} style={{
+            if (id !== false) {
+                var obj = this.props.data.objects[id],
+                    projected = txEphemerides[id].projected,
+                    style = {
                         top: .5 * window.height * (1 - projected.y),
                         left: .5 * window.width * (1 + projected.x)
-                    }}/>);
-                }
+                    };
+
+                element = (
+                    <div className="body-info-anchor" style={style}>
+                        <div className="body-info">
+                            <Paper>
+                                {obj.ui.label}
+                            </Paper>
+                        </div>
+                    </div>
+                );
             }
 
-            return <div className="overlay-3d">{elements}</div>;
+            return <div className="overlay-3d">{element}</div>;
         }
     });
 }();

@@ -21,27 +21,13 @@ module.exports = function () {
     var React = require('react'),
 
         mui = require('material-ui'),
-        ThemeManager = new mui.Styles.ThemeManager(),
         DatePicker = mui.DatePicker,
         Toggle = mui.Toggle,
         Paper = mui.Paper,
 
         dates = require('../../../maths/dates');
 
-
-    ThemeManager.setTheme(ThemeManager.types.DARK);
-
     return React.createClass({
-        childContextTypes: {
-            muiTheme: React.PropTypes.object
-        },
-
-        getChildContext: function () {
-            return {
-                muiTheme: ThemeManager.getCurrentTheme()
-            };
-        },
-
         handleDateChange: function (a, b, c) {
             this.props.setValues({t: dates.date2mjd(b)});
         },
