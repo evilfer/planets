@@ -32,16 +32,37 @@ module.exports = function () {
             if (id !== false) {
                 var obj = this.props.data.objects[id],
                     projected = txEphemerides[id].projected,
+                    info = this.props.info.data[id],
                     style = {
                         top: .5 * window.height * (1 - projected.y),
                         left: .5 * window.width * (1 + projected.x)
-                    };
+                    },
+                    content = [<div key="title">{obj.ui.label}</div>];
+
+                if (info) {
+                    if (info.opposition) {
+                        content.push(<div key="opposition">Opposition: {info.opposition}</div>);
+                    }
+
+                    if (info.angularDiameter) {
+                        content.push(<div key="diameter">Angular diameter: {info.angularDiameter}</div>);
+
+                        if (id !== this.props.info.reference) {
+                            content.push(<div key="rel-diameter">Magnification to same diameter as
+                                Moon: {this.props.info.relMagnification(id)}</div>);
+                        }
+                    }
+
+                    if (id !== info.reference) {
+                    }
+                }
+
 
                 element = (
                     <div className="body-info-anchor" style={style}>
                         <div className="body-info">
                             <Paper>
-                                {obj.ui.label}
+                                {content}
                             </Paper>
                         </div>
                     </div>

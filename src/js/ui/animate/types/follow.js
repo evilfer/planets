@@ -21,6 +21,7 @@ module.exports = function () {
     var init = function (anim, t0, params, v0) {
             anim.v = v0;
             anim.target = v0;
+            anim.t0 = t0;
             reset(anim, t0, params);
         },
 
@@ -37,7 +38,6 @@ module.exports = function () {
                 anim.target = params.max;
             }
 
-            anim.t0 = t0;
             anim.halfT = params.halfT;
             anim.threshold = params.threshold;
         },

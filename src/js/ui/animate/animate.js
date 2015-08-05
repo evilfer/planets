@@ -89,6 +89,10 @@ module.exports = function () {
             }
         },
 
+        isAnimated = function (id) {
+            return data.animations.hasOwnProperty(id);
+        },
+
         cancel = function (id) {
             if (data.animations.hasOwnProperty(id)) {
                 delete data.animations[id];
@@ -103,7 +107,8 @@ module.exports = function () {
         useTimer: useTimer,
         setUpdateCallback: setUpdateCallback,
         setAnim: setAnim,
-        cancel: cancel
+        cancel: cancel,
+        isAnimated: isAnimated
     };
 
 }();

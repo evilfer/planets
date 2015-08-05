@@ -23,19 +23,22 @@ module.exports = function () {
 
     return {
         handleMouseDown: function (e) {
+            e.preventDefault();
             p[0] = e.clientX;
             p[1] = e.clientY;
             down = true;
             moved = false;
         },
         handleMouseUp: function (e) {
+            e.preventDefault();
             down = false;
             if (!moved) {
                 this.handleClick(e.clientX, e.clientY);
             }
         },
         handleMouseMove: function (e) {
-            if (down) {
+            e.preventDefault();
+            if (down && (e.clientX !== p[0] || e.clientY !== p[1])) {
                 this.handleDrag(e.clientX - p[0], e.clientY - p[1]);
                 p[0] = e.clientX;
                 p[1] = e.clientY;
@@ -43,6 +46,7 @@ module.exports = function () {
             }
         },
         handleMouseLeave: function (e) {
+            e.preventDefault();
             down = false;
         }
     }

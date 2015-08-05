@@ -26,6 +26,10 @@ module.exports = function () {
             return vector.distance(eph[a].vectors.p, eph[b].vectors.p);
         },
 
+        angularDiameter = function (a, b, eph) {
+            return data.objects[b].radius * 2 / distance(a, b, eph);
+        },
+
         angle = function () {
             var r = [0, 0, 0];
 
@@ -43,7 +47,7 @@ module.exports = function () {
             var step = Math.min(data.objects[a].step, data.objects[b].step),
                 da0 = angleDiff(a, b, fromT);
 
-            for (var t = fromT + step; t <= data.t1; t+=step) {
+            for (var t = fromT + step; t <= data.t1; t += step) {
                 var da1 = angleDiff(a, b, t);
                 if (da1 === 0) {
                     return da1;
@@ -75,7 +79,8 @@ module.exports = function () {
 
     return {
         distance: distance,
-        opposition: opposition
+        opposition: opposition,
+        angularDiameter: angularDiameter
     };
 
 }();

@@ -28,8 +28,9 @@ module.exports = function () {
         Wrapper3d = require('./renderer/wrapper-3d.jsx'),
         Input = require('./input/input.jsx'),
 
-        eph = require('../../maths/ephemerides'),
         dates = require('../../maths/dates'),
+        eph = require('../../maths/ephemerides'),
+        ObjectInfo = require('../../maths/object-info'),
 
         WindowTimer = require('../animate/window-timer'),
         animate = require('../animate/animate');
@@ -50,7 +51,11 @@ module.exports = function () {
         },
 
         componentWillMount: function () {
-            this.ephs = eph.init();
+            this.cache = {
+                t: false,
+                ephs: eph.init(),
+                info: new ObjectInfo('3', '301')
+            };
         },
 
         getInitialState: function () {
@@ -139,16 +144,23 @@ module.exports = function () {
         },
 
         render: function () {
-            eph.state(this.state.t, this.ephs);
+            if (this.state.t !== this.cache.t) {
+                this.cache.t = this.state.t;
+                eph.state(this.state.t, this.cache.ephs);
+                this.cache.info.update(this.state.t, this.cache.ephs, !animate.isAnimated('t'));
+            }
 
             return (
                 <div className='planets'>
-                    <Wrapper3d ephemerides={this.ephs} data={this.props.data} view={this.state.view}
-                               setValues={this.setValues}/>
+                    <Wrapper3d data={this.props.data}
+                               ephemerides={this.cache.ephs} info={this.cache.info}
+                               view={this.state.view} setValues={this.setValues}/>
+
                     <Input data={this.props.data} setValues={this.setValues}
                            view={this.state.view} t={this.state.t}/>
                 </div>
             );
+
         }
     });
 

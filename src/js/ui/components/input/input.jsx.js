@@ -23,7 +23,8 @@ module.exports = function () {
         mui = require('material-ui'),
         DatePicker = mui.DatePicker,
         Toggle = mui.Toggle,
-        Paper = mui.Paper,
+
+        DatePickerButton = require('./date-picker-button.jsx'),
 
         dates = require('../../../maths/dates');
 
@@ -41,23 +42,32 @@ module.exports = function () {
         },
 
         render: function () {
-            var t = dates.mjd2date(this.props.t),
+            var data = this.props.data,
+                setValues = this.props.setValues,
+                mjd = this.props.t,
+                t = dates.mjd2date(mjd),
                 t0 = dates.mjd2date(this.props.data.t0),
                 t1 = dates.mjd2date(this.props.data.t1);
 
             return (
                 <div className="planets-input">
                     <div className="date-picker">
-                        <Paper>
-                            <DatePicker mode="landscape" showYearSelector={true} onChange={this.handleDateChange}
-                                        defaultDate={t} minDate={t0} maxDate={t1}
-                                        formatDate={this.dateFormat}/>
+                        <DatePickerButton icon="angle-double-left" t={mjd} delta={-30} setValues={setValues} data={data}/>
+                        <DatePickerButton icon="angle-left" t={mjd} delta={-1} setValues={setValues} data={data}/>
 
-                            <div style={{width: 300}}>
-                                <Toggle label="Real scale" defaultToggled={this.props.view.scl === 0}
-                                        onToggle={this.handleScaleChange}/>
-                            </div>
-                        </Paper>
+                        <DatePicker mode="landscape" showYearSelector={true} onChange={this.handleDateChange}
+                                    value={t} minDate={t0} maxDate={t1}
+                                    formatDate={this.dateFormat}
+                                    style={{display: 'inline-block', marginLeft: 5, marginRight: 5}}/>
+
+                        <DatePickerButton icon="angle-right" t={mjd} delta={1} setValues={setValues} data={data}/>
+                        <DatePickerButton icon="angle-double-right" t={mjd} delta={30} setValues={setValues} data={data}/>
+                    </div>
+
+                    <div style={{width: 300}}>
+                        <Toggle label="Real scale" defaultToggled={this.props.view.scl === 0}
+                                onToggle={this.handleScaleChange}/>
+
                     </div>
                 </div>
             );

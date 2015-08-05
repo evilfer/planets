@@ -117,7 +117,7 @@ module.exports = function () {
                                   perspective={perspective} window={window}
                                   txEphemerides={this.txEphs}/>
 
-                    <Overlay3d ephemerides={ephemerides} data={this.props.data}
+                    <Overlay3d ephemerides={ephemerides} data={this.props.data} info={this.props.info}
                                perspective={perspective} window={window}
                                txEphemerides={this.txEphs}
                                selected={this.state.selected}/>
