@@ -26,6 +26,7 @@ module.exports = function () {
 
         ListItem = mui.ListItem,
         IconButton = mui.IconButton,
+        FontIcon = mui.FontIcon,
 
         SvgIcon = require('../../icons/CustomSvgIcon.jsx'),
         dates = require('../../../../maths/dates');
@@ -83,33 +84,19 @@ module.exports = function () {
                         top: .5 * window.height * (1 - projected.y),
                         left: .5 * window.width * (1 + projected.x)
                     },
+                    headerButtonStyle = {
+                        paddingLeft: 0,
+                        paddingRight: 0,
+                        width: 'auto'
+                    },
                     items = [];
 
                 if (info.isObserver(id)) {
-                    items.push(<ListItem primaryText="You live here"/>);
+                    items.push(
+                        <ListItem primaryText="You live here"
+                                  leftIcon={<FontIcon className="material-icons">home</FontIcon>}/>
+                    );
                 } else if (objectInfo) {
-                    if (objectInfo.opposition) {
-                        var icon = <SvgIcon icon="opposition"/>,
-                            button = <IconButton mini={true} onClick={this.handleGoToOpposition}
-                                                 iconClassName='material-icons'>play_arrow</IconButton>;
-
-                        items.push(
-                            <ListItem key="opposition" leftIcon={icon} rightIconButton={button}
-                                      primaryText={dates.mjd2date(objectInfo.opposition).toDateString()}/>
-                        );
-                    }
-
-                    if (objectInfo.maxElongation) {
-                        icon = <SvgIcon icon="max-elongation"/>;
-                        button = <IconButton mini={true} onClick={this.handleGoToMaxElongation}
-                                             iconClassName='material-icons'>play_arrow</IconButton>;
-
-                        items.push(
-                            <ListItem key="max-elongation" leftIcon={icon} rightIconButton={button}
-                                      primaryText={dates.mjd2date(objectInfo.maxElongation).toDateString()}/>
-                        );
-                    }
-
                     if (objectInfo.angularDiameter) {
                         var angDim = objectInfo.angularDiameter * 180 / Math.PI,
                             v1, v2, u1, u2,
@@ -154,15 +141,30 @@ module.exports = function () {
                                           leftIcon={<SvgIcon icon="moon"/>}/>
                             );
                         }
+                    }
 
+                    if (objectInfo.opposition) {
+                        var icon = <SvgIcon icon="opposition"/>,
+                            button = <IconButton mini={true} onClick={this.handleGoToOpposition}
+                                                 iconClassName='material-icons'>play_arrow</IconButton>;
+
+                        items.push(
+                            <ListItem key="opposition" leftIcon={icon} rightIconButton={button}
+                                      primaryText={dates.mjd2date(objectInfo.opposition).toDateString()}/>
+                        );
+                    }
+
+                    if (objectInfo.maxElongation) {
+                        icon = <SvgIcon icon="max-elongation"/>;
+                        button = <IconButton mini={true} onClick={this.handleGoToMaxElongation}
+                                             iconClassName='material-icons'>play_arrow</IconButton>;
+
+                        items.push(
+                            <ListItem key="max-elongation" leftIcon={icon} rightIconButton={button}
+                                      primaryText={dates.mjd2date(objectInfo.maxElongation).toDateString()}/>
+                        );
                     }
                 }
-
-                var headerButtonStyle = {
-                    paddingLeft: 0,
-                    paddingRight: 0,
-                    width: 'auto'
-                };
 
                 element = (
                     <div className="body-info-anchor" style={style}>
