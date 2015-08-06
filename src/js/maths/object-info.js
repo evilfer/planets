@@ -39,16 +39,27 @@ module.exports = function () {
             if (this.data.hasOwnProperty(id)) {
                 this.data[id].angularDiameter = analysis.angularDiameter(this.observer, id, ephs);
                 if (updatePredictions) {
-                    this.data[id].opposition = analysis.opposition(this.observer, id, t);
+                    if (id.charAt(0) >= this.observer.charAt(0)) {
+                        this.data[id].opposition = analysis.opposition(this.observer, id, t);
+                    } else {
+                        this.data[id].maxElongation = analysis.maxElongation(this.observer, id, t);
+                    }
                 }
             }
         }
     };
 
-    ObjectInfo.prototype.relMagnification = function (id) {
-        return this.data[this.reference].angularDiameter / this.data[id].angularDiameter;
-    };
+    ObjectInfo.prototype.isObserver = function(id) {
+        return id === this.observer;
+    },
 
+    ObjectInfo.prototype.isReference = function(id) {
+        return id === this.reference;
+    },
+
+    ObjectInfo.prototype.relDiameter = function (id) {
+        return this.data[id].angularDiameter / this.data[this.reference].angularDiameter;
+    };
 
     return ObjectInfo;
 

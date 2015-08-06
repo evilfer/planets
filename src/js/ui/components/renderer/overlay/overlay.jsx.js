@@ -20,9 +20,54 @@ module.exports = function () {
 
     var React = require('react'),
         mui = require('material-ui'),
-        Paper = mui.Paper;
+        Paper = mui.Paper,
+        List = mui.List,
+
+
+        ListItem = mui.ListItem,
+        IconButton = mui.IconButton,
+
+        SvgIcon = require('../../icons/CustomSvgIcon.jsx'),
+        dates = require('../../../../maths/dates');
 
     return React.createClass({
+        goToInfoTime: function (key) {
+            if (this.props.selected && this.props.info.data[this.props.selected] && this.props.info.data[this.props.selected][key]) {
+                this.props.setValues({t: this.props.info.data[this.props.selected][key]});
+            }
+        },
+
+        handleGoToOpposition: function () {
+            this.goToInfoTime('opposition');
+        },
+
+        handleGoToMaxElongation: function () {
+            this.goToInfoTime('maxElongation');
+        },
+
+        moveSelected: function (delta) {
+            var ids = Object.keys(this.props.data.objects).sort(function (a, b) {
+                    return a.localeCompare(b);
+                }),
+                index = ids.indexOf(this.props.selected);
+
+            console.log(ids);
+
+            if (index >= 0) {
+                this.props.setSelected(ids[(index + delta + ids.length) % ids.length]);
+            }
+        },
+        handlePrevious: function () {
+            this.moveSelected(-1);
+        },
+        handleNext: function () {
+            this.moveSelected(1);
+        },
+        handleClose: function () {
+            this.props.setSelected(false);
+        },
+
+
         render: function () {
             var txEphemerides = this.props.txEphemerides,
                 window = this.props.window,
@@ -32,37 +77,117 @@ module.exports = function () {
             if (id !== false) {
                 var obj = this.props.data.objects[id],
                     projected = txEphemerides[id].projected,
-                    info = this.props.info.data[id],
+                    info = this.props.info,
+                    objectInfo = info.data[id],
                     style = {
                         top: .5 * window.height * (1 - projected.y),
                         left: .5 * window.width * (1 + projected.x)
                     },
-                    content = [<div key="title">{obj.ui.label}</div>];
+                    items = [];
 
-                if (info) {
-                    if (info.opposition) {
-                        content.push(<div key="opposition">Opposition: {info.opposition}</div>);
+                if (info.isObserver(id)) {
+                    items.push(<ListItem primaryText="You live here"/>);
+                } else if (objectInfo) {
+                    if (objectInfo.opposition) {
+                        var icon = <SvgIcon icon="opposition"/>,
+                            button = <IconButton mini={true} onClick={this.handleGoToOpposition}
+                                                 iconClassName='material-icons'>play_arrow</IconButton>;
+
+                        items.push(
+                            <ListItem key="opposition" leftIcon={icon} rightIconButton={button}
+                                      primaryText={dates.mjd2date(objectInfo.opposition).toDateString()}/>
+                        );
                     }
 
-                    if (info.angularDiameter) {
-                        content.push(<div key="diameter">Angular diameter: {info.angularDiameter}</div>);
+                    if (objectInfo.maxElongation) {
+                        icon = <SvgIcon icon="max-elongation"/>;
+                        button = <IconButton mini={true} onClick={this.handleGoToMaxElongation}
+                                             iconClassName='material-icons'>play_arrow</IconButton>;
 
-                        if (id !== this.props.info.reference) {
-                            content.push(<div key="rel-diameter">Magnification to same diameter as
-                                Moon: {this.props.info.relMagnification(id)}</div>);
+                        items.push(
+                            <ListItem key="max-elongation" leftIcon={icon} rightIconButton={button}
+                                      primaryText={dates.mjd2date(objectInfo.maxElongation).toDateString()}/>
+                        );
+                    }
+
+                    if (objectInfo.angularDiameter) {
+                        var angDim = objectInfo.angularDiameter * 180 / Math.PI,
+                            v1, v2, u1, u2,
+                            angDimStr;
+
+                        if (angDim >= 1) {
+                            u1 = "°";
+                            u2 = "'";
+                        } else if (angDim >= 1 / 60) {
+                            u1 = "'";
+                            u2 = "''";
+                            angDim *= 60;
+                        } else {
+                            u1 = "''";
+                            u2 = false;
+                            angDim *= 3600;
                         }
-                    }
 
-                    if (id !== info.reference) {
+                        v1 = Math.floor(angDim);
+                        angDimStr = v1 + u1;
+
+                        if (u2) {
+                            v2 = Math.round(60 * (angDim - v1));
+                            angDimStr += ' ' + v2 + u2;
+                        }
+
+                        items.push(
+                            <ListItem key="diameter"
+                                      primaryText={angDimStr}
+                                      leftIcon={<SvgIcon icon="diameter"/>}/>
+                        );
+
+                        if (!info.isReference(id)) {
+                            var rel = info.relDiameter(id),
+                                relStr = rel >= .5 ? Math.round(100 + rel) + '%' :
+                                '1/' + Math.round(1 / rel);
+
+
+                            items.push(
+                                <ListItem key="rel-diameter"
+                                          primaryText={relStr}
+                                          leftIcon={<SvgIcon icon="moon"/>}/>
+                            );
+                        }
+
                     }
                 }
 
+                var headerButtonStyle = {
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    width: 'auto'
+                };
 
                 element = (
                     <div className="body-info-anchor" style={style}>
                         <div className="body-info">
                             <Paper>
-                                {content}
+                                <div style={{float: 'right', paddingRight: 15}}>
+                                    <IconButton mini={true} onClick={this.handlePrevious}
+                                                iconClassName='material-icons' style={headerButtonStyle}>
+                                        chevron_left
+                                    </IconButton>
+                                    <IconButton mini={true} onClick={this.handleNext}
+                                                iconClassName='material-icons' style={headerButtonStyle}>
+                                        chevron_right
+                                    </IconButton>
+                                    <IconButton mini={true} onClick={this.handleClose}
+                                                iconClassName='material-icons' style={headerButtonStyle}>
+                                        close
+                                    </IconButton>
+                                </div>
+                                <Paper style={{padding: 15, color: '#eee'}}>
+                                    {obj.ui.label}
+                                </Paper>
+                                <List>
+                                    {items}
+                                </List>
                             </Paper>
                         </div>
                     </div>

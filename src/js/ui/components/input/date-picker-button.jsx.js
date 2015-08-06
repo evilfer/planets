@@ -21,8 +21,7 @@ module.exports = function () {
     var React = require('react'),
 
         mui = require('material-ui'),
-        FloatingActionButton = mui.FloatingActionButton,
-        FontAwesomeIcon = require('../common/font-awesome-icon.jsx');
+        IconButton = mui.IconButton;
 
     return React.createClass({
 
@@ -40,14 +39,14 @@ module.exports = function () {
         },
 
         render: function () {
-            var icon = this.props.icon,
-                disabled = !this.buttonEnabled();
+            var disabled = !this.buttonEnabled(),
+                className = typeof this.props.children === 'string' ? 'material-icons' : '';
 
             return (
-                <FloatingActionButton mini={true} secondary={true} disabled={disabled} onClick={this.handleClick}
-                                      style={{marginLeft: 2, marginRight: 2}}>
-                    <FontAwesomeIcon icon={icon}/>
-                </FloatingActionButton>
+                <IconButton mini={true} secondary={true} disabled={disabled} onClick={this.handleClick}
+                            iconClassName={className}>
+                    {this.props.children}
+                </IconButton>
             );
         }
 

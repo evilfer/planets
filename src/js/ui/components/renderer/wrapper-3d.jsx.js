@@ -39,13 +39,17 @@ module.exports = function () {
             return {selected: false};
         },
 
+        handleSelect: function (id) {
+            this.setState({selected: id});
+        },
+
         handleDrag: function (dx, dy) {
             var values = {};
             if (dx !== 0) {
-                values.az = -dx / 80;
+                values.az = -dx / 100;
             }
             if (dy !== 0) {
-                values.alt = dy / 50;
+                values.alt = dy / 75;
             }
             this.props.setValues(values);
         },
@@ -69,9 +73,7 @@ module.exports = function () {
             }
 
             if (select !== false) {
-                this.setState({
-                    selected: this.state.selected === select ? false : select
-                });
+                this.handleSelect(this.state.selected === select ? false : select);
             }
         },
 
@@ -120,9 +122,12 @@ module.exports = function () {
                     <Overlay3d ephemerides={ephemerides} data={this.props.data} info={this.props.info}
                                perspective={perspective} window={window}
                                txEphemerides={this.txEphs}
-                               selected={this.state.selected}/>
+                               selected={this.state.selected}
+                               setValues={this.props.setValues}
+                               setSelected={this.handleSelect}/>
                 </div>
             );
+
         }
     });
 }();

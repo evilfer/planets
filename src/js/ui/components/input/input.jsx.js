@@ -25,12 +25,13 @@ module.exports = function () {
         Toggle = mui.Toggle,
 
         DatePickerButton = require('./date-picker-button.jsx'),
+        SvgIcon = require('../icons/CustomSvgIcon.jsx'),
 
         dates = require('../../../maths/dates');
 
     return React.createClass({
-        handleDateChange: function (a, b, c) {
-            this.props.setValues({t: dates.date2mjd(b)});
+        handleDateChange: function (e, date) {
+            this.props.setValues({t: dates.date2mjd(date)});
         },
 
         handleScaleChange: function (event, toggled) {
@@ -52,16 +53,22 @@ module.exports = function () {
             return (
                 <div className="planets-input">
                     <div className="date-picker">
-                        <DatePickerButton icon="angle-double-left" t={mjd} delta={-30} setValues={setValues} data={data}/>
-                        <DatePickerButton icon="angle-left" t={mjd} delta={-1} setValues={setValues} data={data}/>
+                        <DatePickerButton t={mjd} delta={-30} setValues={setValues}
+                                          data={data}>fast_rewind</DatePickerButton>
+                        <DatePickerButton t={mjd} delta={-1} setValues={setValues}
+                                          data={data}>
+                            <SvgIcon icon="rewind"/>
+                        </DatePickerButton>
 
                         <DatePicker mode="landscape" showYearSelector={true} onChange={this.handleDateChange}
                                     value={t} minDate={t0} maxDate={t1}
                                     formatDate={this.dateFormat}
-                                    style={{display: 'inline-block', marginLeft: 5, marginRight: 5}}/>
+                                    style={{display: 'inline-block'}}/>
 
-                        <DatePickerButton icon="angle-right" t={mjd} delta={1} setValues={setValues} data={data}/>
-                        <DatePickerButton icon="angle-double-right" t={mjd} delta={30} setValues={setValues} data={data}/>
+                        <DatePickerButton t={mjd} delta={1} setValues={setValues}
+                                          data={data}>play_arrow</DatePickerButton>
+                        <DatePickerButton t={mjd} delta={30} setValues={setValues}
+                                          data={data}>fast_forward</DatePickerButton>
                     </div>
 
                     <div style={{width: 300}}>

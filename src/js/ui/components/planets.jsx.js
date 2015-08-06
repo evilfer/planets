@@ -116,16 +116,16 @@ module.exports = function () {
 
             if (values.hasOwnProperty('az')) {
                 animate.setAnim('az', 'follow', {
-                    halfT: 50,
-                    threshold: .01,
+                    halfT: 100,
+                    threshold: .001,
                     delta: values.az
                 }, this.state.view.az);
             }
 
             if (values.hasOwnProperty('alt')) {
                 animate.setAnim('alt', 'follow', {
-                    halfT: 50,
-                    threshold: .01,
+                    halfT: 100,
+                    threshold: .001,
                     delta: values.alt,
                     max: Math.PI / 2,
                     min: 0
