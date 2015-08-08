@@ -22,8 +22,13 @@ module.exports = function () {
         clone = require('clone'),
         extend = require('extend'),
 
+        Router = require('react-router'),
+        RouteHandler = Router.RouteHandler,
+
         mui = require('material-ui'),
         ThemeManager = new mui.Styles.ThemeManager(),
+
+        data = require('../../data/data'),
 
         Wrapper3d = require('./renderer/wrapper-3d.jsx'),
         Input = require('./input/input.jsx'),
@@ -60,7 +65,7 @@ module.exports = function () {
 
         getInitialState: function () {
             return {
-                t: Math.min(this.props.data.t1, Math.max(this.props.data.t0, dates.date2mjd(new Date()))),
+                t: Math.min(data.t1, Math.max(data.t0, dates.date2mjd(new Date()))),
                 view: {
                     zoom: 1,
                     alt: Math.PI / 4,
@@ -128,7 +133,7 @@ module.exports = function () {
                     threshold: .001,
                     delta: values.alt,
                     max: Math.PI / 2,
-                    min: 0
+                    min: -Math.PI / 2
                 }, this.state.view.alt);
             }
 
@@ -152,12 +157,13 @@ module.exports = function () {
 
             return (
                 <div className='planets'>
-                    <Wrapper3d data={this.props.data}
+                    <Wrapper3d data={data}
                                ephemerides={this.cache.ephs} info={this.cache.info}
                                view={this.state.view} setValues={this.setValues}/>
 
-                    <Input data={this.props.data} setValues={this.setValues}
+                    <Input data={data} setValues={this.setValues}
                            view={this.state.view} t={this.state.t}/>
+
                 </div>
             );
 

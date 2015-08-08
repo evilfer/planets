@@ -29,11 +29,14 @@ module.exports = function () {
 
     for (var id in data.objects) {
         if (data.objects.hasOwnProperty(id)) {
-            var obj = data.objects[id];
+            var obj = data.objects[id],
+                color = objectColor(obj, .5),
+                lineColor = objectColor(obj, .3);
 
             materials[id] = {
-                body: new THREE.MeshBasicMaterial({color: objectColor(obj, .5)}),
-                orbit: new THREE.LineBasicMaterial({color: objectColor(obj, .3)})
+                body: obj.ui.color.noLight ? new THREE.MeshBasicMaterial({color: color}) :
+                    new THREE.MeshLambertMaterial({color: color, ambient: color}),
+                orbit: new THREE.LineBasicMaterial({color: lineColor})
             };
         }
     }

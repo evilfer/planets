@@ -1,4 +1,4 @@
-/**d
+/**
  * Copyright 2015 Eloy Villasclaras-Fernandez <eloy.villasclaras@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,28 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-!function () {
+module.exports = function () {
     'use strict';
 
     var React = require('react'),
-        Router = require('react-router'),
-        Route = Router.Route,
 
-        injectTapEventPlugin = require("react-tap-event-plugin"),
+        mui = require('material-ui'),
+        Paper = mui.Paper;
 
-        Planets = require('./ui/components/planets.jsx'),
-        About = require('./ui/components/pages/about.jsx'),
+    return React.createClass({
 
-        routes = (
-            <Route name="app" path="/" handler={Planets}>
-                <Route name="about" handler={About}/>
-            </Route>
-        );
+        render: function () {
 
-    injectTapEventPlugin();
-
-    Router.run(routes, function (Handler) {
-        React.render(<Handler/>, document.getElementById('content'));
+            return (
+                <Paper/>
+            );
+        }
     });
 
 }();

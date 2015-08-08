@@ -22,10 +22,13 @@ module.exports = function () {
     var React = require('react'),
         ReactTHREE = require('react-three'),
         Scene = ReactTHREE.Scene,
+        PointLight = ReactTHREE.PointLight,
+        AmbientLight = ReactTHREE.AmbientLight,
         OnResize = require("react-window-mixins").OnResize,
 
         PlanetsCamera = require('./planets-camera.jsx.js'),
-        ObjectList = require('./solar-system-object.jsx.js').ObjectList;
+        ObjectList = require('./solar-system-object.jsx.js').ObjectList,
+        StartField = require('./star-field.jsx');
 
     return React.createClass({
         mixins: [OnResize],
@@ -39,13 +42,17 @@ module.exports = function () {
                 txEphemerides = this.props.txEphemerides;
 
             return (
-                <Scene camera={name} width={window.width} height={window.height}>
+                <Scene camera={name} width={window.width} height={window.height} background={0x080808}>
                     <PlanetsCamera name={name} perspective={perspective}/>
+                    <StartField perspective={perspective}/>
                     <ObjectList list={data.tree} ephemerides={ephemerides} txEphemerides={txEphemerides}/>
+                    <PointLight distance={1e11} intensity={1}/>
+                    <AmbientLight color={0x666666}/>
                 </Scene>
             );
+
         }
-        
+
     });
 }();
 

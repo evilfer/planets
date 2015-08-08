@@ -40,11 +40,18 @@ module.exports = function () {
 
         render: function () {
             var disabled = !this.buttonEnabled(),
-                className = typeof this.props.children === 'string' ? 'material-icons' : '';
+                className = typeof this.props.children === 'string' ? 'material-icons' : '',
+                iconStyle = {
+                    width: 'auto',
+                    height: 'auto',
+                    padding: 0,
+                    margin: 0,
+                    verticalAlign: 'middle'
+                };
 
             return (
-                <IconButton mini={true} secondary={true} disabled={disabled} onClick={this.handleClick}
-                            iconClassName={className}>
+                <IconButton mini={true} disabled={disabled} onClick={this.handleClick}
+                            iconClassName={className} style={iconStyle}>
                     {this.props.children}
                 </IconButton>
             );

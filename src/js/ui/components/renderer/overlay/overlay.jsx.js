@@ -93,7 +93,7 @@ module.exports = function () {
 
                 if (info.isObserver(id)) {
                     items.push(
-                        <ListItem primaryText="You live here"
+                        <ListItem key="home" primaryText="You live here"
                                   leftIcon={<FontIcon className="material-icons">home</FontIcon>}/>
                     );
                 } else if (objectInfo) {

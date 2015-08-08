@@ -23,7 +23,9 @@ module.exports = function () {
         mui = require('material-ui'),
         DatePicker = mui.DatePicker,
         Toggle = mui.Toggle,
+        IconButton = mui.IconButton,
 
+        PlanetsNav = require('./planets-nav.jsx'),
         DatePickerButton = require('./date-picker-button.jsx'),
         SvgIcon = require('../icons/CustomSvgIcon.jsx'),
 
@@ -42,6 +44,10 @@ module.exports = function () {
             return date.toDateString();
         },
 
+        handleMenu: function () {
+            this.refs.leftNav.toggle();
+        },
+
         render: function () {
             var data = this.props.data,
                 setValues = this.props.setValues,
@@ -52,6 +58,11 @@ module.exports = function () {
 
             return (
                 <div className="planets-input">
+                    <PlanetsNav ref="leftNav"/>
+                    <IconButton iconClassName="material-icons"
+                                style={{verticalAlign: 'middle', marginRight: 20}}
+                                onClick={this.handleMenu}>menu</IconButton>
+
                     <div className="date-picker">
                         <DatePickerButton t={mjd} delta={-30} setValues={setValues}
                                           data={data}>fast_rewind</DatePickerButton>
@@ -63,7 +74,8 @@ module.exports = function () {
                         <DatePicker mode="landscape" showYearSelector={true} onChange={this.handleDateChange}
                                     value={t} minDate={t0} maxDate={t1}
                                     formatDate={this.dateFormat}
-                                    style={{display: 'inline-block'}}/>
+                                    style={{display: 'inline-block'}}
+                                    textFieldStyle={{width: 150}}/>
 
                         <DatePickerButton t={mjd} delta={1} setValues={setValues}
                                           data={data}>play_arrow</DatePickerButton>
@@ -71,7 +83,7 @@ module.exports = function () {
                                           data={data}>fast_forward</DatePickerButton>
                     </div>
 
-                    <div style={{width: 300}}>
+                    <div className="scale-toggle">
                         <Toggle label="Real scale" defaultToggled={this.props.view.scl === 0}
                                 onToggle={this.handleScaleChange}/>
 

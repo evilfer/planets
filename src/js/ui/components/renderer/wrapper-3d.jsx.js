@@ -99,7 +99,7 @@ module.exports = function () {
                     lookAt: new THREE.Vector3(0, 0, 0),
                     pos: new THREE.Vector3(d * Math.sin(view.az) * Math.cos(view.alt), -d * Math.cos(view.az) * Math.cos(view.alt), d * Math.sin(view.alt)),
                     up: new THREE.Vector3(-Math.sin(view.alt) * Math.sin(view.az), Math.sin(view.alt) * Math.cos(view.az), Math.cos(view.alt)),
-                    far: 10 * d,
+                    far: 1e12,//0 * d,
                     near: .1 * d,
                     aspect: window.width / window.height,
                     fov: 50
