@@ -21,14 +21,40 @@ module.exports = function () {
     var React = require('react'),
 
         mui = require('material-ui'),
-        Paper = mui.Paper;
+        Paper = mui.Paper,
+        IconButton = mui.IconButton,
+
+        pages = {
+            '/about': require('./about.jsx'),
+            '/help': require('./help.jsx')
+        };
 
     return React.createClass({
 
         render: function () {
 
+            var style = {
+                    position: 'absolute',
+                    top: 50,
+                    left: 400,
+                    width: 500,
+                    height: 'auto'
+                },
+                page = pages[this.props.path];
+
             return (
-                <Paper/>
+
+                <Paper style={style}>
+                    <div style={{float: 'right', paddingRight: 15}}>
+                        <IconButton mini={true} onClick={this.props.handleClose}
+                                    iconClassName='material-icons'>
+                            close
+                        </IconButton>
+                    </div>
+                    <Paper style={{padding: 15, color: '#eee'}}>
+                        {page.title}
+                    </Paper>
+                </Paper>
             );
         }
     });

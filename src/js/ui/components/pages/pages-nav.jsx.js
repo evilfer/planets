@@ -19,13 +19,15 @@ module.exports = function () {
     'use strict';
 
     var React = require('react'),
-
-        Router = require('react-router'),
-        RouteHandler = Router.RouteHandler,
+        reactMiniRouter = require('react-mini-router'),
+        RouterMixin = reactMiniRouter.RouterMixin,
+        navigate = reactMiniRouter.navigate,
 
         mui = require('material-ui'),
         LeftNav = mui.LeftNav,
         IconButton = mui.IconButton,
+
+        Page = require('./page.jsx'),
 
         headerStyle = {
             backgroundColor: "#00bcd4",
@@ -44,15 +46,13 @@ module.exports = function () {
             marginTop: 8
         },
         menuItems = [
-            {route: 'help', text: 'Help'},
-            {route: 'about', text: 'About'}
+            {path: '/help', text: 'Help'},
+            {path: '/about', text: 'About'}
         ];
 
 
     return React.createClass({
-        contextTypes: {
-            router: React.PropTypes.func
-        },
+        mixins: [RouterMixin],
 
         getInitialState: function () {
             return {
@@ -69,10 +69,22 @@ module.exports = function () {
         },
 
         handleChange: function (e, selectedIndex, menuItem) {
-            console.log(menuItem.route, selectedIndex);
-            this.context.router.transitionTo(menuItem.route);
+            navigate(menuItem.path);
             this.setState({selected: selectedIndex});
             return false;
+        },
+
+        handleClose: function () {
+            console.log('close');
+            navigate('/');
+            this.refs.nav.close();
+            this.setState({selected: -1});
+        },
+
+        routes: {
+            '/': 'home',
+            '/about': 'page',
+            '/help': 'page'
         },
 
         render: function () {
@@ -80,26 +92,34 @@ module.exports = function () {
                 <div style={headerStyle}>
                     Planets
                     <IconButton mini={true} onClick={this.handleClose}
-                                iconClassName='material-icons' style={headerButtonStyle}
-                                onClick={this.toggle}>
+                                iconClassName='material-icons' style={headerButtonStyle}>
                         close
                     </IconButton>
                 </div>
             );
 
             return (
-                <div>
+                <div className="pages-nav">
                     <LeftNav ref="nav"
                              docked={this.state.isDocked}
                              menuItems={menuItems}
                              header={header}
                              onChange={this.handleChange}
                              selectedIndex={this.state.selected}/>
-
-                    <RouteHandler/>
+                    {this.renderCurrentRoute()}
                 </div>
             );
+        },
+
+        home: function () {
+            return false;
+        },
+
+        page: function () {
+            return <Page path={this.state.path} handleClose={this.handleClose}/>;
         }
+
+
     });
 
 }();

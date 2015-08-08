@@ -22,7 +22,7 @@ module.exports = function () {
     var React = require('react');
 
     return {
-        title: 'About',
+        title: 'Help',
         content: (
             <p>hi!</p>
         )

@@ -25,7 +25,7 @@ module.exports = function () {
         Toggle = mui.Toggle,
         IconButton = mui.IconButton,
 
-        PlanetsNav = require('./planets-nav.jsx'),
+        PlanetsNav = require('./../pages/pages-nav.jsx.js'),
         DatePickerButton = require('./date-picker-button.jsx'),
         SvgIcon = require('../icons/CustomSvgIcon.jsx'),
 

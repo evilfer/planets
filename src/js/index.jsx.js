@@ -19,24 +19,16 @@
     'use strict';
 
     var React = require('react'),
-        Router = require('react-router'),
-        Route = Router.Route,
-
         injectTapEventPlugin = require("react-tap-event-plugin"),
 
         Planets = require('./ui/components/planets.jsx'),
-        About = require('./ui/components/pages/about.jsx'),
-
-        routes = (
-            <Route name="app" path="/" handler={Planets}>
-                <Route name="about" handler={About}/>
-            </Route>
-        );
+        data = require('./data/data');
 
     injectTapEventPlugin();
 
-    Router.run(routes, function (Handler) {
-        React.render(<Handler/>, document.getElementById('content'));
-    });
+    React.render(
+        <Planets data={data}/>,
+        document.getElementById('content')
+    );
 
 }();
