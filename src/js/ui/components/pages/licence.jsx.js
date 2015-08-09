@@ -22,12 +22,19 @@ module.exports = function () {
     var React = require('react');
 
     return {
-        title: 'About',
+        title: 'Data sources',
         content: (
             <div>
-                <p>'Planets' is a toy web app created to help understanding the night sky. Predictably, it's focused
-                    only on Solar System planets, and our Moon: it's designed to show clearly which planets will be
-                    visible at night any given day.</p>
+                <p>This software is released under a <a target="_blank"
+                                                        href="https://gnu.org/licenses/gpl.html">GPL licence</a>. The
+                    code can be found in the <a target="_blank" href="https://github.com/evilfer/planets">Planets
+                        GitHub repository</a>.
+                </p>
+
+                <p>Besides third party data sources (see <a href="#!/data">here</a>), 'Planets' use a number of great
+                    libraries made available under open source licences by other developers. The complete list can be
+                    see <a target="_blank" href="https://github.com/evilfer/planets/blob/master/package.json">here</a>.
+                </p>
             </div>
         )
     };

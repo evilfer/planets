@@ -15,25 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 module.exports = function () {
     'use strict';
 
+    var React = require('react');
 
-    var React = require('react'),
-        mui = require('material-ui'),
-        SvgIcon = mui.SvgIcon,
-
-        icons = require('./icons.jsx');
-
-
-    return React.createClass({
-        render: function () {
-            return (
-                <SvgIcon {...this.props}>
-                    {icons[this.props.icon]}
-                </SvgIcon>
-            );
-        }
-    });
-
+    return {
+        title: 'Contact',
+        content: (
+            <div>
+                <p>If you spot any problems with this page, or have any suggestion to improve it, you can post your
+                    questions <a target="_blank" href="https://github.com/evilfer/planets/issues">here</a>.
+                    Alternatively, feel free to email me about it
+                    at <a href="mailto:eloy.villasclaras@gmail.com">eloy.villasclaras@gmail.com</a>.
+                </p>
+            </div>
+        )
+    };
 }();

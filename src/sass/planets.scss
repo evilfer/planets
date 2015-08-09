@@ -53,7 +53,6 @@ html, body {
       }
     }
 
-
     .planets-input {
       position: absolute;
       top: 0;
@@ -80,4 +79,36 @@ html, body {
 
     }
   }
+
+  .page {
+    position: absolute;
+    color: #eee;
+
+    a {
+      color: #12ccff;
+    }
+
+    .page-header {
+
+      .page-header-title {
+        padding: 15px 20px;
+      }
+
+      .page-header-icon {
+        float: right;
+      }
+    }
+
+    .page-content {
+      margin: 5px 0 5px 20px;
+      padding-right: 20px;
+      overflow-y: auto;
+      font-weight: 300;
+      line-height: 1.25em;
+    }
+  }
+}
+
+.help-info-window svg {
+  margin-right: 15px;
 }

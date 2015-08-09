@@ -18,8 +18,8 @@ var fs = require('fs'),
                 "CENTER= '500@0'\n" +
                 "MAKE_EPHEM= 'YES'\n" +
                 "TABLE_TYPE= 'VECTORS'\n" +
-                "START_TIME= '" + sd.year + "-" + sd.month + "-" + sd.day + "'\n" +
-                "STOP_TIME= '" + ed.year + "-" + ed.month + "-" + ed.day + "'\n" +
+                "START_TIME= '" + sd.getFullYear() + "-" + (sd.getMonth() + 1) + "-" + sd.getDate() + "'\n" +
+                "STOP_TIME= '" + ed.getFullYear() + "-" + (ed.getMonth() + 1) + "-" + ed.getDate() + "'\n" +
                 "STEP_SIZE= '" + txtGap + "'\n" +
                 "OUT_UNITS= 'KM-S'\n" +
                 "VECT_TABLE= '2'\n" +
@@ -31,6 +31,8 @@ var fs = require('fs'),
                 "OBJ_DATA= 'NO'\n" +
                 "!$$EOF\n";
 
+        console.log(totalTime, end);
+
         fs.writeFileSync('./data/requests/' + id + '.txt', txt);
     },
 
@@ -38,6 +40,8 @@ var fs = require('fs'),
         var json = fs.readFileSync('./data/base.json'),
             data = JSON.parse(json),
             objects = data.objects;
+
+        console.log(data);
 
         for (var id in objects) {
             if (objects.hasOwnProperty(id) && objects[id].parent) {

@@ -58,9 +58,10 @@ module.exports = function () {
 
             return (
                 <div className="planets-input">
-                    <PlanetsNav ref="leftNav"/>
+                    <PlanetsNav ref="leftNav" window={this.props.window}/>
                     <IconButton iconClassName="material-icons"
                                 style={{verticalAlign: 'middle', marginRight: 20}}
+                                iconStyle={{color: '#00bcd4'}}
                                 onClick={this.handleMenu}>menu</IconButton>
 
                     <div className="date-picker">
@@ -84,7 +85,7 @@ module.exports = function () {
                     </div>
 
                     <div className="scale-toggle">
-                        <Toggle label="Real scale" defaultToggled={this.props.view.scl === 0}
+                        <Toggle label="Actual scale" defaultToggled={this.props.view.scl === 0}
                                 onToggle={this.handleScaleChange}/>
 
                     </div>

@@ -22,6 +22,8 @@ module.exports = function () {
         clone = require('clone'),
         extend = require('extend'),
 
+        OnResize = require("react-window-mixins").OnResize,
+
         mui = require('material-ui'),
         ThemeManager = new mui.Styles.ThemeManager(),
 
@@ -40,6 +42,8 @@ module.exports = function () {
 
 
     return React.createClass({
+        mixins: [OnResize],
+
         childContextTypes: {
             muiTheme: React.PropTypes.object
         },
@@ -152,12 +156,13 @@ module.exports = function () {
 
             return (
                 <div className='planets'>
-                    <Wrapper3d data={this.props.data}
+                    <Wrapper3d data={this.props.data} window={this.state.window}
                                ephemerides={this.cache.ephs} info={this.cache.info}
                                view={this.state.view} setValues={this.setValues}/>
 
                     <Input data={this.props.data} setValues={this.setValues}
-                           view={this.state.view} t={this.state.t}/>
+                           view={this.state.view} t={this.state.t}
+                           window={this.state.window}/>
 
                 </div>
             );

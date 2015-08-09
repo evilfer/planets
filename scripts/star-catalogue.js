@@ -58,3 +58,5 @@ console.log(stars.reduce(function (pc, cv) {
 console.log(stars.reduce(function (pc, cv) {
     return Math.max(pc, cv[0]);
 }, -1000));
+
+console.log(stars.length);

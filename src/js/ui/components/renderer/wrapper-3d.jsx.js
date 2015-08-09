@@ -20,7 +20,6 @@ module.exports = function () {
 
     var React = require('react'),
         THREE = require('three'),
-        OnResize = require("react-window-mixins").OnResize,
 
         ephTransforms = require('../../../data/eph-transforms'),
 
@@ -29,7 +28,7 @@ module.exports = function () {
         MouseInputMixin = require('./mouse-input');
 
     return React.createClass({
-        mixins: [OnResize, MouseInputMixin],
+        mixins: [MouseInputMixin],
 
         componentWillMount: function () {
             this.txEphs = ephTransforms.init();
@@ -89,7 +88,7 @@ module.exports = function () {
 
 
         render: function () {
-            var window = this.state.window,
+            var window = this.props.window,
                 view = this.props.view,
                 ephemerides = this.props.ephemerides,
 

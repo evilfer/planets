@@ -46,19 +46,37 @@ module.exports = function () {
             marginTop: 8
         },
         menuItems = [
+            {path: '/about', text: 'About'},
             {path: '/help', text: 'Help'},
-            {path: '/about', text: 'About'}
+            {path: '/data', text: 'Data'},
+            {path: '/privacy', text: 'Privacy'},
+            {path: '/contact', text: 'Contact'}
         ];
-
 
     return React.createClass({
         mixins: [RouterMixin],
 
+        getSelectedRoute: function () {
+            var path = this.state.path;
+            for (var i = 0; i < menuItems.length; i++) {
+                if (menuItems[i].path === path) {
+                    return i;
+                }
+            }
+
+            return -1;
+        },
+
         getInitialState: function () {
             return {
-                isDocked: false,
-                selected: -1
+                isDocked: false
             };
+        },
+
+        componentDidMount: function () {
+            if (this.state.path !== '/') {
+                this.toggle();
+            }
         },
 
         toggle: function () {
@@ -70,22 +88,17 @@ module.exports = function () {
 
         handleChange: function (e, selectedIndex, menuItem) {
             navigate(menuItem.path);
-            this.setState({selected: selectedIndex});
-            return false;
         },
 
         handleClose: function () {
-            console.log('close');
             navigate('/');
             this.refs.nav.close();
-            this.setState({selected: -1});
         },
 
-        routes: {
-            '/': 'home',
-            '/about': 'page',
-            '/help': 'page'
-        },
+        routes: menuItems.reduce(function (r, item) {
+            r[item.path] = 'page';
+            return r;
+        }, {'/': 'home'}),
 
         render: function () {
             var header = (
@@ -105,7 +118,7 @@ module.exports = function () {
                              menuItems={menuItems}
                              header={header}
                              onChange={this.handleChange}
-                             selectedIndex={this.state.selected}/>
+                             selectedIndex={this.getSelectedRoute()}/>
                     {this.renderCurrentRoute()}
                 </div>
             );
@@ -116,7 +129,8 @@ module.exports = function () {
         },
 
         page: function () {
-            return <Page path={this.state.path} handleClose={this.handleClose}/>;
+            return <Page path={this.state.path} handleClose={this.handleClose}
+                         window={this.props.window}/>;
         }
 
 

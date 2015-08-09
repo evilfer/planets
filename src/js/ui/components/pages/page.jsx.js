@@ -26,35 +26,52 @@ module.exports = function () {
 
         pages = {
             '/about': require('./about.jsx'),
-            '/help': require('./help.jsx')
+            '/contact': require('./contact.jsx'),
+            '/help': require('./help.jsx'),
+            '/data': require('./data.jsx'),
+            '/privacy': require('./privacy.jsx')
         };
 
     return React.createClass({
 
         render: function () {
+            var navWidth = 256,
+                headerHeight = 50,
+                availableWidth = this.props.window.width - navWidth,
+                pageWidth = availableWidth * .8,
+                availableHeight = this.props.window.height - headerHeight,
+                pageHeight = availableHeight * .9,
 
-            var style = {
-                    position: 'absolute',
-                    top: 50,
-                    left: 400,
-                    width: 500,
-                    height: 'auto'
+                style = {
+                    top: headerHeight + .5 * (availableHeight - pageHeight),
+                    height: pageHeight,
+                    left: navWidth + .5 * (availableWidth - pageWidth),
+                    width: availableWidth * 8 / 10
                 },
+                contentStyle = {
+                    maxHeight: pageHeight - 49 - 30
+                },
+
                 page = pages[this.props.path];
 
             return (
-
-                <Paper style={style}>
-                    <div style={{float: 'right', paddingRight: 15}}>
-                        <IconButton mini={true} onClick={this.props.handleClose}
-                                    iconClassName='material-icons'>
-                            close
-                        </IconButton>
+                <Paper style={style} className="page">
+                    <div className="page-header">
+                        <div className="page-header-icon">
+                            <IconButton mini={true} onClick={this.props.handleClose}
+                                        iconClassName='material-icons'>
+                                close
+                            </IconButton>
+                        </div>
+                        <Paper className="page-header-title">
+                            {page.title}
+                        </Paper>
                     </div>
-                    <Paper style={{padding: 15, color: '#eee'}}>
-                        {page.title}
-                    </Paper>
+                    <div className="page-content" style={contentStyle}>
+                        {page.content}
+                    </div>
                 </Paper>
+
             );
         }
     });

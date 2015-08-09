@@ -15,25 +15,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 module.exports = function () {
     'use strict';
 
+    var React = require('react');
 
-    var React = require('react'),
-        mui = require('material-ui'),
-        SvgIcon = mui.SvgIcon,
+    return {
+        title: 'Privacy and cookies',
+        content: (
+            <div>
+                <p>'Planets' uses Google Analytics to keep track of page views. Google Analytics uses its own cookies to
+                    do this; you can read about
+                    it <a target="_blank"
+                          href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage?hl=en">
+                        here</a>.</p>
 
-        icons = require('./icons.jsx');
-
-
-    return React.createClass({
-        render: function () {
-            return (
-                <SvgIcon {...this.props}>
-                    {icons[this.props.icon]}
-                </SvgIcon>
-            );
-        }
-    });
-
+                <p>'Planets' does not use any other cookies. No information about user actions is stored either locally
+                    or on the server.
+                </p>
+            </div>
+        )
+    };
 }();

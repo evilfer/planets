@@ -4,7 +4,8 @@
       "label": "Sun",
       "color": {
         "h": 16,
-        "s": 236
+        "s": 200,
+        "noLight": true
       },
       "scale": {
         "body": 400

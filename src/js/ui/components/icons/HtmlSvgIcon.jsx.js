@@ -20,18 +20,16 @@ module.exports = function () {
 
 
     var React = require('react'),
-        mui = require('material-ui'),
-        SvgIcon = mui.SvgIcon,
-
         icons = require('./icons.jsx');
-
 
     return React.createClass({
         render: function () {
+            var size = this.props.size || 24;
+
             return (
-                <SvgIcon {...this.props}>
+                <svg width={size} height={size} viewBox="0 0 24 24">
                     {icons[this.props.icon]}
-                </SvgIcon>
+                </svg>
             );
         }
     });
