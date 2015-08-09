@@ -18,7 +18,9 @@
 module.exports = function () {
     'use strict';
 
-    var parse = function (txt) {
+    var btoa = require('btoa'),
+
+        parse = function (txt) {
             var lines = txt.split('\r\n'),
                 data = [],
                 soe = false;
@@ -38,10 +40,24 @@ module.exports = function () {
             }
 
             return data;
+        },
+
+        /**
+         * Creates a base64 representation of the state vectors. Each value is a float64.
+         * Please note that 'decoder' assumes the data is little endian.
+         * This function does not check for the machine endianness. A big-endian machine will
+         * produce invalid outputs.
+         *
+         * @param txt Horizons String data
+         * @returns {string}
+         */
+        encoded = function (txt) {
+            return btoa(String.fromCharCode.apply(null, new Uint8Array(new Float64Array(parse(txt)).buffer)));
         };
 
     return {
-        parse: parse
+        parse: parse,
+        encoded: encoded
     };
 
 }();

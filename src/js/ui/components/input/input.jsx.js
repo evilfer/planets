@@ -24,6 +24,11 @@ module.exports = function () {
         DatePicker = mui.DatePicker,
         Toggle = mui.Toggle,
         IconButton = mui.IconButton,
+        Dialog = mui.Dialog,
+
+        ReactSocial = require("react-social"),
+        FacebookButton = ReactSocial.FacebookButton,
+        FacebookCount = ReactSocial.FacebookCount,
 
         PlanetsNav = require('./../pages/pages-nav.jsx.js'),
         DatePickerButton = require('./date-picker-button.jsx'),
@@ -48,13 +53,18 @@ module.exports = function () {
             this.refs.leftNav.toggle();
         },
 
+        handleShare: function () {
+            this.refs.shareDlg.show();
+        },
+
         render: function () {
             var data = this.props.data,
                 setValues = this.props.setValues,
                 mjd = this.props.t,
                 t = dates.mjd2date(mjd),
                 t0 = dates.mjd2date(this.props.data.t0),
-                t1 = dates.mjd2date(this.props.data.t1);
+                t1 = dates.mjd2date(this.props.data.t1),
+                url = 'http://evilfer.github.io/planets/';
 
             return (
                 <div className="planets-input">
@@ -89,6 +99,19 @@ module.exports = function () {
                                 onToggle={this.handleScaleChange}/>
 
                     </div>
+                    <IconButton iconClassName="material-icons"
+                                style={{float: 'right', verticalAlign: 'middle', marginRight: 20}}
+                                onClick={this.handleShare}>share</IconButton>
+                    <Dialog title="Share"
+                            ref="shareDlg"
+                            actions={[{text: 'Cancel'}]}
+                            modal={true}>
+                        <FacebookButton url={url}>
+                            <FacebookCount url={url}/>
+                            {" Share " + url}
+                        </FacebookButton>
+                    </Dialog>
+
                 </div>
             );
         }

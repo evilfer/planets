@@ -28,10 +28,10 @@ module.exports = function () {
         content: (
             <div>
                 <p>Hopefully most of the user interaction in this page is straightforward. If not, I'd be grateful if
-                    you <a href="/contact">let me know</a>!</p>
+                    you could <a href="/contact">let me know</a>!</p>
 
-                <p>Drag the screen with the mouse to change the view; the mouse wheel will zoom in and out. Clicking
-                    near a planet or Moon opens a small info window.</p>
+                <p>Drag the mouse on the screen to change the view; the mouse wheel will zoom in and out. Clicking
+                    on a planet or Moon opens a small info window.</p>
 
                 <p>In the default scale settings, the size of the bodies and orbits is exaggerated, so that all can be
                     seen clearly at the same time. Switch on 'Actual scale' to see a more accurate version of the Solar
@@ -64,8 +64,8 @@ module.exports = function () {
                 </ul>
 
                 <p>Please note that the algorithm to compute the date of oppositions and maximum elongations is rather
-                    unsophisticated. This, along with the accuracy issues (see <a href="/data">here</a>) limits the
-                    precision of the calculated dates.</p>
+                    unsophisticated. This, along with the accuracy issues (see the <a href="/data">data</a> section) limits the
+                    precision of the calculated dates (so far I've only found errors of a few hours). </p>
 
             </div>
         )

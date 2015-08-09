@@ -18,21 +18,56 @@
 module.exports = function () {
     'use strict';
 
-    var expand = function (data) {
-            var expanded = [];
+    var atob = require('atob'),
 
+        expand = function (data) {
+            var expanded = [];
             for (var i = 0; i < data.length; i += 6) {
                 expanded.push({
-                    r: data.slice(i, i + 3),
-                    v: data.slice(i + 3, i + 6)
+                    r: [data[i], data[i + 1], data[i + 2]],
+                    v: [data[i + 3], data[i + 4], data[i + 5]]
                 });
             }
 
             return expanded;
+        },
+
+        /**
+         * from https://gist.github.com/TooTallNate/4750953
+         * @returns boolean
+         */
+        littleEndianness = function () {
+            var b = new ArrayBuffer(4),
+                a = new Uint32Array(b),
+                c = new Uint8Array(b);
+            a[0] = 0xdeadbeef;
+            return c[0] === 0xef;
+        }(),
+
+        expandEncoded = function (txt) {
+            var bufferString = atob(txt),
+                buffer = new ArrayBuffer(bufferString.length),
+                bufferView = new Uint8Array(buffer),
+                floatArray;
+            
+            for (var i = 0; i < bufferString.length; i += 8) {
+                for (var j = 0; j < 8; j++) {
+                    var ccp = i + j,
+                        bvp = littleEndianness ? ccp : i + 7 - j;
+
+                    bufferView[bvp] = bufferString.charCodeAt(ccp);
+                }
+            }
+
+            floatArray = new Float64Array(bufferView.buffer);
+
+            return expand(floatArray);
         };
 
     return {
-        expand: expand
+        expand: expand,
+        expandEncoded: expandEncoded
     };
 
-}();
+}
+();

@@ -25,9 +25,13 @@ module.exports = function () {
         title: 'About',
         content: (
             <div>
-                <p>'Planets' is a toy web app created to help understanding the night sky. Predictably, it's focused
-                    only on Solar System planets, and our Moon: it's designed to show clearly which planets will be
-                    visible at night any given day.</p>
+                <p>'Planets' is a toy web app created to help understanding the night sky. Unsurprisingly t's focused
+                    only on Solar System planets and our Moon.</p>
+
+                <p>Currently it does not have a huge set of functions, but I hope it's useful anyway!</p>
+
+                <p>Check the <a href="/help">help</a> section for a quick introduction to the implemented
+                    functionality, or <a href="/contact">contact us</a> if you have any question or suggestion.</p>
             </div>
         )
     };

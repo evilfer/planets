@@ -21,7 +21,7 @@ module.exports = function () {
     var compressed = require('../../../data/data.json'),
         uiData = require('../../../data/ui.json'),
 
-        expand = require('./expand').expand,
+        expand = require('./expand').expandEncoded,
         cp = ['label', 'parent', 'step', 'mu', 'radius'],
         data = {t0: compressed.t0, t1: compressed.t1, objects: {}, tree: []},
 
