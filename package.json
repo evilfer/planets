@@ -16,9 +16,9 @@
   },
   "homepage": "",
   "devDependencies": {
-    "atob": "^1.1.2",
+    "atob": "1.1.2",
     "browserify": "11.0.1",
-    "btoa": "^1.1.2",
+    "btoa": "1.1.2",
     "bundle-collapser": "1.2.1",
     "chai": "3.2.0",
     "chai-stats": "0.3.0",
@@ -32,7 +32,7 @@
     "gulp-sass": "2.0.4",
     "gulp-uglify": "1.2.0",
     "gulp-watch": "4.3.4",
-    "material-ui": "0.10.2",
+    "material-ui": "0.10.4",
     "morgan": "1.6.1",
     "react": "0.13.3",
     "react-mini-router": "1.1.7",
@@ -40,12 +40,11 @@
     "react-three": "git://github.com/Izzimach/react-three.git",
     "react-window-mixins": "0.0.6",
     "reactify": "1.1.1",
-    "reflux": "0.2.11",
+    "reflux": "0.2.12",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0",
     "watchify": "3.3.1"
   },
   "dependencies": {
-    "react-social": "^0.1.5"
   }
 }

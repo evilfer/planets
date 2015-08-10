@@ -38,7 +38,7 @@ module.exports = function () {
             var navWidth = 256,
                 headerHeight = 50,
                 availableWidth = this.props.window.width - navWidth,
-                pageWidth = availableWidth * .8,
+                pageWidth = Math.min(availableWidth * .8, 800),
                 availableHeight = this.props.window.height - headerHeight,
                 pageHeight = availableHeight * .9,
 

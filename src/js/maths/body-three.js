@@ -18,20 +18,28 @@
 module.exports = function () {
     'use strict';
 
+    var THREE = require('three'),
 
-    var React = require('react'),
-        icons = require('./icons.jsx');
 
-    return React.createClass({
-        render: function () {
-            var size = this.props.size || 24;
+        init = function (data, body) {
+            var z = .5 * Math.PI - data.rings.ra,
+                x = .5 * Math.PI - data.rings.dec,
+                c1 = Math.cos(x / 2),
+                s1 = Math.sin(x / 2),
+                c3 = Math.cos(z / 2),
+                s3 = Math.sin(z / 2);
 
-            return (
-                <svg width={size} height={size} {...this.props} viewBox="0 0 24 24">
-                    {icons[this.props.icon]}
-                </svg>
+            body.quaternion = new THREE.Quaternion(
+                s1 * c3,
+                s1 * s3,
+                c1 * s3,
+                c1 * c3
             );
-        }
-    });
 
+            body.ringGeometry = new THREE.RingGeometry(data.rings.inner, data.rings.outer, 32);
+        };
+
+    return {
+        init: init
+    };
 }();

@@ -42,14 +42,19 @@ module.exports = function () {
                     ephemeris = ephemerides[obj.id],
                     txEphemeris = txEphemerides[obj.id],
 
-                    material = materials[obj.id].body,
-                    orbit = ephemeris.orbit ? <Orbit obj={obj} ephemeris={ephemeris}/> : false;
+                    material = materials[obj.id],
+                    orbit = ephemeris.orbit ? <Orbit obj={obj} ephemeris={ephemeris}/> : false,
+                    rings = ephemeris.rings ? <Mesh geometry={ephemeris.rings.ringGeometry}
+                                                    material={material.rings}
+                                                    scale={txEphemeris.bodyScl}
+                                                    quaternion={ephemeris.rings.quaternion}/> : false;
 
                 return (
                     <Object3D scale={txEphemeris.orbitScl}>
                         <Object3D position={txEphemeris.localPos}>
-                            <Mesh geometry={sphereGeometry} material={material}
-                                  scale={txEphemeris.bodyScl}/>
+                            <Mesh geometry={sphereGeometry} material={material.body}
+                                  scale={txEphemeris.sphereScl}/>
+                            {rings}
                             <ObjectList list={obj.children} ephemerides={ephemerides} txEphemerides={txEphemerides}/>
                         </Object3D>
                         {orbit}

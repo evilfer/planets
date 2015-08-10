@@ -33,14 +33,14 @@ module.exports = function () {
                 <p>Drag the mouse on the screen to change the view; the mouse wheel will zoom in and out. Clicking
                     on a planet or Moon opens a small info window.</p>
 
+                <p>If you change the date, you can go back to today by clicking
+                    on <SvgIcon icon="today" size={20} style={{fill: '#ddd'}}/>. Please note that currently oppositions
+                    and maximum elongations are calculated always forward in time from the selected date.</p>
+
                 <p>In the default scale settings, the size of the bodies and orbits is exaggerated, so that all can be
                     seen clearly at the same time. Switch on 'Actual scale' to see a more accurate version of the Solar
-                    System.</p>
-
-                <p>The scale setting does not affect the orbit shape (e.g., periapsis and apoapsis will not change). It
-                    does not affect either the calculation of oppositions and maximum elongations. However, please note
-                    than on the false scale, maximum elongations will look wrong, since the orbits of inner planets
-                    have different scales than Earth's.</p>
+                    System. The scale setting does not affect the orbit shape (e.g., periapsis and apoapsis will not
+                    change). It does not affect either the calculation of oppositions and maximum elongations.</p>
 
                 <p>The planet info window displays the following data:</p>
 
@@ -64,7 +64,8 @@ module.exports = function () {
                 </ul>
 
                 <p>Please note that the algorithm to compute the date of oppositions and maximum elongations is rather
-                    unsophisticated. This, along with the accuracy issues (see the <a href="/data">data</a> section) limits the
+                    unsophisticated. This, along with the accuracy issues (see the <a href="/data">data</a> section)
+                    limits the
                     precision of the calculated dates (so far I've only found errors of a few hours). </p>
 
             </div>

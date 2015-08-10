@@ -20,6 +20,7 @@ module.exports = function () {
 
 
     var React = require('react'),
+        extend = require('extend'),
         mui = require('material-ui'),
         SvgIcon = mui.SvgIcon,
 
@@ -28,8 +29,12 @@ module.exports = function () {
 
     return React.createClass({
         render: function () {
+            var size = this.props.size || 24,
+                extraStyle = {width: size, height: size},
+                style = this.props.style ? extend({}, this.props.style, extraStyle) : extraStyle;
+
             return (
-                <SvgIcon {...this.props}>
+                <SvgIcon {...this.props} style={style}>
                     {icons[this.props.icon]}
                 </SvgIcon>
             );

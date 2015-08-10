@@ -31,6 +31,7 @@ module.exports = function () {
                         projected: new THREE.Vector3(),
                         screenPos: [0, 0],
                         bodyScl: 1,
+                        sphereScl: 1,
                         orbitScl: 1,
                         accScl: 1
                     };
@@ -67,7 +68,8 @@ module.exports = function () {
                         tx.globalPos.add(parentTx.globalPos);
                     }
 
-                    tx.bodyScl = obj.radius * (scl * obj.ui.scale.body + 1 - scl) / tx.accScl;
+                    tx.bodyScl = (scl * obj.ui.scale.body + 1 - scl) / tx.accScl;
+                    tx.sphereScl = obj.radius * tx.bodyScl;
                     tx.projected.copy(tx.globalPos);
                     tx.projected.project(camera);
 

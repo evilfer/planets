@@ -22,6 +22,7 @@ module.exports = function () {
         interpolator = require('./interpolator'),
         orbit = require('./orbit'),
         orbitThree = require('./orbit-three'),
+        bodyThree = require('./body-three'),
         vector = require('./vector'),
 
         init = function () {
@@ -29,12 +30,19 @@ module.exports = function () {
 
             for (var id in data.objects) {
                 if (data.objects.hasOwnProperty(id)) {
-                    var eph = {};
+                    var obj = data.objects[id],
+                        eph = {};
 
                     eph.vectors = {r: [0, 0, 0], v: [0, 0, 0], p: [0, 0, 0]};
-                    if (data.objects[id].parent) {
+
+                    if (obj.parent) {
                         eph.orbit = {};
                         orbitThree.init(eph.orbit);
+                    }
+
+                    if (obj.rings) {
+                        eph.rings = {};
+                        bodyThree.init(obj, eph.rings);
                     }
 
                     stt[id] = eph;

@@ -21,26 +21,15 @@ module.exports = function () {
     var React = require('react'),
 
         mui = require('material-ui'),
-        DatePicker = mui.DatePicker,
         Toggle = mui.Toggle,
         IconButton = mui.IconButton,
         Dialog = mui.Dialog,
 
-        ReactSocial = require("react-social"),
-        FacebookButton = ReactSocial.FacebookButton,
-        FacebookCount = ReactSocial.FacebookCount,
-
         PlanetsNav = require('./../pages/pages-nav.jsx.js'),
-        DatePickerButton = require('./date-picker-button.jsx'),
-        SvgIcon = require('../icons/CustomSvgIcon.jsx'),
-
-        dates = require('../../../maths/dates');
+        DatePicker = require('./date-picker/date-picker.jsx'),
+        SocialMenu = require('./social/social-menu.jsx');
 
     return React.createClass({
-        handleDateChange: function (e, date) {
-            this.props.setValues({t: dates.date2mjd(date)});
-        },
-
         handleScaleChange: function (event, toggled) {
             this.props.setValues({scl: toggled ? 0 : 1});
         },
@@ -53,19 +42,7 @@ module.exports = function () {
             this.refs.leftNav.toggle();
         },
 
-        handleShare: function () {
-            this.refs.shareDlg.show();
-        },
-
         render: function () {
-            var data = this.props.data,
-                setValues = this.props.setValues,
-                mjd = this.props.t,
-                t = dates.mjd2date(mjd),
-                t0 = dates.mjd2date(this.props.data.t0),
-                t1 = dates.mjd2date(this.props.data.t1),
-                url = 'http://evilfer.github.io/planets/';
-
             return (
                 <div className="planets-input">
                     <PlanetsNav ref="leftNav" window={this.props.window}/>
@@ -74,43 +51,14 @@ module.exports = function () {
                                 iconStyle={{color: '#00bcd4'}}
                                 onClick={this.handleMenu}>menu</IconButton>
 
-                    <div className="date-picker">
-                        <DatePickerButton t={mjd} delta={-30} setValues={setValues}
-                                          data={data}>fast_rewind</DatePickerButton>
-                        <DatePickerButton t={mjd} delta={-1} setValues={setValues}
-                                          data={data}>
-                            <SvgIcon icon="rewind"/>
-                        </DatePickerButton>
-
-                        <DatePicker mode="landscape" showYearSelector={true} onChange={this.handleDateChange}
-                                    value={t} minDate={t0} maxDate={t1}
-                                    formatDate={this.dateFormat}
-                                    style={{display: 'inline-block'}}
-                                    textFieldStyle={{width: 150}}/>
-
-                        <DatePickerButton t={mjd} delta={1} setValues={setValues}
-                                          data={data}>play_arrow</DatePickerButton>
-                        <DatePickerButton t={mjd} delta={30} setValues={setValues}
-                                          data={data}>fast_forward</DatePickerButton>
-                    </div>
+                    <DatePicker t={this.props.t} setValues={this.props.setValues} data={this.props.data}/>
 
                     <div className="scale-toggle">
                         <Toggle label="Actual scale" defaultToggled={this.props.view.scl === 0}
                                 onToggle={this.handleScaleChange}/>
 
                     </div>
-                    <IconButton iconClassName="material-icons"
-                                style={{float: 'right', verticalAlign: 'middle', marginRight: 20}}
-                                onClick={this.handleShare}>share</IconButton>
-                    <Dialog title="Share"
-                            ref="shareDlg"
-                            actions={[{text: 'Cancel'}]}
-                            modal={true}>
-                        <FacebookButton url={url}>
-                            <FacebookCount url={url}/>
-                            {" Share " + url}
-                        </FacebookButton>
-                    </Dialog>
+                    <SocialMenu/>
 
                 </div>
             );

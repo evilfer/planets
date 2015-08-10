@@ -111,7 +111,10 @@ module.exports = function () {
 
         setValues: function (values) {
             if (values.hasOwnProperty('t')) {
-                animate.setAnim('t', 'poly3', {duration: 1000, target: values.t}, this.state.t);
+                var dt = Math.abs(this.state.t - values.t),
+                    duration = 200 * (1 + dt / (1 + 0.1 * dt));
+
+                animate.setAnim('t', 'poly3', {duration: duration, target: values.t}, this.state.t);
             }
 
             if (values.hasOwnProperty('scl')) {

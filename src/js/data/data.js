@@ -22,7 +22,7 @@ module.exports = function () {
         uiData = require('../../../data/ui.json'),
 
         expand = require('./expand').expandEncoded,
-        cp = ['label', 'parent', 'step', 'mu', 'radius'],
+        cp = ['label', 'parent', 'step', 'mu', 'radius', 'rings'],
         data = {t0: compressed.t0, t1: compressed.t1, objects: {}, tree: []},
 
 

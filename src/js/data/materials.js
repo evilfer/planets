@@ -21,8 +21,8 @@ module.exports = function () {
     var THREE = require('three'),
         data = require('./data'),
 
-        objectColor = function (obj, l) {
-            return new THREE.Color().setHSL(obj.ui.color.h / 255, obj.ui.color.s / 255, l);
+        objectColor = function (color, l) {
+            return new THREE.Color().setHSL(color.h / 255, color.s / 255, l);
         },
 
         materials = {};
@@ -30,14 +30,23 @@ module.exports = function () {
     for (var id in data.objects) {
         if (data.objects.hasOwnProperty(id)) {
             var obj = data.objects[id],
-                color = objectColor(obj, .5),
-                lineColor = objectColor(obj, .3);
+                color = objectColor(obj.ui.color, .5),
+                lineColor = objectColor(obj.ui.color, .3);
 
             materials[id] = {
                 body: obj.ui.color.noLight ? new THREE.MeshBasicMaterial({color: color}) :
                     new THREE.MeshLambertMaterial({color: color, ambient: color}),
                 orbit: new THREE.LineBasicMaterial({color: lineColor})
             };
+
+            if (obj.ui.rings) {
+                materials[id].rings = new THREE.MeshBasicMaterial({
+                    color: objectColor(obj.ui.rings, 1),
+                    side: THREE.DoubleSide,
+                    opacity: .3,
+                    transparent: true
+                });
+            }
         }
     }
 

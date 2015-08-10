@@ -16,7 +16,6 @@ var fs = require('fs'),
             ra2 = Math.atan2(y2 / Math.cos(dec2), x2 / Math.cos(dec2));
 
         return [ra2.toPrecision(4), dec2.toPrecision(4)];
-
     },
 
     data = fs.readFileSync('./data/bsc5.dat').toString(),
