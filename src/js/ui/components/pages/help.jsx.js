@@ -40,7 +40,9 @@ module.exports = function () {
                 <p>In the default scale settings, the size of the bodies and orbits is exaggerated, so that all can be
                     seen clearly at the same time. Switch on 'Actual scale' to see a more accurate version of the Solar
                     System. The scale setting does not affect the orbit shape (e.g., periapsis and apoapsis will not
-                    change). It does not affect either the calculation of oppositions and maximum elongations.</p>
+                    change). It does not affect either the calculation of oppositions and maximum elongations.
+                    Please note that on the false scale the maximum elongations may look wrong; this is caused by the
+                    orbit scales being different.</p>
 
                 <p>The planet info window displays the following data:</p>
 

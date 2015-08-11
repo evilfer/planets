@@ -57,6 +57,7 @@ module.exports = function () {
             return function (a, b, t) {
                 interpolator.pos(t, data.t0, data.objects[a], or);
                 interpolator.pos(t, data.t0, data.objects[b], tr);
+                vector.sub(or, tr);
 
                 var s = or[0] * tr[1] - or[1] * tr[0];
                 return s * s / (vector.mod2(or) * vector.mod2(tr));
