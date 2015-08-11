@@ -35,7 +35,9 @@ module.exports = function () {
     return React.createClass({
 
         render: function () {
-            var navWidth = 256,
+            console.log(this.props);
+
+            var navWidth = this.props.navOpen ? 256 : 0,
                 headerHeight = 50,
                 availableWidth = this.props.window.width - navWidth,
                 pageWidth = Math.min(availableWidth * .8, 800),
@@ -46,13 +48,15 @@ module.exports = function () {
                     top: headerHeight + .5 * (availableHeight - pageHeight),
                     height: pageHeight,
                     left: navWidth + .5 * (availableWidth - pageWidth),
-                    width: availableWidth * 8 / 10
+                    width: pageWidth
                 },
                 contentStyle = {
                     maxHeight: pageHeight - 49 - 30
                 },
 
                 page = pages[this.props.path];
+
+            console.log(navWidth, availableWidth, pageWidth, style.left);
 
             return (
                 <Paper style={style} className="page">

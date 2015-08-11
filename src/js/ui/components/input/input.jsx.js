@@ -34,10 +34,6 @@ module.exports = function () {
             this.props.setValues({scl: toggled ? 0 : 1});
         },
 
-        dateFormat: function (date) {
-            return date.toDateString();
-        },
-
         handleMenu: function () {
             this.refs.leftNav.toggle();
         },

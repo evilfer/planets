@@ -35,6 +35,9 @@ module.exports = function () {
             this.props.setValues({t: dates.date2mjd(date)});
         },
 
+        dateFormat: function (date) {
+            return date.toDateString();
+        },
 
         render: function () {
 

@@ -13,7 +13,7 @@ var fs = require('fs'),
             z2 = Math.cos(obliq) * z1 - Math.sin(obliq) * y1,
 
             dec2 = Math.asin(z2),
-            ra2 = Math.atan2(y2 / Math.cos(dec2), x2 / Math.cos(dec2));
+            ra2 = Math.asin(y2 / Math.cos(dec2));
 
         return [ra2.toPrecision(4), dec2.toPrecision(4)];
     },
@@ -44,7 +44,6 @@ var fs = require('fs'),
             coordenates = eq2ecl(ra, dec),
 
             result = [mag, coordenates[0], coordenates[1]];
-            result = [mag, ra, dec];
 
         return result;
     });

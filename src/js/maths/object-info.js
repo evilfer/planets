@@ -30,6 +30,13 @@ module.exports = function () {
             for (var id in data.objects) {
                 if (id !== this.observer && data.objects.hasOwnProperty(id)) {
                     this.data[id] = {};
+
+                    if (id.charAt(0) >= this.observer.charAt(0)) {
+                        this.data[id].opposition = false;
+                    } else {
+                        this.data[id].elongation = 0;
+                        this.data[id].maxElongation = {t: false, e: 0};
+                    }
                 }
             }
         };
@@ -37,29 +44,37 @@ module.exports = function () {
     ObjectInfo.prototype.update = function (t, ephs, updatePredictions) {
         for (var id in this.data) {
             if (this.data.hasOwnProperty(id)) {
-                this.data[id].angularDiameter = analysis.angularDiameter(this.observer, id, ephs);
+                var isInner = id.charAt(0) < this.observer.charAt(0),
+                    info = this.data[id];
+
+                info.angularDiameter = analysis.angularDiameter(this.observer, id, ephs);
+
+                if (isInner) {
+                    info.elongation = analysis.elongation(this.observer, id, ephs);
+                }
+
                 if (updatePredictions) {
-                    if (id.charAt(0) >= this.observer.charAt(0)) {
-                        this.data[id].opposition = analysis.opposition(this.observer, id, t);
+                    if (isInner) {
+                        analysis.maxElongation(this.observer, id, t, info.maxElongation);
                     } else {
-                        this.data[id].maxElongation = analysis.maxElongation(this.observer, id, t);
+                        info.opposition = analysis.opposition(this.observer, id, t);
                     }
                 }
             }
         }
     };
 
-    ObjectInfo.prototype.isObserver = function(id) {
+    ObjectInfo.prototype.isObserver = function (id) {
         return id === this.observer;
     },
 
-    ObjectInfo.prototype.isReference = function(id) {
-        return id === this.reference;
-    },
+        ObjectInfo.prototype.isReference = function (id) {
+            return id === this.reference;
+        },
 
-    ObjectInfo.prototype.relDiameter = function (id) {
-        return this.data[id].angularDiameter / this.data[this.reference].angularDiameter;
-    };
+        ObjectInfo.prototype.relDiameter = function (id) {
+            return this.data[id].angularDiameter / this.data[this.reference].angularDiameter;
+        };
 
     return ObjectInfo;
 

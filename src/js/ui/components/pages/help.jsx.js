@@ -56,12 +56,16 @@ module.exports = function () {
                             respect to the Moon.</p>
                     </li>
                     <li>
-                        <p><SvgIcon icon="opposition" size={16}/> The date of the next opposition between Earth and the
-                            selected planet. It is calculated for Mars, the outer planets, and the Moon.</p>
+                        <p><SvgIcon icon="elongation" size={16}/> The current elongation as seen from Earth. It is
+                            calculated only for Mercury and Venus.</p>
                     </li>
                     <li>
                         <p><SvgIcon icon="max-elongation" size={16}/> The date of the next maximum elongation between
                             Earth and the selected planet. It is calculated only for Mercury and Venus.</p>
+                    </li>
+                    <li>
+                        <p><SvgIcon icon="opposition" size={16}/> The date of the next opposition between Earth and the
+                            selected planet. It is calculated for Mars, the outer planets, and the Moon.</p>
                     </li>
                 </ul>
 

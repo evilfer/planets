@@ -44,10 +44,10 @@ module.exports = function () {
             }
         },
 
-        diff = function (a, b) {
-            var c = a.slice();
-            sub(c, b);
-            return c;
+        diff = function (r, a, b) {
+            for (var i = 0; i < a.length; i++) {
+                r[i] = a[i] - b[i];
+            }
         },
 
         sum = function (r, a, b) {

@@ -29,7 +29,9 @@ describe('vector', function () {
     });
 
     it('should diff', function () {
-        var a = v.diff([-1, 3, 2], [2, -1, 1]);
+        var a = [0, 0, 0];
+
+        v.diff(a, [-1, 3, 2], [2, -1, 1]);
         expect(a).to.eql([-3, 4, 1]);
     });
 

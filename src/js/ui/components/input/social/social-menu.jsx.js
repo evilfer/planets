@@ -35,43 +35,33 @@ module.exports = function () {
         };
 
     return React.createClass({
-            render: function () {
-                var me = this,
+        render: function () {
+            var me = this,
 
-                    iconStyle = {
-                        padding: 6,
-                        width: 24,
-                        height: 24
-                    },
-                    items = Object.keys(icons).map(function (icon) {
-                        return (
-                            <a target="_blank" href={icons[icon]}>
-                                <SvgIcon icon={icon} style={iconStyle}/>
-                            </a>
-                        );
-                    });
+                iconStyle = {
+                    padding: 6,
+                    width: 24,
+                    height: 24
+                },
+                items = Object.keys(icons).map(function (icon) {
+                    return (
+                        <a key={icon} target="_blank" href={icons[icon]}>
+                            <SvgIcon icon={icon} style={iconStyle}/>
+                        </a>
+                    );
+                });
 
-                return (
-                    <div className="social-menu">
-                        <div className="social-links">
-                            <FontIcon className="material-icons" style={iconStyle}>share</FontIcon>
+            return (
+                <div className="social-menu">
+                    <FontIcon className="material-icons" style={iconStyle}>share</FontIcon>
 
-                            <div className="social-dropdown-wrapper">
-                                <div className="social-dropdown">
-                                    {items}
-                                </div>
-                            </div>
+                    <div className="social-dropdown-wrapper">
+                        <div className="social-dropdown">
+                            {items}
                         </div>
-                        <Dialog title="Share"
-                                ref="shareDlg"
-                                actions={[{text: 'Cancel'}]}
-                                modal={true}>
-                        </Dialog>
                     </div>
-                );
-            }
+                </div>
+            );
         }
-    )
-        ;
-}
-();
+    });
+}();

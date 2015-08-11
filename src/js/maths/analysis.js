@@ -50,40 +50,50 @@ module.exports = function () {
             return d;
         },
 
-        elongation = function () {
+        elongationK = function () {
             var or = [0, 0, 0],
                 tr = [0, 0, 0];
 
             return function (a, b, t) {
                 interpolator.pos(t, data.t0, data.objects[a], or);
                 interpolator.pos(t, data.t0, data.objects[b], tr);
-                vector.sub(or, tr);
+                vector.sub(tr, or);
 
-                var s = or[0] * tr[1] - or[1] * tr[0];
-                return s * s / (vector.mod2(or) * vector.mod2(tr));
+                var mc = vector.dot(or, tr);
+                return mc * mc / (vector.mod2(or) * vector.mod2(tr));
             }
         }(),
 
-        maxElongation = function (a, b, fromT) {
-            var step = Math.min(data.objects[a].step, data.objects[b].step),
+        elongation = function () {
+            var ot = [0, 0, 0];
+
+            return function (a, b, eph) {
+                vector.diff(ot, eph[a].vectors.p, eph[b].vectors.p);
+                var mc = vector.dot(ot, eph[a].vectors.p);
+                return Math.acos(Math.sqrt(mc * mc / (vector.mod2(ot) * vector.mod2(eph[a].vectors.p))));
+            }
+        }(),
+
+        maxElongation = function (a, b, fromT, result) {
+            var step = .5 * Math.min(data.objects[a].step, data.objects[b].step),
                 e0, e1, e2;
 
             if (fromT + 2 * step <= data.t1) {
-                e0 = elongation(a, b, fromT);
-                e1 = elongation(a, b, fromT + step);
+                e0 = elongationK(a, b, fromT);
+                e1 = elongationK(a, b, fromT + step);
 
                 for (var t = fromT + 2 * step; t <= data.t1; t += step) {
-                    e2 = elongation(a, b, t);
-                    if (e1 > e0 && e1 > e2) {
+                    e2 = elongationK(a, b, t);
+                    if (e1 < e0 && e1 < e2) {
                         var t2 = t,
                             t1 = t - step,
                             t0 = t1 - step;
 
                         for (var i = 0; i < 5; i++) {
                             var tp = .5 * (t0 + t1),
-                                ep = elongation(a, b, tp);
+                                ep = elongationK(a, b, tp);
 
-                            if (ep > e1) {
+                            if (ep < e1) {
                                 t2 = t1;
                                 e2 = e1;
                                 t1 = tp;
@@ -92,11 +102,13 @@ module.exports = function () {
                                 e0 = e1;
                                 t0 = t1;
                                 t1 = .5 * (t0 + t2);
-                                e1 = elongation(a, b, t1);
+                                e1 = elongationK(a, b, t1);
                             }
                         }
 
-                        return t1;
+                        result.t = t1;
+                        result.e = Math.acos(Math.sqrt(e1));
+                        return;
                     } else {
                         e0 = e1;
                         e1 = e2;
@@ -104,7 +116,7 @@ module.exports = function () {
                 }
             }
 
-            return false;
+            result.t = false;
         },
 
         opposition = function (a, b, fromT) {
@@ -145,7 +157,8 @@ module.exports = function () {
         distance: distance,
         angularDiameter: angularDiameter,
         opposition: opposition,
-        maxElongation: maxElongation
+        maxElongation: maxElongation,
+        elongation: elongation
     };
 
 }();

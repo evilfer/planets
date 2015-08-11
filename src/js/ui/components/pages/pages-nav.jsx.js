@@ -67,9 +67,20 @@ module.exports = function () {
             return -1;
         },
 
+        onNavOpen: function () {
+            this.setState({isOpen: true});
+            console.log('open');
+
+        },
+        onNavClose: function () {
+            this.setState({isOpen: false});
+            console.log('close');
+        },
+
         getInitialState: function () {
             return {
-                isDocked: false
+                isDocked: false,
+                isOpen: false
             };
         },
 
@@ -83,7 +94,11 @@ module.exports = function () {
             if (!this.state.isDocked) {
                 this.setState({isDocked: true});
             }
-            this.refs.nav.toggle();
+            if (this.state.isOpen) {
+                this.refs.nav.close();
+            } else {
+                this.refs.nav.open();
+            }
         },
 
         handleChange: function (e, selectedIndex, menuItem) {
@@ -118,6 +133,8 @@ module.exports = function () {
                              menuItems={menuItems}
                              header={header}
                              onChange={this.handleChange}
+                             onNavOpen={this.onNavOpen}
+                             onNavClose={this.onNavClose}
                              selectedIndex={this.getSelectedRoute()}/>
                     {this.renderCurrentRoute()}
                 </div>
@@ -129,8 +146,9 @@ module.exports = function () {
         },
 
         page: function () {
+            console.log(this.state);
             return <Page path={this.state.path} handleClose={this.handleClose}
-                         window={this.props.window}/>;
+                         navOpen={this.state.isOpen} window={this.props.window}/>;
         }
 
 
