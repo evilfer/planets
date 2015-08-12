@@ -100,6 +100,13 @@ module.exports = function () {
             for (var i = 0; i < r.length; i++) {
                 r[i] = a[i] * k;
             }
+        },
+
+        polar2CartU = function (r, ra, dec) {
+            var cosDec = Math.cos(dec);
+            r[0] = Math.cos(ra) * cosDec;
+            r[1] = Math.sin(ra) * cosDec;
+            r[2] = Math.sin(dec);
         };
 
 
@@ -116,6 +123,7 @@ module.exports = function () {
         distance: distance,
         dot: dot,
         scl: scl,
-        scld: scld
+        scld: scld,
+        polar2CartU: polar2CartU
     };
 }();

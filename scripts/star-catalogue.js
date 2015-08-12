@@ -10,10 +10,10 @@ var fs = require('fs'),
 
             x2 = x1,
             y2 = Math.cos(obliq) * y1 - Math.sin(obliq) * z1,
-            z2 = Math.cos(obliq) * z1 - Math.sin(obliq) * y1,
+            z2 = Math.cos(obliq) * z1 + Math.sin(obliq) * y1,
 
             dec2 = Math.asin(z2),
-            ra2 = Math.asin(y2 / Math.cos(dec2));
+            ra2 = Math.atan2(x2, y2);
 
         return [ra2.toPrecision(4), dec2.toPrecision(4)];
     },

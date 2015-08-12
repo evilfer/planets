@@ -18,6 +18,8 @@ var gulp = require('gulp'),
     jsWatch = ['./src/js/**/*.js', jsSpecs],
 
     browserifyTaskGen = function (isDev, isWatching) {
+        process.env.NODE_ENV = isDev ? 'development' : 'production';
+
         return function () {
             var outputPath = './build/' + (isDev ? 'dev' : 'prod') + '/js/',
                 outputName = 'bundle.js',

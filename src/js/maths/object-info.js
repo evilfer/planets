@@ -29,7 +29,9 @@ module.exports = function () {
 
             for (var id in data.objects) {
                 if (id !== this.observer && data.objects.hasOwnProperty(id)) {
-                    this.data[id] = {};
+                    this.data[id] = {
+                        visible: {}
+                    };
 
                     if (id.charAt(0) >= this.observer.charAt(0)) {
                         this.data[id].opposition = false;

@@ -151,14 +151,70 @@ module.exports = function () {
             }
 
             return false;
+        },
+
+        visible = function (dec, pos, result) {
+            var cosDec = Math.cos(dec),
+
+                a = pos[0] * cosDec,
+                b = pos[1] * cosDec,
+                c = pos[2] * Math.sin(dec);
+
+            if (a === 0 && b === 0) {
+                result.mode = c > 0 ? 'visible' : 'hidden';
+            } else {
+                /*  a * cos(ra) + b * sin(ra) + c = 0
+                 d * sin(ra + p) + c = 0  */
+
+                var p = Math.atan2(b, a),
+                    cosP = Math.cos(p),
+                    d = cosP !== 0 ? b / cosP : a / Math.sin(p);
+
+                if (Math.abs(c) >= Math.abs(d)) {
+                    result.mode = c > 0 ? 'visible' : 'hidden';
+                } else {
+                    result.mode = 'rise_set';
+                    var pi2 = Math.PI * 2,
+                        angle1 = Math.asin(-c / d),
+                        angle2 = Math.PI - angle1,
+                        ra1 = angle1 - p,
+                        ra2 = angle2 - p;
+
+                    if (ra1 < 0) {
+                        ra1 += pi2;
+                    } else if (ra1 > pi2) {
+                        ra1 -= pi2;
+                    }
+
+                    if (ra2 < 0) {
+                        ra2 += pi2;
+                    } else if (ra2 > pi2) {
+                        ra2 -= pi2;
+                    }
+
+                    if (d * Math.sin(.5 * (ra1 + ra2) + p) + c > 0) {
+                        result.rises = ra1;
+                        result.sets = ra2;
+                    } else {
+                        result.rises = ra2;
+                        result.sets = ra1;
+                    }
+
+                    if (result.sets < result.rises) {
+                        result.sets += pi2;
+                    }
+                }
+            }
         };
+
 
     return {
         distance: distance,
         angularDiameter: angularDiameter,
         opposition: opposition,
         maxElongation: maxElongation,
-        elongation: elongation
+        elongation: elongation,
+        visible: visible
     };
 
 }();
