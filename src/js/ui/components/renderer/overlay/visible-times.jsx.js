@@ -110,14 +110,14 @@ module.exports = function () {
                                 left: -1,
                                 width: 2,
                                 height: 4,
-                                background: 'white'
+                                background: '#ccc'
                             }}/>
                             <div style={{
                                 position:'absolute',
                                 bottom: 0,
                                 width: 40,
                                 left: -20,
-                                color: 'white',
+                                color: '#eee',
                                 textAlign: 'center',
                                 fontSize: '.7em'
                             }}>{Math.round(180 * data.tmh / Math.PI) + '\u00B0'}</div>
