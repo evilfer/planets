@@ -15,31 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 module.exports = function () {
     'use strict';
 
-    var b64Decoder = require('./b64Decoder'),
-
-        expand = function (data) {
-            var expanded = [];
-            for (var i = 0; i < data.length; i += 6) {
-                expanded.push({
-                    r: [data[i], data[i + 1], data[i + 2]],
-                    v: [data[i + 3], data[i + 4], data[i + 5]]
-                });
-            }
-
-            return expanded;
-        },
-
-        expandEncoded = function (txt) {
-            return expand(b64Decoder.f64(txt));
-        };
+    var React = require('react');
 
     return {
-        expand: expand,
-        expandEncoded: expandEncoded
-    };
+        title: 'Contact',
+        content: (
+            <div>
+                <p>If you spot any problems with this page, or have any suggestion to improve it, you can post your
+                    questions <a target="_blank" href="https://github.com/evilfer/planets/issues">here <i
+                        className="material-icons open-in-new">open_in_new</i></a>.</p>
 
-}
-();
+                <p>Alternatively, feel free to email me about it at
+                    <a href="mailto:eloy.villasclaras@gmail.com">eloy.villasclaras@gmail.com</a>.
+                </p>
+            </div>
+        )
+    };
+}();

@@ -25,7 +25,11 @@ module.exports = function () {
         ReactTHREE = require('react-three'),
         PointCloud = ReactTHREE.PointCloud,
 
-        stars = require('../../../../../../data/stars.json'),
+        b64Decoder = require('../../../../data/b64Decoder'),
+
+        starsEncoded = require('../../../../../../data/stars.json'),
+
+        stars = b64Decoder.f32(starsEncoded),
 
         components = function () {
             var geometry = new THREE.Geometry(),
@@ -36,11 +40,11 @@ module.exports = function () {
                 }),
                 r = 1e11;
 
-            for (var i = 0; i < stars.length; i++) {
-                var star = stars[i],
-                    mag = star[0],
-                    ra = star[1],
-                    dec = star[2],
+
+            for (var i = 0; i < stars.length; i += 3) {
+                var mag = stars[i],
+                    ra = stars[i + 1],
+                    dec = stars[i + 2],
                     lum = (6 - mag) / 7.5,
                     color = new THREE.Color();
 

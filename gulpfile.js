@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     browserify = require('browserify'),
     collapse = require('bundle-collapser/plugin'),
     watchify = require('watchify'),
+    literalify = require('literalify'),
     minifycss = require('gulp-minify-css'),
     sass = require('gulp-sass'),
     reactify = require('reactify'),
@@ -26,7 +27,11 @@ var gulp = require('gulp'),
 
                 bundler = browserify({
                     entries: [jsIndex], // Only need initial file, browserify finds the deps
-                    transform: [reactify],
+                    transform: [
+                        reactify,
+                        literalify.configure({
+                            atob: 'window.atob'
+                        })],
                     debug: isDev,
                     cache: {}, packageCache: {}, fullPaths: isDev && isWatching // Requirement of watchify
                 });

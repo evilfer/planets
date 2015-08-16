@@ -15,31 +15,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 module.exports = function () {
     'use strict';
 
-    var b64Decoder = require('./b64Decoder'),
-
-        expand = function (data) {
-            var expanded = [];
-            for (var i = 0; i < data.length; i += 6) {
-                expanded.push({
-                    r: [data[i], data[i + 1], data[i + 2]],
-                    v: [data[i + 3], data[i + 4], data[i + 5]]
-                });
-            }
-
-            return expanded;
-        },
-
-        expandEncoded = function (txt) {
-            return expand(b64Decoder.f64(txt));
-        };
+    var React = require('react');
 
     return {
-        expand: expand,
-        expandEncoded: expandEncoded
+        title: 'Help',
+        content: (
+            <div>
+                <p>Hopefully most of the user interaction in this page is straightforward. If not, I'd be grateful if
+                    you could <a href="/contact">let me know</a>! The links below show hints about specific aspects of
+                    this page:</p>
+                <ul>
+                    <li><p><a href="/help/time">Selecting the date</a></p></li>
+                    <li><p><a href="/help/view">Controlling the 3D view</a></p></li>
+                    <li><p><a href="/help/info">Planet/Moon info window</a></p></li>
+                    <li><p><a href="/help/latitude">Latitude setting</a></p></li>
+                </ul>
+            </div>
+        )
     };
-
-}
-();
+}();

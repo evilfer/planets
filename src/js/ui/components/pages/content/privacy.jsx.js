@@ -26,15 +26,15 @@ module.exports = function () {
         content: (
             <div>
                 <p>'Planets' uses Google Analytics to keep track of page views. Google Analytics uses its own cookies to
-                    do this; you can read about
-                    it <a target="_blank"
-                          href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage?hl=en">
-                        here</a>.</p>
+                    do this; you can read about it <a
+                        target="_blank"
+                        href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage?hl=en">
+                        here <i className="material-icons open-in-new">open_in_new</i></a>.</p>
 
                 <p>'Planets' does not use any other cookies. <a href="https://en.wikipedia.org/wiki/Web_storage"
-                                                                target="_blank">Local storage</a> is used to store the
-                    selected latitude; this is not shared in any way, and it's not sent to the server.
-                </p>
+                                                                target="_blank">Local storage <i
+                    className="material-icons open-in-new">open_in_new</i></a> is used to store the selected latitude;
+                    this is not shared in any way, and it's not sent to the server.</p>
             </div>
         )
     };

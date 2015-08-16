@@ -21,42 +21,47 @@ module.exports = function () {
     var React = require('react'),
 
         mui = require('material-ui'),
-        IconButton = mui.IconButton;
+        IconButton = mui.IconButton,
+        Dialog = mui.Dialog,
+
+        LatitudePickerDlg = require('./latitude-picker-dlg.jsx');
+
 
     return React.createClass({
-
-        buttonEnabled: function () {
-            var data = this.props.data,
-                t = this.props.t + this.props.delta;
-
-            return t <= data.t1 && t >= data.t0;
+        handleOpen: function () {
+            this.refs.dlg.show();
         },
 
-        handleClick: function () {
-            if (this.buttonEnabled()) {
-                this.props.setValues({t: this.props.t + this.props.delta});
-            }
+        handleOk: function () {
+
         },
 
         render: function () {
-            var disabled = !this.buttonEnabled(),
-                className = typeof this.props.children === 'string' ? 'material-icons' : '',
-                iconStyle = {
+
+            var iconStyle = {
                     width: 'auto',
                     height: 'auto',
                     padding: 0,
-                    margin: 0,
+                    margin: '-3px 0 0 0',
                     verticalAlign: 'middle'
-                };
+                },
+                latStr = '' + Math.abs(.1 * Math.round(10 * this.props.lat));
+
+            if (this.props.lat > 0) {
+                latStr += ' N';
+            } else if (this.props.lat < 0) {
+                latStr += ' S';
+            }
 
             return (
-                <IconButton mini={true} disabled={disabled} onClick={this.handleClick}
-                            iconClassName={className} style={iconStyle}>
-                    {this.props.children}
-                </IconButton>
+                <div className="latitude-picker">
+                    <label style={{color: '#ddd'}}>Latitude: </label><span className="latitude-picker-value">{latStr}</span>
+                    <IconButton mini={true} onClick={this.handleOpen}
+                                iconClassName='material-icons' style={iconStyle}>language</IconButton>
+                    <LatitudePickerDlg ref="dlg" value={this.props.lat} setValues={this.props.setValues}/>
+                </div>
             );
         }
-
     });
 
 }();

@@ -18,12 +18,28 @@
 module.exports = function () {
     'use strict';
 
-    var React = require('react');
+    var enabled = typeof localStorage !== 'undefined',
 
-    return React.createClass({
-        render: function () {
-            return <i className={'fa fa-' + this.props.icon} style={{fontSize: 24, lineHeight: '40px'}}></i>;
-        }
-    });
+        load = function () {
+            if (enabled) {
+                var strVal = localStorage.getItem('settings');
+                if (strVal) {
+                    return JSON.parse(strVal);
+                }
+            }
+
+            return {};
+        },
+
+        save = function (settings) {
+            if (enabled) {
+                localStorage.setItem('settings', JSON.stringify(settings));
+            }
+        };
+
+    return {
+        load: load,
+        save: save
+    };
 
 }();

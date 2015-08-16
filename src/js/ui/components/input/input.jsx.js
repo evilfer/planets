@@ -23,10 +23,10 @@ module.exports = function () {
         mui = require('material-ui'),
         Toggle = mui.Toggle,
         IconButton = mui.IconButton,
-        Dialog = mui.Dialog,
 
         PlanetsNav = require('./../pages/pages-nav.jsx.js'),
         DatePicker = require('./date-picker/date-picker.jsx'),
+        LatitudePicker = require('./latitude-picker/latitude-picker.jsx'),
         SocialMenu = require('./social/social-menu.jsx');
 
     return React.createClass({
@@ -42,18 +42,25 @@ module.exports = function () {
             return (
                 <div className="planets-input">
                     <PlanetsNav ref="leftNav" window={this.props.window}/>
-                    <IconButton iconClassName="material-icons"
-                                style={{verticalAlign: 'middle', marginRight: 20}}
-                                iconStyle={{color: '#00bcd4'}}
-                                onClick={this.handleMenu}>menu</IconButton>
+
+                    <div className="menu-toggle">
+                        <IconButton iconClassName="material-icons"
+                                    style={{verticalAlign: 'middle', marginRight: 20}}
+                                    iconStyle={{color: '#00bcd4'}}
+                                    onClick={this.handleMenu}>menu</IconButton>
+                    </div>
 
                     <DatePicker t={this.props.t} setValues={this.props.setValues} data={this.props.data}/>
 
                     <div className="scale-toggle">
                         <Toggle label="Actual scale" defaultToggled={this.props.view.scl === 0}
-                                onToggle={this.handleScaleChange}/>
+                                onToggle={this.handleScaleChange}
+                                labelStyle={{color: '#ddd'}}/>
 
                     </div>
+
+                    <LatitudePicker setValues={this.props.setValues} lat={this.props.lat}/>
+
                     <SocialMenu/>
 
                 </div>

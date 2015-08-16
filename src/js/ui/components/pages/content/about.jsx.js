@@ -15,31 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 module.exports = function () {
     'use strict';
 
-    var b64Decoder = require('./b64Decoder'),
-
-        expand = function (data) {
-            var expanded = [];
-            for (var i = 0; i < data.length; i += 6) {
-                expanded.push({
-                    r: [data[i], data[i + 1], data[i + 2]],
-                    v: [data[i + 3], data[i + 4], data[i + 5]]
-                });
-            }
-
-            return expanded;
-        },
-
-        expandEncoded = function (txt) {
-            return expand(b64Decoder.f64(txt));
-        };
+    var React = require('react');
 
     return {
-        expand: expand,
-        expandEncoded: expandEncoded
-    };
+        title: 'About',
+        content: (
+            <div>
+                <p>'Planets' is a toy web app created to help understanding the night sky. Unsurprisingly t's focused
+                    only on Solar System planets and our Moon.</p>
 
-}
-();
+                <p>Currently it does not have a huge set of functions, but I hope it's useful anyway!</p>
+
+                <p>Check the <a href="/help">help</a> section for a quick introduction to the implemented
+                    functionality, or <a href="/contact">contact us</a> if you have any question or suggestion.</p>
+            </div>
+        )
+    };
+}();

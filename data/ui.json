@@ -8,7 +8,7 @@
         "noLight": true
       },
       "scale": {
-        "body": 400
+        "body": 380
       }
     },
     "199": {
@@ -19,7 +19,7 @@
       },
       "scale": {
         "body": 1e4,
-        "global": 12
+        "global": 10
       }
     },
     "299": {
@@ -41,7 +41,7 @@
       },
       "scale": {
         "body": 1e4,
-        "global": 10
+        "global": 10.2
       }
     },
     "301": {
@@ -63,7 +63,7 @@
       },
       "scale": {
         "body": 1e4,
-        "global": 9
+        "global": 10
       }
     },
     "5": {
@@ -88,7 +88,7 @@
         "s": 0
       },
       "scale": {
-        "body": 3000,
+        "body": 2500,
         "global": 2.4
       }
     },
@@ -99,7 +99,7 @@
         "s": 108
       },
       "scale": {
-        "body": 3000,
+        "body": 2500,
         "global": 1.4
       }
     },
@@ -107,7 +107,7 @@
       "label": "Neptune",
       "color": {
         "h": 169,
-        "s": 240
+        "s": 180
       },
       "scale": {
         "body": 3000,

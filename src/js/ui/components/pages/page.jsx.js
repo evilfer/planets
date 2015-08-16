@@ -24,12 +24,19 @@ module.exports = function () {
         Paper = mui.Paper,
         IconButton = mui.IconButton,
 
+        Breadcrumbs = require('./breadcrumbs.jsx'),
+
         pages = {
-            '/about': require('./about.jsx'),
-            '/contact': require('./contact.jsx'),
-            '/help': require('./help.jsx'),
-            '/data': require('./data.jsx'),
-            '/privacy': require('./privacy.jsx')
+            '/about': require('./content/about.jsx'),
+            '/contact': require('./content/contact.jsx'),
+            '/help': require('./content/help.jsx'),
+            '/help/info': require('./content/help-info.jsx'),
+            '/help/info/visibility': require('./content/help-info-visibility.jsx'),
+            '/help/latitude': require('./content/help-latitude.jsx'),
+            '/help/time': require('./content/help-time.jsx'),
+            '/help/view': require('./content/help-view.jsx'),
+            '/data': require('./content/data.jsx'),
+            '/privacy': require('./content/privacy.jsx')
         };
 
     return React.createClass({
@@ -38,7 +45,7 @@ module.exports = function () {
             console.log(this.props);
 
             var navWidth = this.props.navOpen ? 256 : 0,
-                headerHeight = 50,
+                headerHeight = 40,
                 availableWidth = this.props.window.width - navWidth,
                 pageWidth = Math.min(availableWidth * .8, 800),
                 availableHeight = this.props.window.height - headerHeight,
@@ -56,8 +63,6 @@ module.exports = function () {
 
                 page = pages[this.props.path];
 
-            console.log(navWidth, availableWidth, pageWidth, style.left);
-
             return (
                 <Paper style={style} className="page">
                     <div className="page-header">
@@ -72,10 +77,10 @@ module.exports = function () {
                         </Paper>
                     </div>
                     <div className="page-content" style={contentStyle}>
+                        <Breadcrumbs path={this.props.path} pages={pages}/>
                         {page.content}
                     </div>
                 </Paper>
-
             );
         }
     });

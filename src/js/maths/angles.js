@@ -18,28 +18,34 @@
 module.exports = function () {
     'use strict';
 
-    var b64Decoder = require('./b64Decoder'),
+    var pi_2 = 2 * Math.PI,
+        rad2rev = 1 / pi_2,
 
-        expand = function (data) {
-            var expanded = [];
-            for (var i = 0; i < data.length; i += 6) {
-                expanded.push({
-                    r: [data[i], data[i + 1], data[i + 2]],
-                    v: [data[i + 3], data[i + 4], data[i + 5]]
-                });
+        moveAfter = function (a, a0) {
+            while (a < a0) {
+                a += pi_2;
             }
-
-            return expanded;
+            while (a > a0 + pi_2) {
+                a -= pi_2;
+            }
+            return a;
         },
 
-        expandEncoded = function (txt) {
-            return expand(b64Decoder.f64(txt));
+        revFrom = function (a, a0) {
+            a = rad2rev * (a - a0);
+
+            while (a < 0) {
+                a += 1;
+            }
+            while (a > 1) {
+                a -= 1;
+            }
+            return a;
         };
 
     return {
-        expand: expand,
-        expandEncoded: expandEncoded
+        moveAfter: moveAfter,
+        revFrom:revFrom
     };
 
-}
-();
+}();

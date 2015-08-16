@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/evilfer/planets"
   },
   "author": "",
   "license": "GPL",
@@ -22,7 +22,7 @@
     "bundle-collapser": "1.2.1",
     "chai": "3.2.0",
     "chai-stats": "0.3.0",
-    "clone": "^1.0.2",
+    "clone": "1.0.2",
     "express": "4.13.3",
     "extend": "3.0.0",
     "gulp": "3.9.0",
@@ -32,6 +32,7 @@
     "gulp-sass": "2.0.4",
     "gulp-uglify": "1.2.0",
     "gulp-watch": "4.3.4",
+    "literalify": "0.4.0",
     "material-ui": "0.10.4",
     "morgan": "1.6.1",
     "react": "0.13.3",
@@ -45,6 +46,5 @@
     "vinyl-source-stream": "1.1.0",
     "watchify": "3.3.1"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

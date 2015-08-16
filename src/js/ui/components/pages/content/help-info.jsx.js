@@ -20,48 +20,25 @@ module.exports = function () {
     'use strict';
 
     var React = require('react'),
-        SvgIcon = require('../icons/HtmlSvgIcon.jsx');
+        SvgIcon = require('../../icons/HtmlSvgIcon.jsx');
 
 
     return {
-        title: 'Help',
+        title: 'Planet/Moon info window',
         content: (
             <div>
-                <p>Hopefully most of the user interaction in this page is straightforward. If not, I'd be grateful if
-                    you could <a href="/contact">let me know</a>!</p>
-
-                <p>Drag the mouse on the screen to change the view; the mouse wheel will zoom in and out. Clicking
-                    on a planet or Moon opens a small info window.</p>
-
-                <p>After you change the date, you can go back to today by clicking
-                    on <SvgIcon icon="today" size={20} style={{fill: '#ddd'}}/>. Please note that currently oppositions
-                    and maximum elongations are calculated always forward in time from the selected date.</p>
-
-                <p>In the default scale settings, the size of the bodies and orbits is exaggerated, so that all can be
-                    seen clearly at the same time. Switch on 'Actual scale' to see a more accurate version of the Solar
-                    System. The scale setting does not affect the orbit shape (e.g., periapsis and apoapsis will not
-                    change). It does not affect either the calculation of oppositions and maximum elongations.
-                    Please note that on the false scale the maximum elongations may look wrong; this is caused by the
-                    orbit scales being different.</p>
-
                 <p>The planet info window displays the following data:</p>
 
                 <ul className="help-info-window">
                     <li>
                         <p><i className="material-icons">visibility</i>An approximation to the hours when the selected
-                            object is visible, at your latitude. The dark and bright grays represents the duration of
-                            night and day respectively. When a planet or the Moon are selected, the thin color bar
-                            indicates the times when it's visible.</p>
-                    </li>
-                    <li>
-                        <p><SvgIcon icon="height" size={16}/>Highest position in the sky as observed from the user's
-                            latitude, within the visible time span.</p>
+                            object is visible from your latitude. <a href="/help/info/visibility">Read more</a>.
+                        </p>
                     </li>
                     <li>
                         <p><SvgIcon icon="diameter" size={16}/>Apparent angular diameter: as seen from Earth in the
                             current selected day.</p>
                     </li>
-
                     <li>
                         <p><SvgIcon icon="moon" size={16}/>This indicates the apparent size of the selected object with
                             respect to the Moon.</p>
@@ -82,13 +59,11 @@ module.exports = function () {
 
                 <p>Please note that the algorithm to compute the date of oppositions and maximum elongations is rather
                     unsophisticated. This, along with the accuracy issues (see the <a href="/data">data</a> section)
-                    limits the
-                    precision of the calculated dates (so far I've only found errors of a few hours). </p>
+                    limits the precision of the calculated dates (so far I've only found errors of a few hours). </p>
 
-                <p>The algorithm to calculate the visible time of the Sun and planets is a gross simplification. It
-                    assumes the Earth is a perfect sphere, the effects of the atmosphere are not included, and even
-                    worse: it ignores the fact that the Earth and planets move a considerable distance during a single
-                    day.</p>
+                <p>Also, The algorithm to calculate the visible time of the Sun and planets is a gross simplification.
+                    It assumes the Earth is a perfect sphere, the effects of the atmosphere are not included, and it
+                    ignores the fact that the Earth and planets move a considerable distance during a single day.</p>
 
             </div>
         )

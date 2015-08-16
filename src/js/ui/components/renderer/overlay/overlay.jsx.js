@@ -35,6 +35,8 @@ module.exports = function () {
         SvgIcon = require('../../icons/CustomSvgIcon.jsx'),
         dates = require('../../../../maths/dates'),
 
+        VisibleTimes = require('./visible-times.jsx'),
+
         formatAngle = function (angle) {
             var angDeg = angle * 180 / Math.PI,
                 v1, v2, u1, u2,
@@ -96,7 +98,7 @@ module.exports = function () {
             this.moveSelected(1);
         },
         handleHelp: function () {
-            navigate('/help');
+            navigate('/help/info');
         },
         handleClose: function () {
             this.props.setSelected(false);
@@ -125,7 +127,14 @@ module.exports = function () {
                         <ListItem key="home" primaryText="You live here"
                                   leftIcon={<FontIcon className="material-icons">home</FontIcon>}/>
                     );
+
                 } else if (objectInfo) {
+                    items.push(
+                        <ListItem key="visible"
+                                  primaryText={<VisibleTimes id={id} data={info.visible(id)}/>}
+                                  leftIcon={<FontIcon className="material-icons">visibility</FontIcon>}/>
+                    );
+
                     if (objectInfo.angularDiameter) {
                         items.push(
                             <ListItem key="diameter"

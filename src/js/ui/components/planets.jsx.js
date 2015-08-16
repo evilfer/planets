@@ -27,6 +27,7 @@ module.exports = function () {
         mui = require('material-ui'),
         ThemeManager = new mui.Styles.ThemeManager(),
 
+        persistence = require('../../data/persistence'),
         Wrapper3d = require('./renderer/wrapper-3d.jsx'),
         Input = require('./input/input.jsx'),
 
@@ -57,14 +58,18 @@ module.exports = function () {
         componentWillMount: function () {
             this.cache = {
                 t: false,
+                lat: false,
                 ephs: eph.init(),
-                info: new ObjectInfo('3', '301')
+                info: new ObjectInfo('0', '3', 0.4090928, '301')
             };
         },
 
         getInitialState: function () {
+            var settings = persistence.load();
+
             return {
                 t: Math.min(this.props.data.t1, Math.max(this.props.data.t0, dates.date2mjd(new Date()))),
+                lat: settings.lat || 0,
                 view: {
                     zoom: 1,
                     alt: Math.PI / 4,
@@ -148,13 +153,19 @@ module.exports = function () {
                     max: 100
                 }, this.state.view.zoom);
             }
+
+            if (values.hasOwnProperty('lat')) {
+                persistence.save({lat: values.lat});
+                this.setState({lat: values.lat});
+            }
         },
 
         render: function () {
-            if (this.state.t !== this.cache.t) {
+            if (this.state.t !== this.cache.t || this.state.lat !== this.cache.lat) {
                 this.cache.t = this.state.t;
+                this.cache.lat = this.state.lat;
                 eph.state(this.state.t, this.cache.ephs);
-                this.cache.info.update(this.state.t, this.cache.ephs, !animate.isAnimated('t'));
+                this.cache.info.update(this.state.t, this.state.lat, this.cache.ephs, !animate.isAnimated('t'));
             }
 
             return (
@@ -164,7 +175,7 @@ module.exports = function () {
                                view={this.state.view} setValues={this.setValues}/>
 
                     <Input data={this.props.data} setValues={this.setValues}
-                           view={this.state.view} t={this.state.t}
+                           view={this.state.view} t={this.state.t} lat={this.state.lat}
                            window={this.state.window}/>
 
                 </div>

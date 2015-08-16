@@ -25,6 +25,7 @@ module.exports = function () {
 
         mui = require('material-ui'),
         LeftNav = mui.LeftNav,
+        MenuItem = mui.MenuItem,
         IconButton = mui.IconButton,
 
         Page = require('./page.jsx'),
@@ -47,11 +48,12 @@ module.exports = function () {
         },
         menuItems = [
             {path: '/about', text: 'About'},
-            {path: '/help', text: 'Help'},
+            {path: '/help', text: 'Help', children: ['/info', '/info/visibility', '/latitude', '/time', '/view']},
             {path: '/data', text: 'Data'},
             {path: '/privacy', text: 'Privacy'},
             {path: '/contact', text: 'Contact'}
         ];
+
 
     return React.createClass({
         mixins: [RouterMixin],
@@ -59,7 +61,7 @@ module.exports = function () {
         getSelectedRoute: function () {
             var path = this.state.path;
             for (var i = 0; i < menuItems.length; i++) {
-                if (menuItems[i].path === path) {
+                if (path === menuItems[i].path || path.indexOf(menuItems[i].path + '/') === 0) {
                     return i;
                 }
             }
@@ -112,6 +114,12 @@ module.exports = function () {
 
         routes: menuItems.reduce(function (r, item) {
             r[item.path] = 'page';
+            if (item.children) {
+                item.children.reduce(function (r, child) {
+                    r[item.path + child] = 'page';
+                    return r;
+                }, r);
+            }
             return r;
         }, {'/': 'home'}),
 
@@ -146,11 +154,14 @@ module.exports = function () {
         },
 
         page: function () {
-            console.log(this.state);
             return <Page path={this.state.path} handleClose={this.handleClose}
                          navOpen={this.state.isOpen} window={this.props.window}/>;
-        }
+        },
 
+        notFound: function () {
+            navigate('/');
+            return false;
+        }
 
     });
 

@@ -22,19 +22,19 @@ module.exports = function () {
     var React = require('react');
 
     return {
-        title: 'Privacy and cookies',
+        title: '3D view',
         content: (
             <div>
-                <p>'Planets' uses Google Analytics to keep track of page views. Google Analytics uses its own cookies to
-                    do this; you can read about
-                    it <a target="_blank"
-                          href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage?hl=en">
-                        here</a>.</p>
+                <p>Drag the mouse on the screen to change the view; the mouse wheel will zoom in and out. Clicking
+                    on a planet or Moon opens a small info window.</p>
 
-                <p>'Planets' does not use any other cookies. <a href="https://en.wikipedia.org/wiki/Web_storage"
-                                                                target="_blank">Local storage</a> is used to store the
-                    selected latitude; this is not shared in any way, and it's not sent to the server.
-                </p>
+                <p>In the default scale settings, the size of the bodies and orbits is exaggerated, so that all can be
+                    seen clearly at the same time. Switch on 'Actual scale' to see a more accurate version of the Solar
+                    System. The scale setting does not affect the orbit shape (e.g., periapsis, apoapsis and nodes will
+                    not change). It does not affect either the calculation of oppositions and maximum elongations.</p>
+
+                <p>However, please note that on the false scale the maximum elongations may look wrong; this is caused
+                    by the orbit scales being different.</p>
             </div>
         )
     };

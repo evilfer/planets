@@ -27,12 +27,12 @@ module.exports = function () {
             <div>
                 <p>The position of Solar System bodies has been computed using
                     the <a target="_blank" href="http://ssd.jpl.nasa.gov/?horizons">JPL
-                        Horizons system</a>.
+                        Horizons system <i className="material-icons open-in-new">open_in_new</i></a>.
                 </p>
 
                 <p>The star field is created using data from
                     the <a target="_blank" href="http://tdc-www.harvard.edu/catalogs/bsc5.html">Yale
-                        Bright Star Catalog</a>.
+                        Bright Star Catalog <i className="material-icons open-in-new">open_in_new</i></a>.
                     'Planets' includes the stars with magnitude up to 6: 5.080 stars.
                 </p>
 

@@ -34,6 +34,7 @@ module.exports = function () {
                 lineColor = objectColor(obj.ui.color, .3);
 
             materials[id] = {
+                color: '#' + color.getHexString(),
                 body: obj.ui.color.noLight ? new THREE.MeshBasicMaterial({color: color}) :
                     new THREE.MeshLambertMaterial({color: color, ambient: color}),
                 orbit: new THREE.LineBasicMaterial({color: lineColor})
