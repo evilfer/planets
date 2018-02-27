@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 Eloy Villasclaras-Fernandez <eloy.villasclaras@gmail.com>
+ * Copyright 2015-2018 Eloy Villasclaras-Fernandez <eloy.villasclaras@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ module.exports = function () {
     var btoa = require('btoa'),
 
         parse = function (txt) {
-            var lines = txt.split('\r\n'),
+            var lines = txt.split(/\r?\n/),
                 data = [],
                 soe = false;
 
@@ -39,7 +39,18 @@ module.exports = function () {
                 }
             }
 
+            console.log(data.length);
             return data;
+        },
+
+        uint16toString = function (arr) {
+            var n = 1000;
+            var str = "";
+            for (var i = 0; i < arr.length; i += n) {
+                str += String.fromCharCode.apply(null, arr.slice(i, i + n));
+            }
+
+            return str;
         },
 
         /**
@@ -52,7 +63,7 @@ module.exports = function () {
          * @returns {string}
          */
         encoded = function (txt) {
-            return btoa(String.fromCharCode.apply(null, new Uint8Array(new Float64Array(parse(txt)).buffer)));
+            return btoa(uint16toString(new Uint8Array(new Float64Array(parse(txt)).buffer)));
         };
 
     return {

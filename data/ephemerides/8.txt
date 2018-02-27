@@ -1,40 +1,52 @@
-
-
-
 *******************************************************************************
-Ephemeris / MAIL_REQUEST Sun Aug  9 09:38:08 2015 Pasadena, USA  / Horizons
+Ephemeris / MAIL_REQUEST Tue Feb 27 10:53:52 2018 Pasadena, USA  / Horizons
 *******************************************************************************
-Target body name: Neptune Barycenter (8)          {source: DE-0431LE-0431}
-Center body name: Solar System Barycenter (0)     {source: DE-0431LE-0431}
+Target body name: Neptune Barycenter (8)          {source: DE431mx}
+Center body name: Solar System Barycenter (0)     {source: DE431mx}
 Center-site name: BODY CENTER
 *******************************************************************************
-Start time      : A.D. 2015-Jan-01 00:00:00.0000 CT
-Stop  time      : A.D. 2018-Apr-15 00:00:00.0000 CT
+Start time      : A.D. 2015-Jan-01 00:00:00.0000 TDB
+Stop  time      : A.D. 2026-Jul-02 00:00:00.0000 TDB
 Step-size       : 864000 minutes
 *******************************************************************************
 Center geodetic : 0.00000000,0.00000000,0.0000000 {E-lon(deg),Lat(deg),Alt(km)}
 Center cylindric: 0.00000000,0.00000000,0.0000000 {E-lon(deg),Dxy(km),Dz(km)}
 Center radii    : (undefined)
 Output units    : KM-S
-Output format   : 02
-Reference frame : ICRF/J2000.0
 Output type     : GEOMETRIC cartesian states
+Output format   : 2 (position and velocity)
+Reference frame : ICRF/J2000.0
 Coordinate systm: Ecliptic and Mean Equinox of Reference Epoch
 *******************************************************************************
-JDCT
+JDTDB
    X     Y     Z
    VX    VY    VZ
 *******************************************************************************
 $$SOE
-2457023.500000000 = A.D. 2015-Jan-01 00:00:00.0000 (CT)
+2457023.500000000 = A.D. 2015-Jan-01 00:00:00.0000 TDB
    4.118382622939076E+09 -1.771801325987792E+09 -5.842541830550480E+07
    2.111858262553630E+00  5.025080691187248E+00 -1.521520720010228E-01
-2457623.500000000 = A.D. 2016-Aug-23 00:00:00.0000 (CT)
+2457623.500000000 = A.D. 2016-Aug-23 00:00:00.0000 TDB
    4.219630487628078E+09 -1.507962685518393E+09 -6.619203542739153E+07
    1.792940021961741E+00  5.150548627632509E+00 -1.473857422743754E-01
-2458223.500000000 = A.D. 2018-Apr-15 00:00:00.0000 (CT)
+2458223.500000000 = A.D. 2018-Apr-15 00:00:00.0000 TDB
    4.304143794605861E+09 -1.238142559018576E+09 -7.369614238869214E+07
    1.466449842848908E+00  5.255757627253181E+00 -1.420274923413061E-01
+2458823.500000000 = A.D. 2019-Dec-06 00:00:00.0000 TDB
+   4.371563455509276E+09 -9.634045385617661E+08 -8.090755846566206E+07
+   1.133677169061161E+00  5.340205813632013E+00 -1.360971159466522E-01
+2459423.500000000 = A.D. 2021-Jul-28 00:00:00.0000 TDB
+   4.421597019045663E+09 -6.848357682407124E+08 -8.779717892727509E+07
+   7.959045007859433E-01  5.403492779161090E+00 -1.296163427885870E-01
+2460023.500000000 = A.D. 2023-Mar-20 00:00:00.0000 TDB
+   4.454019455914640E+09 -4.035408761542889E+08 -9.433709453217110E+07
+   4.544691858496940E-01  5.445341811737626E+00 -1.226098963947901E-01
+2460623.500000000 = A.D. 2024-Nov-09 00:00:00.0000 TDB
+   4.468677860635354E+09 -1.206370705398303E+08 -1.005007783469802E+08
+   1.108008893662783E-01  5.465529621950472E+00 -1.151060578610343E-01
+2461223.500000000 = A.D. 2026-Jul-02 00:00:00.0000 TDB
+   4.465492617290574E+09  1.627481460314605E+08 -1.062631957835981E+08
+  -2.337159884339395E-01  5.463899936530309E+00 -1.071338347157882E-01
 $$EOE
 *******************************************************************************
 Coordinate system description:
@@ -42,23 +54,24 @@ Coordinate system description:
   Ecliptic and Mean Equinox of Reference Epoch
 
     Reference epoch: J2000.0
-    xy-plane: plane of the Earth's orbit at the reference epoch
-    x-axis  : out along ascending node of instantaneous plane of the Earth's
+    XY-plane: plane of the Earth's orbit at the reference epoch
+              Note: obliquity of 84381.448 arcseconds wrt ICRF equator (IAU76)
+    X-axis  : out along ascending node of instantaneous plane of the Earth's
               orbit and the Earth's mean equator at the reference epoch
-    z-axis  : perpendicular to the xy-plane in the directional (+ or -) sense
+    Z-axis  : perpendicular to the xy-plane in the directional (+ or -) sense
               of Earth's north pole at the reference epoch.
 
-Symbol meaning
+  Symbol meaning:
 
-    JDCT     Epoch Julian Date, Coordinate Time
-      X      x-component of position vector (km)
-      Y      y-component of position vector (km)
-      Z      z-component of position vector (km)
-      VX     x-component of velocity vector (km/sec)
-      VY     y-component of velocity vector (km/sec)
-      VZ     z-component of velocity vector (km/sec)
+    JDTDB    Julian Day Number, Barycentric Dynamical Time
+      X      X-component of position vector (km)
+      Y      Y-component of position vector (km)
+      Z      Z-component of position vector (km)
+      VX     X-component of velocity vector (km/sec)
+      VY     Y-component of velocity vector (km/sec)
+      VZ     Z-component of velocity vector (km/sec)
 
-Geometric states/elements have no aberration corrections applied.
+Geometric states/elements have no aberrations applied.
 
  Computations by ...
      Solar System Dynamics Group, Horizons On-Line Ephemeris System
@@ -66,6 +79,7 @@ Geometric states/elements have no aberration corrections applied.
      Pasadena, CA  91109   USA
      Information: http://ssd.jpl.nasa.gov/
      Connect    : telnet://ssd.jpl.nasa.gov:6775  (via browser)
+                  http://ssd.jpl.nasa.gov/?horizons
                   telnet ssd.jpl.nasa.gov 6775    (via command-line)
-     Author     : Jon.Giorgini@jpl.nasa.gov
+     Author     : Jon.D.Giorgini@jpl.nasa.gov
 *******************************************************************************

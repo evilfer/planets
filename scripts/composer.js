@@ -6,7 +6,7 @@ var fs = require('fs'),
         var data = fs.readFileSync('./data/ephemerides/' + id + '.txt'),
             txt = data.toString();
 
-       objects[id].points = parser.encoded(txt);
+        objects[id].points = parser.encoded(txt);
     },
 
     compose = function () {
