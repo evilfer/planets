@@ -33,14 +33,14 @@ module.exports = function () {
                 <p>The star field is created using data from
                     the <a target="_blank" href="http://tdc-www.harvard.edu/catalogs/bsc5.html">Yale
                         Bright Star Catalog <i className="material-icons open-in-new">open_in_new</i></a>.
-                    'Planets' includes the stars with magnitude up to 6: 5.080 stars.
+                    'Planets' includes the stars with magnitude up to 6 (5.080 stars).
                 </p>
 
                 <p>Planet orbits are calculated from their state vectors (position and velocity).
                     Please note that the precision of the planets and Moon in this page limited, even though the
                     Horizons system produces very accurate data. This is due the fact that 'Planets' does not compute
                     ephemerides on the fly. Rather, it uses precomputed data: state vectors have been calculated only
-                    for a number of dates within a three year time span (Jan 2015 - Dec 2017).</p>
+                    for a number of dates within between January 2015 and December 2025.</p>
 
                 <p>To keep the size of the download reasonable, the separation between computed points is limited
                     (around 100 points per orbital period). For dates that fall between points, the velocity and

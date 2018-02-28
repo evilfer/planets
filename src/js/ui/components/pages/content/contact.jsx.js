@@ -29,7 +29,7 @@ module.exports = function () {
                     questions <a target="_blank" href="https://github.com/evilfer/planets/issues">here <i
                         className="material-icons open-in-new">open_in_new</i></a>.</p>
 
-                <p>Alternatively, feel free to email me about it at
+                <p>Alternatively, feel free to email me about it at&nbsp;
                     <a href="mailto:eloy.villasclaras@gmail.com">eloy.villasclaras@gmail.com</a>.
                 </p>
             </div>

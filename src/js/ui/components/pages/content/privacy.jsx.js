@@ -31,10 +31,9 @@ module.exports = function () {
                         href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage?hl=en">
                         here <i className="material-icons open-in-new">open_in_new</i></a>.</p>
 
-                <p>'Planets' does not use any other cookies. <a href="https://en.wikipedia.org/wiki/Web_storage"
-                                                                target="_blank">Local storage <i
-                    className="material-icons open-in-new">open_in_new</i></a> is used to store the selected latitude;
-                    this is not shared in any way, and it's not sent to the server.</p>
+                <p>'Planets' does not use any other cookies. The user latitude, if selected, is stored
+                    using <a href="https://en.wikipedia.org/wiki/Web_storage" target="_blank">Local storage <i
+                    className="material-icons open-in-new">open_in_new</i></a>. It is not shared in any way, and it's not sent to the server.</p>
             </div>
         )
     };
