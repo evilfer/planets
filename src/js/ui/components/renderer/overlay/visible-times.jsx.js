@@ -93,10 +93,7 @@ module.exports = function () {
         MaxHeightIndicator = React.createClass({
             render: function () {
                 var data = this.props.data;
-                console.log(data);
-
                 if (data.tmh) {
-                    console.log('yes');
                     return (
                         <div style={{
                            position: 'absolute',
@@ -120,7 +117,7 @@ module.exports = function () {
                                 color: '#eee',
                                 textAlign: 'center',
                                 fontSize: '.7em'
-                            }}>{Math.round(180 * data.tmh / Math.PI) + '\u00B0'}</div>
+                            }}>{Math.round(90 - 180 * data.tmh / Math.PI)}&#x00B0;</div>
                         </div>
                     );
                 } else {

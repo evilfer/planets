@@ -57,10 +57,7 @@ module.exports = function () {
         handleClick: function () {
             var mjd = this.mjd();
             if (this.valid(mjd)) {
-                console.log('set');
                 this.props.setValues({t: mjd});
-            } else {
-                console.log('no');
             }
         },
 

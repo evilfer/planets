@@ -71,12 +71,9 @@ module.exports = function () {
 
         onNavOpen: function () {
             this.setState({isOpen: true});
-            console.log('open');
-
         },
         onNavClose: function () {
             this.setState({isOpen: false});
-            console.log('close');
         },
 
         getInitialState: function () {

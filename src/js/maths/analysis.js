@@ -158,14 +158,16 @@ module.exports = function () {
 
             return function (observer, lat, tilt, target, eph, result) {
                 vector.diff(ot, eph[target].vectors.p, eph[observer].vectors.p);
+                vector.scl(ot, 1. / vector.mod(ot));
 
-                var cosDec = Math.cos(lat),
-                    modF = 1. / vector.mod(ot),
-                    a = ot[0] * cosDec,
-                    b = (tilt.c * ot[1] - tilt.s * ot[2]) * cosDec,
-                    c = (tilt.c * ot[2] + tilt.s * ot[1]) * Math.sin(lat) * modF;
+                var cosLat = Math.cos(lat),
+                    sinLat = Math.sin(lat),
 
-                result.c = 0;
+                    a = ot[0] * cosLat,
+                    b = (tilt.c * ot[1] - tilt.s * ot[2]) * cosLat,
+                    c = (tilt.c * ot[2] + tilt.s * ot[1]) * sinLat;
+
+                result.c = c;
 
                 /*  solve: a * cos(ra) + b * sin(ra) + c = 0 */
 
@@ -179,7 +181,7 @@ module.exports = function () {
                     var p = Math.atan2(a, b),
                         cosP = Math.cos(p),
                         sinP = Math.sin(p),
-                        d = modF * (Math.abs(cosP) > Math.abs(sinP) ? b / cosP : a / sinP);
+                        d = Math.abs(cosP) > Math.abs(sinP) ? b / cosP : a / sinP;
 
                     result.p = p;
                     result.d = d;

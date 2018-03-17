@@ -43,7 +43,7 @@ module.exports = function () {
 
         handleChange: function (a) {
             var txt = a.target.value;
-            if (txt.match(/^-?\d*(\.\d+)?$/)) {
+            if (txt.match(/^-?\d*(\.\d*)?$/)) {
                 this.setState({value: a.target.value});
             }
         },

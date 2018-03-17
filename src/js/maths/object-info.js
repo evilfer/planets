@@ -112,7 +112,7 @@ module.exports = function () {
                         maxHeightTime = angles.revFrom(maxHeightAngle, a0);
 
                     if (sunVisible.mode === 'hidden' || (maxHeightTime >= result.ss && maxHeightTime <= result.sr)) {
-                        result.tmh = Math.acos(targetVisible.c + targetVisible.d);
+                        result.tmh = Math.acos(targetVisible.c + Math.abs(targetVisible.d));
                         result.tmt = targetVisible.mode === 'visible' ? .5 : maxHeightTime;
                     } else {
                         var sunriseCosHeight = targetVisible.c + targetVisible.d * Math.sin(sunVisible.rises + targetVisible.p),

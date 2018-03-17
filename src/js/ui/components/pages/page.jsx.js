@@ -42,8 +42,6 @@ module.exports = function () {
     return React.createClass({
 
         render: function () {
-            console.log(this.props);
-
             var navWidth = this.props.navOpen ? 256 : 0,
                 headerHeight = 40,
                 availableWidth = this.props.window.width - navWidth,
