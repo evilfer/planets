@@ -45,7 +45,7 @@ module.exports = function () {
                     margin: '-3px 0 0 0',
                     verticalAlign: 'middle'
                 },
-                latStr = '' + Math.abs(.1 * Math.round(10 * this.props.lat));
+                latStr = this.props.lat.toFixed(1).replace(/\.?0+$/, '');
 
             if (this.props.lat > 0) {
                 latStr += ' N';
